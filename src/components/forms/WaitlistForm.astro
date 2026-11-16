@@ -1,0 +1,25 @@
+---
+import FormShell from "./FormShell.astro";
+import Field from "./Field.astro";
+import CheckGroup from "./CheckGroup.astro";
+import Check from "./Check.astro";
+import { RIDE_OPTS, INTEREST_OPTS, CONSENT_TEXT } from "../../lib/form-fields";
+interface Props { id?: string; interest?: string }
+const { id = "waitlist-form", interest } = Astro.props;
+---
+<FormShell form="waitlist" id={id} submitLabel="Count me in">
+  <div class="grid gap-5 sm:grid-cols-2">
+    <Field name="first_name" id={`${id}-first`} label="First name" required autocomplete="given-name" maxlength={60} />
+    <Field name="email" id={`${id}-email`} label="Email" type="email" required autocomplete="email" maxlength={254} />
+    <Field name="zip" id={`${id}-zip`} label="ZIP code" hint="So we can tell you about rides near you." autocomplete="postal-code" pattern="\d{5}" inputmode="numeric" maxlength={5} />
+    <Field name="ride" id={`${id}-ride`} label="What do you ride?" type="select" options={RIDE_OPTS} />
+  </div>
+  <div data-preset-interest={interest}>
+    <CheckGroup name="interests" legend="I'm in for" options={INTEREST_OPTS} preselectParam="interest" />
+  </div>
+  <div class="grid gap-1">
+    <Check name="over18" id={`${id}-over18`} required>I'm 18 or older</Check>
+    <Check name="marketing" id={`${id}-marketing`} required>{CONSENT_TEXT.waitlist}</Check>
+  </div>
+  <p slot="after-submit" class="fine">We'll only use your email for Epoch updates. See our <a href="/privacy" class="link">privacy policy</a>.</p>
+</FormShell>

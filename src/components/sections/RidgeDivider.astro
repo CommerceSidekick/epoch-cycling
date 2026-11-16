@@ -1,0 +1,9 @@
+---
+interface Props { color?: string; flip?: boolean; bg?: string; class?: string }
+const { color = "var(--color-ridge)", flip = false, bg = "transparent", class: cls = "" } = Astro.props;
+---
+<div class={cls} style={`background:${bg};line-height:0`} aria-hidden="true">
+  <svg class="ridge-divider" viewBox="0 0 1440 110" preserveAspectRatio="none" style={flip ? "transform:scaleY(-1)" : undefined}>
+    <path d="M0 110V70l140-36 110 26 190-58 160 62 120-30 160 46 150-40 170 52 240-70v88z" fill={color} />
+  </svg>
+</div>

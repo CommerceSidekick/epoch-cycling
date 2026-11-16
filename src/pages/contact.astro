@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../components/layout/BaseLayout.astro";
+import PageHeader from "../components/sections/PageHeader.astro";
+import ContactForm from "../components/forms/ContactForm.astro";
+import ExternalLink from "../components/ui/ExternalLink.astro";
+import Icon from "../components/ui/Icon.astro";
+import { SITE } from "../config/site";
+import { BRAND } from "../config/brand";
+const e = SITE.emails;
+const ways = [
+  { h: "The Riders Club and the race deal.", l: "Applications, claims, ambassadors.", email: e.club },
+  { h: "Events, partnerships and press.", l: "Race organizers, shops, media.", email: e.hello },
+  { h: "App, account and orders.", l: "Run by Epoch Health System support.", email: e.support },
+  { h: "Privacy and your data.", l: "Requests about your information.", email: e.privacy },
+];
+const hasMail = !!(SITE.legalEntity && SITE.address);
+---
+<BaseLayout
+  title="Contact | Epoch Cycling"
+  description="Questions about the Riders Club, the race deal, events, Epoch Fuel and Salt, or the app? Talk to us. We read everything."
+  breadcrumbs={[{ name: "Contact", path: "/contact" }]}
+>
+  <PageHeader eyebrow="CONTACT" ghost="TALK">
+    <h1 class="t-display">Talk to <span class="text-dawn">us.</span></h1>
+    <p class="body-l muted measure">We read everything. Most messages get a reply within two business days.</p>
+    <p class="notice measure">If someone is hurt on a ride, call 911 first. For any medical emergency, don't use this page. Call 911 or go to the nearest emergency room.</p>
+  </PageHeader>
+  <section class="section">
+    <div class="wrap contact-grid">
+      <div><ContactForm /></div>
+      <aside class="ways" aria-labelledby="ways-title">
+        <h2 id="ways-title" class="t-h3 uppercase">Ways to reach us</h2>
+        <ul role="list" class="grid gap-3">
+          {ways.map((w) => (
+            <li class="way card">
+              <p class="t-h4">{w.h}</p>
+              <p class="small muted">{w.l}</p>
+              <a href={`mailto:${w.email}`} class="link inline-flex items-center gap-2"><Icon name="mail" size={18} />{w.email}</a>
+            </li>
+          ))}
+          <li class="way card way-med">
+            <p class="t-h4">Medical programs.</p>
+            <p class="small muted">Questions about {BRAND.program} go to Epoch Health System.</p>
+            <ExternalLink href="https://epochhealthsystem.com/contact?topic=program" campaign="contact_program" class="link">Contact Epoch Health System</ExternalLink>
+          </li>
+        </ul>
+        {hasMail && (
+          <div class="card way">
+            <p class="t-h4">By mail</p>
+            <p class="small">{SITE.legalEntity}, {SITE.address}</p>
+          </div>
+        )}
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .contact-grid { display: grid; gap: 48px; }
+  @media (min-width: 1024px) { .contact-grid { grid-template-columns: 1.4fr 0.9fr; gap: 64px; } }
+  .ways { display: grid; gap: 18px; align-content: start; }
+  .way { padding: 20px 22px; display: grid; gap: 6px; }
+  .way-med { background: var(--color-bone); color: var(--color-carbon); border-color: var(--color-bone); }
+  .way-med .muted { color: #4d4a41; }
+  .way-med :global(.link) { color: var(--color-ember); }
+</style>

@@ -1,0 +1,36 @@
+// Path redirects (spec 4.2). The Vercel adapter turns these into real 301/302 routes.
+// Domain-level redirects (www -> apex, epochmtb.com -> /mtb) are added by scripts/vercel-postbuild.mjs.
+const r301 = (destination) => ({ status: 301, destination });
+const r302 = (destination) => ({ status: 302, destination });
+export const REDIRECTS = {
+  "/club": r301("/ride"),
+  "/riders-club": r301("/ride"),
+  "/riders": r301("/ride/team"),
+  "/team": r301("/ride/team"),
+  "/events": r301("/ride/events"),
+  "/rides": r301("/ride/events"),
+  "/group-rides": r301("/ride/events"),
+  "/sponsorship": r301("/ride/sponsorship"),
+  "/race-program": r301("/ride/sponsorship"),
+  "/apply": r301("/ride/apply"),
+  "/ambassadors": r301("/ride/apply?type=ambassador"),
+  "/signup": r301("/join"),
+  "/waitlist": r301("/join"),
+  "/app": r301("/optimize#app"),
+  "/coaching": r301("/optimize#coaching"),
+  "/labs": r301("/optimize#labs"),
+  "/medical": r301("/optimize/medical"),
+  "/total-health": r301("/optimize/medical"),
+  "/epochedge": r301("/optimize#medical"),
+  "/salt": r301("/fuel/epoch-salt"),
+  "/epoch-salt": r301("/fuel/epoch-salt"),
+  "/epoch-fuel": r301("/fuel/epoch-fuel"),
+  "/how-to-fuel": r301("/fuel/guide"),
+  "/fueling": r301("/fuel/guide"),
+  "/journal": r301("/stories"),
+  "/blog": r301("/stories"),
+  "/race-program-terms": r301("/riders-club-terms"),
+  "/sitemap.xml": r301("/sitemap-index.xml"),
+  "/tri": r302("https://epochhealthsystem.com/sports"),
+  "/run": r302("https://epochhealthsystem.com/sports"),
+};

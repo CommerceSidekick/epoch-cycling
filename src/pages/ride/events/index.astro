@@ -1,0 +1,87 @@
+---
+import BaseLayout from "../../../components/layout/BaseLayout.astro";
+import PageHeader from "../../../components/sections/PageHeader.astro";
+import EventList from "../../../components/sections/EventList.astro";
+import FilterBar from "../../../components/sections/FilterBar.astro";
+import Photo from "../../../components/sections/Photo.astro";
+import Ph from "../../../components/ui/Ph.astro";
+import Icon from "../../../components/ui/Icon.astro";
+import { getCollection } from "astro:content";
+import { SITE } from "../../../config/site";
+const upcoming = (await getCollection("events")).filter((e) => e.data.start > new Date());
+const rules = [
+  { t: "Helmet on.", b: "Every ride." },
+  { t: "Sign the waiver before you roll.", b: "It takes two minutes.", waiver: true },
+  { t: "Ride your own ride.", b: "Every ride has a regroup plan and a sweep." },
+  { t: "Leave the trail better.", b: "Follow local trail rules and closures. Don't ride wet trails that the land manager says are closed." },
+  { t: "Be decent.", b: "Everyone was new once." },
+  { t: "Adults 18 and over at launch.", b: "" },
+];
+---
+<BaseLayout
+  title="Events and Group Rides | Epoch Riders Club"
+  description="Find an Epoch group ride or race weekend near you. All levels. Every ride has a regroup plan and a sweep."
+  breadcrumbs={[{ name: "Riders Club", path: "/ride" }, { name: "Events", path: "/ride/events" }]}
+>
+  <PageHeader eyebrow="EVENTS" ghost="RIDE">
+    <h1 class="t-display-xl">Come <span class="text-dawn">ride.</span></h1>
+    <p class="body-l muted measure">Group rides, race weekends and the occasional taco run. All levels. Nobody gets dropped without a regroup.</p>
+  </PageHeader>
+
+  <section class="section" aria-labelledby="cal-title">
+    <div class="wrap">
+      <h2 id="cal-title" class="sr-only">Calendar</h2>
+      {upcoming.length > 0 && (
+        <FilterBar
+          noun={["event", "events"]}
+          groups={[
+            { key: "discipline", label: "Discipline", attr: "data-filter-discipline", options: [{ value: "mtb", label: "MTB" }, { value: "gravel", label: "Gravel" }, { value: "road", label: "Road" }] },
+            { key: "type", label: "Type", attr: "data-filter-type", options: [{ value: "group-ride", label: "Group rides" }, { value: "race", label: "Races" }, { value: "clinic", label: "Clinics" }, { value: "meetup", label: "Meetups" }] },
+          ]}
+        />
+      )}
+      <EventList emptyHost filterable />
+    </div>
+  </section>
+
+  <section class="rules on-ridge" aria-labelledby="rules-title">
+    <div class="rules-media photo" aria-hidden="true">
+      <Photo img="crewRest" sizes="(min-width: 1024px) 45vw, 100vw" widths={[640, 1024, 1400]} position="center 45%" decorative />
+    </div>
+    <div class="rules-body">
+      <p class="eyebrow">THE BASICS</p>
+      <h2 id="rules-title" class="t-h2">Ride rules.</h2>
+      <ol class="rules-list" role="list">
+        {rules.map((r, i) => (
+          <li class="reveal">
+            <span class="race-number">{String(i + 1).padStart(2, "0")}</span>
+            <div>
+              <p class="t-h4">{r.t}</p>
+              {r.b && <p class="muted">{r.b}</p>}
+              {r.waiver && (
+                <p class="mt-2">
+                  {SITE.waiverUrl ? (
+                    <a href={SITE.waiverUrl} class="link-arrow" target="_blank" rel="noopener" data-outbound><span>Sign the waiver</span><Icon name="arrow-up-right" size={18} class="arr" /><span class="sr-only"> (opens in a new tab)</span></a>
+                  ) : (
+                    <span>Sign the waiver: <Ph value={SITE.waiverUrl} label="waiver URL" /></span>
+                  )}
+                </p>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .rules { display: grid; }
+  @media (min-width: 1024px) { .rules { grid-template-columns: 0.9fr 1.1fr; } }
+  .rules-media { min-height: 320px; }
+  .rules-media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .rules-body { display: grid; gap: 22px; align-content: center; padding: clamp(48px, 7vw, 104px) clamp(20px, 5vw, 80px); }
+  .rules-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; }
+  .rules-list li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 16px 0; border-top: 1px solid var(--color-slate); }
+  .rules-list .race-number { color: var(--color-dawn); padding-top: 3px; }
+</style>

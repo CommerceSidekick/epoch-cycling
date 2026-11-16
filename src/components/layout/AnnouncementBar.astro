@@ -1,0 +1,25 @@
+---
+import Icon from "../ui/Icon.astro";
+---
+<aside class="ann" data-announcement aria-label="Announcement" hidden>
+  <div class="wrap-wide ann-row">
+    <p class="ann-text">
+      <span class="ann-dot" aria-hidden="true"></span>
+      <span>Epoch MTB is live. Gravel's next.</span>
+      <a href="/join?interest=gravel" class="ann-link">Get on the list <span aria-hidden="true">→</span></a>
+    </p>
+    <button type="button" class="ann-close" data-announcement-close><Icon name="x" size={18} /><span class="sr-only">Dismiss</span></button>
+  </div>
+</aside>
+<script is:inline>
+  try { if (localStorage.getItem("epoch-ann-dismissed") !== "1") document.querySelector("[data-announcement]")?.removeAttribute("hidden"); } catch (e) { document.querySelector("[data-announcement]")?.removeAttribute("hidden"); }
+</script>
+<style>
+  .ann { background: var(--color-signal); color: var(--color-carbon); }
+  .ann-row { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 40px; position: relative; }
+  .ann-text { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 10px; font-weight: 600; font-size: 0.9375rem; padding: 6px 40px; text-align: center; }
+  .ann-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-carbon); animation: pulse 1.8s infinite; }
+  @keyframes pulse { 50% { opacity: 0.25; } }
+  .ann-link { color: var(--color-carbon); text-decoration: underline; text-underline-offset: 3px; }
+  .ann-close { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: grid; place-content: center; width: 44px; height: 40px; background: none; border: 0; color: var(--color-carbon); cursor: pointer; }
+</style>

@@ -1,0 +1,14 @@
+---
+// Mono stats strip. Real ride data only.
+interface Props { stats: { label: string; value: string }[] }
+const { stats } = Astro.props;
+---
+<dl class="ride-stats not-prose">
+  {stats.map((s) => (<div><dt class="mono">{s.label}</dt><dd class="mono">{s.value}</dd></div>))}
+</dl>
+<style>
+  .ride-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1px; margin: 2em 0; background: var(--color-slate); border: 1px solid var(--color-slate); border-radius: var(--radius-md); overflow: hidden; }
+  .ride-stats div { background: var(--color-ridge); padding: 16px 18px; }
+  .ride-stats dt { font-size: 0.8125rem; letter-spacing: 0.1em; color: var(--color-dust); text-transform: uppercase; }
+  .ride-stats dd { font-size: 1.5rem; color: var(--color-signal); margin-top: 4px; }
+</style>

@@ -1,0 +1,34 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import { SITE } from "../../config/site";
+interface Props { rider: CollectionEntry<"riders"> }
+const r = Astro.props.rider.data;
+const show = r.consentOnFile && !r.placeholder && SITE.flags.showRiders;
+const roleLabel = { racer: "Epoch Riders Club racer", ambassador: "Epoch ambassador", host: "Ride host", staff: "Epoch Cycling staff" }[r.role];
+---
+{show && (
+  <article class="rider card card-hover" data-discipline={r.disciplines[0]} data-filter-discipline={r.disciplines.join(" ")} data-filter-role={r.role}>
+    <div class="rider-photo photo duo duo-hover" style="--duo: var(--disc)">
+      <Image src={r.photo} alt={r.photoAlt} widths={[360, 640]} sizes="(min-width: 1024px) 25vw, 50vw" />
+      {r.number && <span class="rider-num race-number">#EPOCH {r.number}</span>}
+    </div>
+    <div class="p-5 grid gap-2">
+      <h3 class="t-h3">{r.name}</h3>
+      <p class="mono small" style="color: var(--disc)">{roleLabel}</p>
+      <div class="flex flex-wrap gap-2">{r.disciplines.map((d) => <span class="chip" data-d={d}>{d.toUpperCase()}</span>)}</div>
+      <p class="small muted">{r.city}, {r.state}</p>
+      <p class="small">{r.bio}</p>
+      {r.sponsored && <p class="fine">Epoch supports this rider's racing.</p>}
+      <div class="flex gap-4 small">
+        {r.instagram && <a class="link" href={`https://instagram.com/${r.instagram.replace(/^@/, "")}`} target="_blank" rel="noopener">Instagram<span class="sr-only"> (opens in a new tab)</span></a>}
+        {r.strava && <a class="link" href={r.strava} target="_blank" rel="noopener">Strava<span class="sr-only"> (opens in a new tab)</span></a>}
+      </div>
+    </div>
+  </article>
+)}
+<style>
+  .rider-photo { aspect-ratio: 4 / 5; }
+  .rider-photo :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .rider-num { position: absolute; left: 12px; top: 12px; z-index: 2; background: var(--color-carbon); color: var(--color-bone); padding: 4px 8px; border-radius: 3px; }
+</style>

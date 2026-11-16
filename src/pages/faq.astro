@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../components/layout/BaseLayout.astro";
+import PageHeader from "../components/sections/PageHeader.astro";
+import FaqAccordion from "../components/sections/FaqAccordion.astro";
+import CtaBand from "../components/sections/CtaBand.astro";
+import Button from "../components/ui/Button.astro";
+import { FAQ, FAQ_GROUPS } from "../content/faq";
+import { faqSchema } from "../lib/schema";
+---
+<BaseLayout
+  title="FAQ | Epoch Riders Club, Fuel, the App and Racing Clean | Epoch Cycling"
+  description="Answers about the Epoch Riders Club, the race deal, anti-doping rules, Epoch Fuel and Salt, the free app, coaching and how medical guidance works."
+  breadcrumbs={[{ name: "FAQ", path: "/faq" }]}
+  schema={[faqSchema(FAQ)]}
+>
+  <PageHeader eyebrow="FAQ" ghost="FAQ">
+    <h1 class="t-display">Questions. <span class="text-dawn">Answered.</span></h1>
+    <p class="body-l muted">Can't find it? <a href="/contact" class="link">Ask us</a>.</p>
+  </PageHeader>
+  <section class="section">
+    <div class="wrap faq-layout">
+      <nav class="faq-toc" aria-label="FAQ topics">
+        <p class="eyebrow no-bar mb-3">Jump to</p>
+        <ul role="list">
+          {FAQ_GROUPS.map((g) => <li><a href={`#group-${g.id}`}>{g.label}</a></li>)}
+        </ul>
+      </nav>
+      <div class="faq-groups">
+        {FAQ_GROUPS.map((g) => (
+          <section id={`group-${g.id}`} class="faq-group" aria-labelledby={`h-${g.id}`}>
+            <h2 id={`h-${g.id}`} class="t-h3 faq-gh"><span class="race-number text-dawn">{String(FAQ_GROUPS.indexOf(g) + 1).padStart(2, "0")}</span>{g.label}</h2>
+            <FaqAccordion entries={FAQ.filter((f) => f.group === g.id)} />
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+  <CtaBand title="Still got questions?" sub="We read everything. Most messages get a reply within two business days.">
+    <Button href="/contact" size="lg" arrow>Talk to us</Button>
+  </CtaBand>
+</BaseLayout>
+<style>
+  .faq-layout { display: grid; gap: 40px; }
+  @media (min-width: 1024px) { .faq-layout { grid-template-columns: 240px 1fr; gap: 64px; } }
+  .faq-toc ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  @media (min-width: 1024px) { .faq-toc { position: sticky; top: 100px; align-self: start; } .faq-toc ul { display: grid; gap: 2px; } }
+  .faq-toc a { display: inline-flex; min-height: 44px; align-items: center; padding: 0 14px; border: 1px solid var(--color-slate); border-radius: 999px; text-decoration: none; font-weight: 500; }
+  @media (min-width: 1024px) { .faq-toc a { border: 0; padding: 0; border-radius: 0; color: var(--color-dust); } .faq-toc a:hover { color: var(--color-bone); } }
+  .faq-groups { display: grid; gap: 56px; }
+  .faq-gh { display: flex; align-items: center; gap: 14px; text-transform: uppercase; padding-bottom: 6px; border-bottom: 2px solid var(--color-bone); }
+</style>

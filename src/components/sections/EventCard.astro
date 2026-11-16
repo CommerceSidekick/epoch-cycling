@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Icon from "../ui/Icon.astro";
+import { eventLabel, eventLong } from "../../lib/format";
+interface Props { event: CollectionEntry<"events">; compact?: boolean }
+const { event, compact = false } = Astro.props;
+const e = event.data;
+const d = e.disciplines[0];
+const typeLabel = { "group-ride": "Group ride", race: "Race", clinic: "Clinic", meetup: "Meetup" }[e.type];
+const href = `/ride/events/${event.id}`;
+const ext = e.type === "race" && e.registrationUrl;
+---
+<article class={`event-card card card-hover ${compact ? "compact" : ""}`} data-discipline={d} data-filter-discipline={e.disciplines.join(" ")} data-filter-type={e.type}>
+  <div class="ec-edge" aria-hidden="true"></div>
+  <div class="ec-body">
+    <p class="race-number ec-date"><time datetime={e.start.toISOString()}><span aria-hidden="true">{eventLabel(e.start, e.timezone)}</span><span class="sr-only">{eventLong(e.start, e.timezone)}</span></time></p>
+    <h3 class="t-h3"><a href={href} class="ec-link">{e.title}</a></h3>
+    <p class="muted small flex items-center gap-2"><Icon name="map-pin" size={16} />{e.location.name}, {e.location.city}, {e.location.state}</p>
+    <div class="flex flex-wrap gap-2">
+      {e.disciplines.map((x) => <span class="chip" data-d={x}>{x.toUpperCase()}</span>)}
+      <span class="chip">{typeLabel}</span>
+      <span class="chip">{e.level}</span>
+      {e.entryEligible && <span class="tag">RACE DEAL ELIGIBLE</span>}
+    </div>
+    {(e.distanceMi || e.climbingFt) && (
+      <p class="race-number muted">{e.distanceMi && `${e.distanceMi} MI (${Math.round(e.distanceMi * 1.609)} KM)`}{e.distanceMi && e.climbingFt && " · "}{e.climbingFt && `${e.climbingFt.toLocaleString()} FT (${Math.round(e.climbingFt * 0.3048).toLocaleString()} M)`}</p>
+    )}
+    <p class="small muted">Host: {e.host}</p>
+    {e.status !== "scheduled" && <p class="ec-status"><strong>{e.status === "cancelled" ? "Cancelled" : "Postponed"}</strong>{e.statusNote && `. ${e.statusNote}`}</p>}
+    <div class="mt-auto pt-2">
+      {ext ? (
+        <a href={e.registrationUrl} class="btn btn-outline btn-sm" target="_blank" rel="noopener" data-outbound>Race info ↗<span class="sr-only"> (opens in a new tab)</span></a>
+      ) : (
+        <a href={e.rsvpUrl ?? href} class="btn btn-accent btn-sm" {...(e.rsvpUrl ? { target: "_blank", rel: "noopener" } : {})}>Count me in</a>
+      )}
+    </div>
+  </div>
+</article>
+<style>
+  .event-card { display: flex; height: 100%; }
+  .ec-edge { width: 6px; background: var(--disc); flex: none; }
+  .ec-body { display: flex; flex-direction: column; gap: 12px; padding: 22px; flex: 1; }
+  .ec-date { color: var(--disc); }
+  .ec-link { text-decoration: none; }
+  .ec-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .ec-status { background: var(--color-slate); padding: 8px 12px; border-radius: 6px; }
+</style>

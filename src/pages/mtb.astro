@@ -1,0 +1,162 @@
+---
+import BaseLayout from "../components/layout/BaseLayout.astro";
+import PageHero from "../components/sections/PageHero.astro";
+import SectionHead from "../components/sections/SectionHead.astro";
+import Photo from "../components/sections/Photo.astro";
+import KitGrid from "../components/sections/KitGrid.astro";
+import EventList from "../components/sections/EventList.astro";
+import RiderGrid from "../components/sections/RiderGrid.astro";
+import PhoneMock from "../components/sections/PhoneMock.astro";
+import ElevationProfile from "../components/sections/ElevationProfile.astro";
+import CtaBand from "../components/sections/CtaBand.astro";
+import Lockup from "../components/brand/Lockup.astro";
+import Button from "../components/ui/Button.astro";
+import LinkArrow from "../components/ui/LinkArrow.astro";
+import Eyebrow from "../components/ui/Eyebrow.astro";
+import { SITE } from "../config/site";
+const cards = [
+  { n: "01", t: "Group rides.", b: "Trail rides and dawn patrols, all levels. Regroups at every junction.", img: "crewSingletrack" as const, pos: "center 40%" },
+  { n: "02", t: "Race weekends.", b: "XC, enduro and downhill. Club racers get entries covered under the club terms.", img: "mtbDustyRace" as const, pos: "65% center" },
+  { n: "03", t: "The kit.", b: "Loose trail jerseys, an enduro race cut, baggies and a trucker. EPOCH on the chest, MTB on the sleeve.", img: "mtbForestCharge" as const, pos: "center 35%" },
+];
+---
+<BaseLayout lcp="mtbChargeWide"
+  title="Epoch MTB | Mountain Bike Crew, Kits and Race Deal | Epoch Cycling"
+  description="Epoch MTB is live. Enduro, XC, downhill and trail. Group rides, MTB kits, race entry coverage for Club racers, and fuel for long days in the dirt."
+  discipline="mtb"
+  overlayHeader
+  breadcrumbs={[{ name: "Epoch MTB", path: "/mtb" }]}
+>
+  <!-- 5.8.1 Hero -->
+  <PageHero img="mtbChargeWide" eyebrow="EPOCH MTB · LIVE" size="full" position="center 35%" dust speed>
+    <div class="mtb-lockup reveal"><Lockup variant="mtb" size="md" /></div>
+    <h1 class="t-display-xl mtb-h1 reveal">Built in<br /> the <span class="text-disc">dirt.</span></h1>
+    <p class="body-l mtb-sub reveal reveal-d1">Enduro, XC, downhill, trail. Dawn laps, race weekends and the long climb back up. This is where Epoch Cycling started.</p>
+    <div class="mtb-ctas reveal reveal-d2">
+      <Button href="/join?interest=rides" variant="accent" size="lg" arrow location="mtb-hero">Join the club</Button>
+      <Button href="/ride/apply?type=racer" variant="outline" size="lg" location="mtb-hero">Apply to race</Button>
+    </div>
+  </PageHero>
+
+  <!-- Intensity strip -->
+  <div class="strip" aria-hidden="true">
+    <div class="strip-item photo"><Photo img="mtbBlurJump" sizes="33vw" widths={[480, 800]} position="center 40%" decorative /></div>
+    <div class="strip-item photo strip-word"><span>ENDURO</span><span class="t-outline-bone">XC</span><span>DOWNHILL</span><span class="t-outline-bone">TRAIL</span></div>
+    <div class="strip-item photo"><Photo img="mtbEnduroRocks" sizes="33vw" widths={[480, 800]} position="center" decorative /></div>
+  </div>
+
+  <!-- 5.8.2 What MTB looks like at Epoch -->
+  <section class="section" aria-labelledby="crew-title">
+    <div class="wrap">
+      <SectionHead eyebrow="MTB AT EPOCH" title="Your crew on the trail." id="crew-title" bar="var(--disc)" />
+      <ul class="mtb-cards" role="list">
+        {cards.map((c, i) => (
+          <li class={`mtb-card reveal reveal-d${i}`}>
+            <div class="mc-media photo zoom-hover"><Photo img={c.img} sizes="(min-width: 1024px) 33vw, 100vw" widths={[480, 800, 1200]} position={c.pos} decorative /></div>
+            <div class="mc-body">
+              <span class="race-number text-disc">#{c.n}</span>
+              <h3 class="t-h3">{c.t}</h3>
+              <p class="muted">{c.b}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5.8.3 MTB kit -->
+  <section class="section on-ridge topo" aria-labelledby="kit-title">
+    <div class="wrap">
+      <SectionHead eyebrow="TEAM KITS" title="The MTB kit." id="kit-title" intro="Built to race. Made to survive the crash you'll laugh about later." bar="var(--disc)" />
+      <KitGrid discipline="mtb" />
+      <div class="mt-10"><Button href="/join?interest=kits" variant="accent" arrow location="mtb-kit">Get notified</Button></div>
+    </div>
+  </section>
+
+  <!-- 5.8.4 Fuel for the dirt -->
+  <section class="split on-moss" aria-labelledby="fuel-title">
+    <div class="split-media photo"><Photo img="fuelCage" sizes="(min-width: 1024px) 50vw, 100vw" widths={[640, 1024, 1400]} position="center 55%" /></div>
+    <div class="split-copy">
+      <Eyebrow bar="var(--color-signal)" class="text-bone">FUEL</Eyebrow>
+      <h2 id="fuel-title" class="t-h2 reveal">Fuel like the trail is long. <span class="text-signal">It is.</span></h2>
+      <p class="body-l reveal reveal-d1">MTB is hard efforts, short bursts and long days in the saddle. Start fueling early, keep sipping on the climbs, and salt up when it's hot. The guide has the numbers.</p>
+      <div class="flex flex-wrap items-center gap-5 reveal reveal-d2">
+        <Button href="/fuel/guide" variant="signal" arrow location="mtb-fuel">How to fuel a ride</Button>
+        <LinkArrow href="/fuel" accent="var(--color-signal)">See Epoch Fuel and Salt</LinkArrow>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5.8.5 Train smarter on dirt -->
+  <section class="section opt" aria-labelledby="opt-title">
+    <ElevationProfile class="opt-profile" color="var(--color-sky)" />
+    <div class="wrap opt-grid">
+      <div class="grid gap-5">
+        <Eyebrow bar="var(--color-sky)">OPTIMIZE</Eyebrow>
+        <h2 id="opt-title" class="t-h2 reveal">Know when to <span class="text-sky">send it.</span></h2>
+        <p class="body-l muted reveal reveal-d1">The free Epoch app reads your rides, sleep and recovery, and shows you the numbers behind every readout. Push on the days you're fresh. Back off on the days you're cooked.</p>
+        <div class="reveal reveal-d2"><Button href="/optimize#app" variant="sky" arrow location="mtb-optimize">Get the app free</Button></div>
+      </div>
+      <PhoneMock class="reveal" />
+    </div>
+  </section>
+
+  <!-- 5.8.6 MTB events -->
+  <section class="section on-ridge topo" aria-labelledby="events-title">
+    <div class="wrap">
+      <SectionHead eyebrow="ON THE CALENDAR" title="Next MTB rides." id="events-title" bar="var(--disc)" />
+      <EventList limit={3} discipline="mtb" />
+      <div class="mt-10"><Button href="/ride/events?discipline=mtb" variant="outline" arrow location="mtb-events">All events</Button></div>
+    </div>
+  </section>
+
+  <!-- 5.8.7 MTB crew (hidden while showRiders is false) -->
+  {SITE.flags.showRiders && (
+    <section class="section" aria-labelledby="mtbcrew-title">
+      <div class="wrap">
+        <SectionHead eyebrow="THE CREW" title="The MTB crew." id="mtbcrew-title" bar="var(--disc)" />
+        <RiderGrid discipline="mtb" />
+      </div>
+    </section>
+  )}
+
+  <!-- 5.8.8 CTA band -->
+  <CtaBand title="Earn the descent." img="mtbFogJump" position="center 40%">
+    <Button href="/join" variant="accent" size="lg" arrow location="mtb-closing">Join the club</Button>
+    <Button href="/ride/apply?type=racer" variant="outline" size="lg" location="mtb-closing">Apply to race</Button>
+  </CtaBand>
+</BaseLayout>
+
+<style>
+  .mtb-lockup { color: var(--color-bone); margin-bottom: 24px; }
+  .mtb-h1 { max-width: 10ch; }
+  .mtb-sub { margin-top: 24px; max-width: 40ch; color: #ece7dc; }
+  .mtb-ctas { display: flex; flex-wrap: wrap; gap: 16px 22px; margin-top: 32px; }
+
+  .strip { display: grid; grid-template-columns: 1fr; border-block: 1px solid var(--color-slate); }
+  @media (min-width: 768px) { .strip { grid-template-columns: 1fr 1.2fr 1fr; } }
+  .strip-item { height: clamp(220px, 28vw, 380px); }
+  .strip-item :global(img) { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.25); }
+  .strip-item:not(.strip-word) { display: none; }
+  @media (min-width: 768px) { .strip-item:not(.strip-word) { display: block; } }
+  .strip-word { display: flex; flex-direction: column; justify-content: center; padding: 24px clamp(20px, 3vw, 40px); background: var(--disc); color: var(--color-carbon); font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(2.25rem, 4.6vw, 4.25rem); line-height: 0.92; }
+  .strip-word .t-outline-bone { -webkit-text-stroke: 2px var(--color-carbon); }
+
+  .mtb-cards { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 900px) { .mtb-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .mtb-card { background: var(--color-ridge); border: 1px solid var(--color-slate); border-radius: var(--radius-md); overflow: hidden; border-bottom: 4px solid var(--disc); }
+  .mc-media { aspect-ratio: 4 / 3; }
+  .mc-media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .mc-body { display: grid; gap: 10px; padding: 24px; }
+
+  .split { display: grid; }
+  @media (min-width: 1024px) { .split { grid-template-columns: 1fr 1fr; } }
+  .split-media { min-height: 360px; }
+  .split-media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .split-copy { display: grid; gap: 22px; align-content: center; padding: clamp(48px, 7vw, 110px) clamp(20px, 5vw, 80px); }
+
+  .opt { overflow: hidden; }
+  :global(.opt-profile) { position: absolute; left: 0; right: 0; bottom: 0; height: 45%; opacity: 0.6; pointer-events: none; }
+  .opt-grid { position: relative; display: grid; gap: 56px; align-items: center; }
+  @media (min-width: 1024px) { .opt-grid { grid-template-columns: 1.15fr 1fr; } }
+</style>

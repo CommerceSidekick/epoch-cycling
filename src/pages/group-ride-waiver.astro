@@ -1,0 +1,26 @@
+---
+import LegalPage from "../components/sections/LegalPage.astro";
+import Button from "../components/ui/Button.astro";
+import Ph from "../components/ui/Ph.astro";
+import { SITE } from "../config/site";
+---
+<LegalPage id="group-ride-waiver" path="/group-ride-waiver">
+  <div class="not-prose waiver-cta">
+    {SITE.waiverUrl ? (
+      <a href={SITE.waiverUrl} class="btn btn-primary btn-lg" target="_blank" rel="noopener" data-outbound>Sign the waiver ↗<span class="sr-only"> (opens in a new tab)</span></a>
+    ) : (
+      <p><Ph value={SITE.waiverUrl} label="waiver e-sign link: rides can't publish until this is set" /></p>
+    )}
+  </div>
+  <p class="fine">Questions? <a href="mailto:club@epochcycling.com" class="link">club@epochcycling.com</a></p>
+</LegalPage>
+<style>
+  .waiver-cta { margin: 28px 0 20px; }
+  .waiver-cta a.btn { color: var(--color-carbon); text-decoration: none; }
+</style>
+
+<style is:global>
+  .legal .ph { white-space: normal; display: inline; line-height: 1.7; }
+  .legal p.ph { display: block; padding: 12px 14px; margin-bottom: 1.2em; }
+  .legal a:not(.btn) { text-decoration: underline; text-underline-offset: 3px; }
+</style>

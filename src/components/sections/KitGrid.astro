@@ -1,0 +1,27 @@
+---
+import { getCollection } from "astro:content";
+import KitArt from "./KitArt.astro";
+interface Props { discipline?: "mtb" | "gravel" | "road" }
+const { discipline } = Astro.props;
+const items = (await getCollection("kit")).filter((k) => !discipline || k.data.discipline === discipline).sort((a, b) => a.data.order - b.data.order);
+---
+<ul class="kit-grid" role="list">
+  {items.map((k, i) => (
+    <li class={`kit-card card card-hover reveal reveal-d${Math.min(i, 3)}`}>
+      <div class="kit-stage topo">
+        <KitArt art={k.data.art} label={k.data.imageAlt} racer={k.data.art === "race-jersey"} />
+      </div>
+      <div class="kit-meta">
+        <h3 class="t-h4">{k.data.name}</h3>
+        <span class="tag">{k.data.status === "coming-soon" ? "COMING SOON" : k.data.status === "sold-out" ? "SOLD OUT" : "IN STOCK"}</span>
+      </div>
+      {k.data.mockup && <p class="fine px-5 pb-4">Illustration. Final kit after design sign-off.</p>}
+    </li>
+  ))}
+</ul>
+<style>
+  .kit-grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 1024px) { .kit-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .kit-stage { padding: 18px; background: radial-gradient(circle at 50% 40%, #2a2c27, var(--color-ridge) 70%); }
+  .kit-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 16px 20px 8px; }
+</style>

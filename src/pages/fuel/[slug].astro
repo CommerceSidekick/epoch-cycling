@@ -1,0 +1,23 @@
+---
+import { getCollection } from "astro:content";
+import ProductPage from "../../components/sections/ProductPage.astro";
+
+const META: Record<string, { title: string; description: string }> = {
+  "epoch-fuel": {
+    title: "Epoch Fuel | Ride Fuel Drink Mix | Epoch Cycling",
+    description: "Carbs and electrolytes in your bottle for rides over an hour. Mix it, sip it from the first climb, keep going. Every ingredient on the label.",
+  },
+  "epoch-salt": {
+    title: "Epoch Salt | Electrolytes for Riders | Epoch Cycling",
+    description: "Electrolytes to replace what you sweat out. Sodium, potassium and magnesium, amounts on the label. Sticks for the pocket, a tub for the garage.",
+  },
+};
+
+export async function getStaticPaths() {
+  const products = await getCollection("products");
+  return products.map((product) => ({ params: { slug: product.id }, props: { product } }));
+}
+const { product } = Astro.props;
+const meta = META[product.id] ?? { title: `${product.data.name} | Epoch Cycling`, description: product.data.oneLiner.replace(/\*$/, "") };
+---
+<ProductPage product={product} metaTitle={meta.title} metaDescription={meta.description} />

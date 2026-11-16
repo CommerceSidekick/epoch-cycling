@@ -1,0 +1,85 @@
+---
+// Generic client-side filter bar (6.8, 6.11). Toggle buttons with aria-pressed, state mirrored to the URL,
+// polite live region with the result count. Without JS every item shows.
+// Each group filters items inside [data-filter-list] by a data attribute holding a space-separated list.
+interface Group { key: string; label: string; attr: string; options: { value: string; label: string }[] }
+interface Props { groups: Group[]; noun?: [string, string]; target?: string; id?: string }
+const { groups, noun = ["item", "items"], target = "[data-filter-list]", id = "filters" } = Astro.props;
+---
+<div class="filterbar" data-filterbar data-target={target} data-noun-one={noun[0]} data-noun-many={noun[1]} id={id}>
+  {groups.map((g) => (
+    <div class="fb-group" role="group" aria-label={g.label} data-fb-key={g.key} data-fb-attr={g.attr}>
+      <span class="fb-label mono" aria-hidden="true">{g.label}</span>
+      <div class="fb-btns">
+        <button type="button" class="fb-btn" aria-pressed="true" data-value="all">All</button>
+        {g.options.map((o) => <button type="button" class="fb-btn" aria-pressed="false" data-value={o.value}>{o.label}</button>)}
+      </div>
+    </div>
+  ))}
+  <p class="sr-only" aria-live="polite" data-fb-status></p>
+  <p class="fb-empty muted" data-fb-empty hidden>Nothing matches those filters. Try All.</p>
+</div>
+<script>
+  import { track } from "../../lib/analytics";
+  document.querySelectorAll<HTMLElement>("[data-filterbar]").forEach((bar) => {
+    const groups = Array.from(bar.querySelectorAll<HTMLElement>("[data-fb-key]"));
+    const status = bar.querySelector<HTMLElement>("[data-fb-status]");
+    const one = bar.dataset.nounOne ?? "item";
+    const many = bar.dataset.nounMany ?? "items";
+    const lists = () => Array.from(document.querySelectorAll<HTMLElement>(bar.dataset.target ?? "[data-filter-list]"));
+    const state: Record<string, string> = {};
+    const params = new URLSearchParams(location.search);
+    groups.forEach((g) => {
+      const key = g.dataset.fbKey!;
+      const wanted = params.get(key);
+      const valid = Array.from(g.querySelectorAll<HTMLButtonElement>(".fb-btn")).some((b) => b.dataset.value === wanted);
+      state[key] = wanted && valid ? wanted : "all";
+    });
+    const apply = (announce: boolean) => {
+      groups.forEach((g) => g.querySelectorAll<HTMLButtonElement>(".fb-btn").forEach((b) => b.setAttribute("aria-pressed", b.dataset.value === state[g.dataset.fbKey!] ? "true" : "false")));
+      let count = 0;
+      lists().forEach((list) => {
+        Array.from(list.children).forEach((child) => {
+          const el = child as HTMLElement;
+          const item = el.matches("[data-filter-discipline],[data-filter-type],[data-filter-role],[data-filter-category]") ? el : el.querySelector<HTMLElement>("[data-filter-discipline],[data-filter-type],[data-filter-role],[data-filter-category]");
+          if (!item) return;
+          const ok = groups.every((g) => {
+            const v = state[g.dataset.fbKey!];
+            if (v === "all") return true;
+            const raw = item.getAttribute(g.dataset.fbAttr!) ?? "";
+            const vals = raw.split(/\s+/);
+            return vals.includes(v) || vals.includes("all");
+          });
+          el.hidden = !ok;
+          if (ok) count++;
+        });
+      });
+      const empty = bar.querySelector<HTMLElement>("[data-fb-empty]");
+      if (empty) empty.hidden = count > 0;
+      if (status && announce) status.textContent = `${count} ${count === 1 ? one : many}`;
+      const url = new URL(location.href);
+      groups.forEach((g) => { const k = g.dataset.fbKey!; if (state[k] === "all") url.searchParams.delete(k); else url.searchParams.set(k, state[k]); });
+      history.replaceState(null, "", url.toString());
+    };
+    groups.forEach((g) => {
+      g.addEventListener("click", (e) => {
+        const b = (e.target as HTMLElement).closest<HTMLButtonElement>(".fb-btn");
+        if (!b) return;
+        state[g.dataset.fbKey!] = b.dataset.value!;
+        apply(true);
+        track("filter_change", { page: location.pathname, filter: `${g.dataset.fbKey}=${b.dataset.value}` });
+      });
+    });
+    apply(false);
+  });
+</script>
+<style>
+  .filterbar { display: flex; flex-wrap: wrap; gap: 14px 32px; margin-bottom: 32px; }
+  .fb-group { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .fb-label { font-size: 0.8125rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-dust); min-width: 6.5rem; }
+  .fb-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+  .fb-btn { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--color-slate); background: transparent; color: var(--color-bone); font: inherit; font-weight: 500; font-size: 0.9375rem; cursor: pointer; transition: background var(--dur-ui) var(--ease), border-color var(--dur-ui) var(--ease), color var(--dur-ui) var(--ease); }
+  .fb-btn:hover { border-color: var(--color-dust); }
+  .fb-empty { flex-basis: 100%; }
+  .fb-btn[aria-pressed="true"] { background: var(--color-bone); color: var(--color-carbon); border-color: var(--color-bone); }
+</style>

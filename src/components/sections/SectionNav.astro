@@ -1,0 +1,45 @@
+---
+import Icon from "../ui/Icon.astro";
+import { BRAND } from "../../config/brand";
+const links = [
+  { href: "#app", label: "The app", id: "app" },
+  { href: "#coaching", label: "Coaching", id: "coaching" },
+  { href: "#labs", label: "Labs", id: "labs" },
+];
+---
+<nav class="section-nav" aria-label="On this page" data-section-nav>
+  <div class="wrap sn-row">
+    <ul role="list">
+      {links.map((l) => <li><a href={l.href} data-target={l.id}>{l.label}</a></li>)}
+      <li class="sn-div" aria-hidden="true"></li>
+      <li><a href="#medical" data-target="medical" class="sn-ext">{BRAND.program} <Icon name="arrow-up-right" size={15} /><span class="sr-only"> (medical guidance at Epoch Health System)</span><span class="sn-sub" aria-hidden="true">at Epoch Health System</span></a></li>
+    </ul>
+  </div>
+</nav>
+<script>
+  import { track } from "../../lib/analytics";
+  const nav = document.querySelector("[data-section-nav]");
+  if (nav) {
+    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>("a[data-target]"));
+    const seen = new Set<string>();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const id = (e.target as HTMLElement).id;
+        links.forEach((a) => a.dataset.target === id ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current"));
+        if (!seen.has(id)) { seen.add(id); track("section_view", { section: id }); }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    links.forEach((a) => { const s = document.getElementById(a.dataset.target!); if (s) io.observe(s); });
+  }
+</script>
+<style>
+  .section-nav { position: sticky; top: 0; z-index: 30; background: rgb(14 15 12 / 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-block: 1px solid var(--color-slate); }
+  .sn-row ul { display: flex; gap: 6px; align-items: center; overflow-x: auto; list-style: none; margin: 0; padding: 10px 0; scrollbar-width: none; }
+  .sn-row a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--color-slate); text-decoration: none; white-space: nowrap; font-weight: 500; font-size: 0.9375rem; }
+  .sn-row a:hover { border-color: var(--color-sky); }
+  .sn-row a[aria-current="true"] { background: var(--color-sky); color: var(--color-carbon); border-color: var(--color-sky); }
+  .sn-div { width: 1px; height: 26px; background: var(--color-dust); margin: 0 8px; flex: none; }
+  .sn-ext { background: var(--color-bone); color: var(--color-carbon); border-color: var(--color-bone) !important; }
+  .sn-sub { font-size: 0.8125rem; opacity: 0.75; font-weight: 400; }
+</style>

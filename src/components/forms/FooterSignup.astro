@@ -1,0 +1,28 @@
+---
+import { CONSENT_TEXT, MESSAGES } from "../../lib/form-fields";
+---
+<form class="footer-form" action="/api/forms" method="post" data-epoch-form="footer_signup" data-success={MESSAGES.footer_signup.success} data-error={MESSAGES.footer_signup.error} aria-labelledby="footer-signup-label">
+  <input type="hidden" name="form" value="footer_signup" />
+  <input type="hidden" name="site" value="epochcycling" />
+  <div class="hp" aria-hidden="true"><label for="fs-company">Company</label><input type="text" id="fs-company" name="company" tabindex="-1" autocomplete="off" /></div>
+  <p id="footer-signup-label" class="t-h3 uppercase">Get the drop.</p>
+  <p class="muted small">Kit drops, fuel drops, group rides near you. No spam.</p>
+  <div class="fs-row">
+    <div class="field grow" data-field="email">
+      <label for="fs-email" class="sr-only">Email address</label>
+      <input id="fs-email" class="input" type="email" name="email" placeholder="Email address" autocomplete="email" required aria-required="true" aria-describedby="fs-email-err" />
+      <p id="fs-email-err" class="field-error" data-error-for="email"></p>
+    </div>
+    <button type="submit" class="btn btn-primary" data-submit><span data-submit-label>Join</span></button>
+  </div>
+  <div class="field" data-field="marketing">
+    <label class="check small" for="fs-marketing"><input id="fs-marketing" type="checkbox" name="marketing" required aria-required="true" aria-describedby="fs-marketing-err" /><span>{CONSENT_TEXT.footer_signup}<span class="req" aria-hidden="true">*</span></span></label>
+    <p id="fs-marketing-err" class="field-error" data-error-for="marketing"></p>
+  </div>
+  <div class="form-status small" role="status" aria-live="polite" data-status></div>
+</form>
+<style>
+  .footer-form { display: grid; gap: 10px; }
+  .fs-row { display: flex; gap: 14px; align-items: flex-start; margin-top: 6px; }
+  .grow { flex: 1; }
+</style>

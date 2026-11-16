@@ -1,0 +1,8 @@
+---
+// Renders a config value, or a clearly marked placeholder when it isn't decided yet.
+// Every placeholder carries data-placeholder so `npm run build:strict` can block launch.
+interface Props { value?: string | number | null; label: string }
+const { value, label } = Astro.props;
+const has = value !== undefined && value !== null && String(value).trim() !== "";
+---
+{has ? <Fragment set:text={String(value)} /> : <span class="ph" data-placeholder title="Placeholder: the owner sets this before launch">[{label}]</span>}

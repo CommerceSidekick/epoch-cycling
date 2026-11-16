@@ -1,0 +1,79 @@
+/*
+  Epoch master design tokens.
+  Reconstructed from EPOCH_CYCLING spec 3.1 and 6.5 (the master tokens.css was not available
+  in this build environment). When the master file is available, replace this file with a
+  verbatim copy and diff it: the values below must match exactly.
+  Declared inside @theme so Tailwind v4 emits them as :root custom properties AND utilities
+  (bg-carbon, text-dawn, font-display ...).
+*/
+@theme {
+  --color-carbon: #0E0F0C;
+  --color-ridge: #1C1E1A;
+  --color-slate: #2E312B;
+  --color-bone: #F2EEE6;
+  --color-dust: #A8A291;
+  --color-dawn: #FF5A1F;
+  --color-ember: #B83A0A;
+  --color-signal: #D4FF3A;
+  --color-moss: #3D4A35;
+  --color-sky: #8FB8C9;
+
+  --font-display: "Archivo Variable", "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --text-display: clamp(3rem, 8vw, 7.5rem);
+  --text-display--line-height: 0.92;
+  --text-h2: clamp(2rem, 4.5vw, 3.75rem);
+  --text-h2--line-height: 1;
+  --text-h3: clamp(1.25rem, 2vw, 1.625rem);
+  --text-h3--line-height: 1.15;
+  --text-eyebrow: 0.8125rem;
+  --text-body-l: 1.25rem;
+  --text-body-l--line-height: 1.5;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+  --text-small: 0.875rem;
+
+  --spacing: 4px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-pill: 999px;
+
+  --ease-epoch: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
+
+:root {
+  --section-y: clamp(64px, 10vw, 128px);
+  --container: 1240px;
+  --measure: 68ch;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-ui: 180ms;
+  --dur-reveal: 560ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-ui: 0ms;
+    --dur-reveal: 0ms;
+  }
+}

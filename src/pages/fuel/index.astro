@@ -1,0 +1,164 @@
+---
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import PageHero from "../../components/sections/PageHero.astro";
+import SectionHead from "../../components/sections/SectionHead.astro";
+import Photo from "../../components/sections/Photo.astro";
+import Marquee from "../../components/sections/Marquee.astro";
+import Button from "../../components/ui/Button.astro";
+import LinkArrow from "../../components/ui/LinkArrow.astro";
+import Eyebrow from "../../components/ui/Eyebrow.astro";
+import Disclaimer from "../../components/ui/Disclaimer.astro";
+import PillarIcon from "../../components/brand/PillarIcon.astro";
+import ProductCard from "../../components/fuel/ProductCard.astro";
+import FuelStandard from "../../components/fuel/FuelStandard.astro";
+import RacingCallout from "../../components/fuel/RacingCallout.astro";
+import WaitlistForm from "../../components/forms/WaitlistForm.astro";
+import { getCollection } from "astro:content";
+const products = (await getCollection("products")).sort((a, b) => (a.data.line === "fuel" ? -1 : 1) - (b.data.line === "fuel" ? -1 : 1));
+const anyLive = products.some((p) => p.data.status === "live");
+const allLive = products.length > 0 && products.every((p) => p.data.status === "live");
+const strip = [
+  { k: "Before.", v: "Eat real food. Start hydrated.", n: "01" },
+  { k: "During.", v: "Over an hour? Start fueling in the first 30 minutes. Sip early. Sip often.", n: "02" },
+  { k: "After.", v: "Refill the tank. Carbs, protein, fluids.", n: "03" },
+];
+---
+<BaseLayout lcp="fuelTrail"
+  title="Fuel | Epoch Fuel and Epoch Salt | Epoch Cycling"
+  description="Ride fuel and electrolytes for long days in the dirt. Every ingredient on the label. Plus a no-nonsense guide to fueling any ride."
+  overlayHeader
+  breadcrumbs={[{ name: "Fuel", path: "/fuel" }]}
+>
+  <!-- 5.11.1 Hero -->
+  <PageHero img="fuelTrail" eyebrow="PILLAR 02 · FUEL" bar="var(--color-signal)" size="tall" position="center 62%" dust>
+    <h1 class="t-display-xl fuel-h1 reveal">Fuel <span class="t-outline-bone">the</span> <span class="text-signal">ride.</span></h1>
+    <p class="body-l fuel-sub reveal reveal-d1">Epoch Fuel for rides over an hour. Epoch Salt for the hot ones. And a guide that tells you how much, and when.</p>
+    <div class="fuel-ctas reveal reveal-d2">
+      {anyLive ? (
+        <Button href="#lineup" variant="signal" size="lg" arrow location="fuel-hero">Shop the lineup</Button>
+      ) : (
+        <Button href="/join?interest=fuel" variant="signal" size="lg" arrow location="fuel-hero">Get first access</Button>
+      )}
+      <LinkArrow href="/fuel/guide" accent="var(--color-signal)">How to fuel a ride</LinkArrow>
+    </div>
+    <div class="fuel-badge" aria-hidden="true">
+      <PillarIcon name="fuel" size={34} />
+      <span class="mono">NA · K · MG · CHO</span>
+    </div>
+  </PageHero>
+
+  <!-- 5.11.2 The lineup -->
+  <section id="lineup" class="section topo" aria-labelledby="lineup-title">
+    <div class="wrap">
+      <SectionHead eyebrow="EPOCH FUEL · EPOCH SALT" bar="var(--color-signal)" title="The lineup." id="lineup-title" />
+      <div class="lineup">
+        {products.map((p, i) => <ProductCard product={p} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5.11.3 Our standard -->
+  <section class="section standard-sec" aria-label="Our standard">
+    <div class="wrap">
+      <Eyebrow bar="var(--color-signal)" class="mb-5">OUR STANDARD</Eyebrow>
+      <FuelStandard />
+    </div>
+  </section>
+
+  <!-- 5.11.4 Short guide -->
+  <section class="guide-strip on-moss" aria-labelledby="strip-title">
+    <div class="gs-media photo duo" style="--duo: var(--color-moss)">
+      <Photo img="gravelMotion" sizes="100vw" widths={[640, 1024, 1600]} position="center 40%" decorative />
+    </div>
+    <div class="wrap gs-inner">
+      <div class="gs-head">
+        <Eyebrow bar="var(--color-signal)" class="text-bone">HOW TO FUEL A RIDE</Eyebrow>
+        <h2 id="strip-title" class="t-display reveal">Simple on purpose.</h2>
+      </div>
+      <ol class="gs-steps" role="list">
+        {strip.map((s, i) => (
+          <li class={`reveal reveal-d${i}`}>
+            <span class="gs-n" aria-hidden="true">{s.n}</span>
+            <p class="t-h3">{s.k}</p>
+            <p>{s.v}</p>
+          </li>
+        ))}
+      </ol>
+      <div><Button href="/fuel/guide" variant="signal" size="lg" arrow location="fuel-strip">Read the full guide</Button></div>
+    </div>
+  </section>
+
+  <!-- 5.11.5 + 5.11.6 -->
+  <section class="section" aria-label="What fuel can and can't do, and racing in a tested event">
+    <div class="wrap two-up">
+      <div class="cant reveal">
+        <h2 class="t-h3">What fuel can and can't do.</h2>
+        <p>Fuel gives you energy and replaces what you sweat. It won't replace training, sleep or a bike that fits. Anyone promising more than that is selling something.</p>
+      </div>
+      <RacingCallout />
+    </div>
+  </section>
+
+  <Marquee items={["CARBS FOR THE LONG CLIMB", "SALT FOR THE HOT DAY", "LABELS YOU CAN ACTUALLY READ", "SIP EARLY. SIP OFTEN."]} />
+
+  <!-- 5.11.7 Signup -->
+  {!allLive && (
+    <section id="signup" class="section topo" aria-labelledby="signup-title">
+      <div class="wrap signup-grid">
+        <div class="signup-copy">
+          <Eyebrow bar="var(--color-signal)">EARLY ACCESS</Eyebrow>
+          <h2 id="signup-title" class="t-h2 reveal">Be first in line.</h2>
+          <p class="body-l muted reveal reveal-d1">Fuel and Salt drop soon. Get early access and launch pricing.</p>
+          <div class="signup-photo photo reveal">
+            <Photo img="fuelCage" sizes="(min-width: 1024px) 40vw, 100vw" widths={[480, 800, 1200]} position="center 40%" />
+          </div>
+        </div>
+        <div class="signup-form card">
+          <WaitlistForm id="fuel-waitlist" interest="fuel" />
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 5.11.8 Inline disclaimer -->
+  <section class="disc-sec" aria-label="Disclaimer">
+    <div class="wrap"><Disclaimer variant="fda-full" class="measure" /></div>
+  </section>
+</BaseLayout>
+
+<style>
+  .fuel-h1 { max-width: 9ch; }
+  .fuel-sub { margin-top: 26px; max-width: 40ch; color: #ece7dc; }
+  .fuel-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 26px; margin-top: 34px; }
+  .fuel-badge { display: none; }
+  @media (min-width: 1200px) {
+    .fuel-badge { position: absolute; right: 48px; bottom: 170px; display: grid; justify-items: center; gap: 12px; padding: 22px 20px; border-radius: 50%; width: 170px; height: 170px; align-content: center; border: 2px solid var(--color-signal); color: var(--color-signal); background: rgb(14 15 12 / 0.55); backdrop-filter: blur(6px); transform: rotate(-8deg); }
+    .fuel-badge .mono { font-size: 0.8125rem; letter-spacing: 0.12em; text-align: center; }
+  }
+  .lineup { display: grid; gap: 18px; }
+  @media (min-width: 900px) { .lineup { grid-template-columns: 1fr 1fr; } }
+  .standard-sec { border-top: 1px solid var(--color-slate); }
+
+  .guide-strip { position: relative; isolation: isolate; overflow: hidden; }
+  .gs-media { position: absolute; inset: 0; z-index: -2; }
+  .gs-media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .guide-strip::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(61 74 53 / 0.96) 0%, rgb(61 74 53 / 0.82) 55%, rgb(61 74 53 / 0.55) 100%); }
+  .gs-inner { display: grid; gap: clamp(32px, 5vw, 56px); padding-block: clamp(80px, 11vw, 150px); }
+  .gs-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  @media (min-width: 900px) { .gs-steps { grid-template-columns: repeat(3, 1fr); } }
+  .gs-steps li { position: relative; display: grid; gap: 10px; align-content: start; padding: 28px 24px 24px; border-radius: var(--radius-md); background: rgb(14 15 12 / 0.62); border: 1px solid rgb(242 238 230 / 0.12); }
+  .gs-n { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 3.5rem; line-height: 0.85; color: transparent; -webkit-text-stroke: 1.5px var(--color-signal); }
+
+  .two-up { display: grid; gap: 18px; align-items: start; }
+  @media (min-width: 1024px) { .two-up { grid-template-columns: 1fr 1fr; } }
+  .cant { background: var(--color-ridge); color: var(--color-bone); border-radius: var(--radius-md); padding: clamp(22px, 3vw, 32px); display: grid; gap: 12px; border: 1px solid var(--color-slate); }
+
+  .signup-grid { display: grid; gap: 32px; align-items: start; }
+  @media (min-width: 1024px) { .signup-grid { grid-template-columns: 0.9fr 1.1fr; gap: 56px; } }
+  .signup-copy { display: grid; gap: 18px; }
+  .signup-photo { display: none; aspect-ratio: 4 / 3; border-radius: var(--radius-md); margin-top: 10px; }
+  @media (min-width: 1024px) { .signup-photo { display: block; } }
+  .signup-photo :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .signup-form { padding: clamp(22px, 3vw, 36px); }
+  .disc-sec { padding-block: 32px 56px; border-top: 1px solid var(--color-slate); }
+</style>

@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+import RiderCard from "./RiderCard.astro";
+import { SITE } from "../../config/site";
+interface Props { discipline?: "mtb" | "gravel" | "road"; featured?: boolean; limit?: number; role?: "staff" | "crew" }
+const { discipline, featured = false, limit, role = "crew" } = Astro.props;
+let riders = SITE.flags.showRiders
+  ? (await getCollection("riders")).filter((r) => r.data.consentOnFile && !r.data.placeholder)
+  : [];
+riders = riders.filter((r) => (role === "staff" ? r.data.role === "staff" : r.data.role !== "staff"));
+if (discipline) riders = riders.filter((r) => r.data.disciplines.includes(discipline));
+if (featured) riders = riders.filter((r) => r.data.featured);
+if (limit) riders = riders.slice(0, limit);
+---
+{riders.length > 0 ? (
+  <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4" data-filter-list>
+    {riders.map((r) => <RiderCard rider={r} />)}
+  </div>
+) : <slot name="empty" />}

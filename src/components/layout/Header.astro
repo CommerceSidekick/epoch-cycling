@@ -1,0 +1,170 @@
+---
+import Lockup from "../brand/Lockup.astro";
+import Icon from "../ui/Icon.astro";
+import Button from "../ui/Button.astro";
+import AnnouncementBar from "./AnnouncementBar.astro";
+import { NAV } from "../../config/nav";
+import { BRAND } from "../../config/brand";
+import { SITE } from "../../config/site";
+interface Props { overlay?: boolean }
+const { overlay = false } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isCurrent = (href: string) => {
+  const h = href.split("#")[0];
+  return h === path || (h !== "/" && path.startsWith(h + "/"));
+};
+---
+<div id="site-top" class="site-top" data-overlay={overlay ? "true" : "false"}>
+  {SITE.flags.showAnnouncement && <AnnouncementBar />}
+  <header class="site-header">
+    <div class="wrap-wide header-row">
+      <a href="/" class="header-logo" aria-label="Epoch Cycling home">
+        <Lockup variant="site" size="sm" />
+      </a>
+
+      <nav aria-label="Main" class="main-nav">
+        <ul class="nav-list">
+          {NAV.map((g) => (
+            <li class="nav-item" data-dropdown>
+              {g.href ? (
+                <span class="split">
+                  <a href={g.href} class="nav-link" aria-current={isCurrent(g.href) ? "page" : undefined}>{g.label}</a>
+                  <button type="button" class="nav-chev" aria-expanded="false" aria-controls={`dd-${g.id}`} data-label={g.label}>
+                    <span class="sr-only" data-sr>Show {g.label} menu</span>
+                    <Icon name="chevron-down" size={16} />
+                  </button>
+                </span>
+              ) : (
+                <button type="button" class="nav-link nav-chev nav-chev-full" aria-expanded="false" aria-controls={`dd-${g.id}`} data-label={g.label}>
+                  {g.label}
+                  <Icon name="chevron-down" size={16} />
+                </button>
+              )}
+              <div id={`dd-${g.id}`} class="dropdown" data-dd>
+                <ul>
+                  {g.items.map((it, i) => (
+                    <>
+                      {g.dividerBeforeLast && i === g.items.length - 1 && <li class="dd-divider" aria-hidden="true" />}
+                      <li>
+                        <a href={it.href} class={`dd-link ${it.external ? "dd-ext" : ""}`}>
+                          <span class="dd-label">
+                            {it.label}
+                            {it.soon && <span class="tag">SOON</span>}
+                            {it.external && <Icon name="arrow-up-right" size={16} />}
+                          </span>
+                          {it.sub && <span class="dd-sub">{it.sub}</span>}
+                        </a>
+                      </li>
+                    </>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))}
+          <li class="nav-item"><a href="/stories" class="nav-link" aria-current={isCurrent("/stories") ? "page" : undefined}>Stories</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="/optimize#app" class="nav-link get-app" data-cta="Get the app" data-cta-location="header">Get the app</a>
+        <Button href="/join" size="sm" class="join-btn" location="header"><span>Join<span class="hide-xs"> the club</span></span></Button>
+        <button type="button" class="menu-btn" aria-expanded="false" aria-controls="mobile-menu" data-menu-open>
+          <Icon name="menu" size={22} />
+          <span>Menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+</div>
+
+<div id="mobile-menu" class="mobile-sheet" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="wrap mobile-inner">
+    <div class="mobile-top">
+      <a href="/" aria-label="Epoch Cycling home"><Lockup variant="site" size="sm" /></a>
+      <button type="button" class="menu-btn" data-menu-close><Icon name="x" size={22} /><span>Close</span></button>
+    </div>
+    <nav aria-label="Mobile">
+      <ul class="m-big">
+        <li><a href="/ride">{BRAND.PILLAR_1_WORD}</a><span class="m-num">01</span></li>
+        <li><a href="/fuel">{BRAND.PILLAR_2_WORD}</a><span class="m-num">02</span></li>
+        <li>
+          <a href="/optimize">{BRAND.PILLAR_3_WORD}</a><span class="m-num">03</span>
+          <a href="/optimize/medical" class="m-ext">{BRAND.program} <Icon name="arrow-up-right" size={16} /> <span class="m-ext-sub">at Epoch Health System</span></a>
+        </li>
+      </ul>
+      <ul class="m-mid">
+        <li><a href="/mtb">MTB</a></li>
+        <li><a href="/gravel">Gravel <span class="tag">SOON</span></a></li>
+        <li><a href="/road">Road <span class="tag">SOON</span></a></li>
+      </ul>
+      <ul class="m-small">
+        <li><a href="/ride/events">Events</a></li>
+        <li><a href="/stories">Stories</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/faq">FAQ</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+      <div class="m-actions">
+        <Button href="/join" location="mobile-menu">Join the club</Button>
+        <Button href="/optimize#app" variant="outline" location="mobile-menu">Get the app</Button>
+      </div>
+      <p class="m-tag mono">{BRAND.tagline}</p>
+    </nav>
+  </div>
+</div>
+
+<style>
+  .site-top { position: fixed; inset: 0 0 auto 0; z-index: 50; transition: transform 320ms var(--ease); }
+  .site-top[data-hidden="true"] { transform: translateY(-100%); }
+  .site-header { transition: background 220ms var(--ease), backdrop-filter 220ms var(--ease), border-color 220ms var(--ease); border-bottom: 1px solid transparent; background: linear-gradient(180deg, rgb(14 15 12 / 0.75), rgb(14 15 12 / 0)); }
+  .site-top[data-overlay="false"] .site-header, .site-top[data-scrolled="true"] .site-header { background: rgb(14 15 12 / 0.94); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom-color: rgb(46 49 43 / 0.7); }
+  .header-row { height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .header-logo { display: inline-flex; color: var(--color-bone); flex: none; }
+  .main-nav { display: none; }
+  @media (min-width: 1024px) { .main-nav { display: block; } }
+  .nav-list { display: flex; align-items: center; gap: 2px; list-style: none; margin: 0; padding: 0; }
+  .nav-item { position: relative; }
+  .split { display: inline-flex; align-items: center; }
+  .nav-link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 12px; font-weight: 500; font-size: 0.9875rem; color: var(--color-bone); text-decoration: none; background: none; border: 0; cursor: pointer; border-radius: 4px; transition: color var(--dur-ui) var(--ease); }
+  .nav-link:hover { color: var(--color-dawn); }
+  .nav-link[aria-current="page"] { color: var(--color-bone); text-decoration: underline; text-decoration-color: var(--color-dawn); text-decoration-thickness: 2px; text-underline-offset: 8px; }
+  .nav-chev { display: inline-grid; place-content: center; min-width: 32px; min-height: 44px; margin-left: -8px; color: var(--color-dust); background: none; border: 0; cursor: pointer; }
+  .nav-chev-full { margin-left: 0; display: inline-flex; color: var(--color-bone); }
+  .nav-chev :global(svg) { transition: transform var(--dur-ui) var(--ease); }
+  .nav-chev[aria-expanded="true"] :global(svg) { transform: rotate(180deg); }
+  .dropdown { position: absolute; top: calc(100% + 4px); left: -8px; min-width: 260px; padding: 10px; background: var(--color-ridge); border: 1px solid var(--color-slate); border-radius: var(--radius-md); box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.8); visibility: hidden; opacity: 0; transform: translateY(6px); transition: opacity var(--dur-ui) var(--ease), transform var(--dur-ui) var(--ease), visibility 0s linear var(--dur-ui); }
+  .dropdown::before { content: ""; position: absolute; left: 0; right: 0; top: -10px; height: 10px; }
+  .nav-item[data-open] .dropdown { visibility: visible; opacity: 1; transform: none; transition-delay: 0s; }
+  @media (hover: hover) { .nav-item[data-dropdown]:hover .dropdown { visibility: visible; opacity: 1; transform: none; transition-delay: 0s; } }
+  .dropdown ul { list-style: none; margin: 0; padding: 0; }
+  .dd-link { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 8px; text-decoration: none; color: var(--color-bone); min-height: 44px; justify-content: center; }
+  .dd-link:hover { background: var(--color-slate); }
+  .dd-label { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+  .dd-sub { font-size: 0.8125rem; color: var(--color-dust); }
+  .dd-divider { height: 1px; background: var(--color-slate); margin: 8px 4px; }
+  .dd-ext .dd-label { color: var(--color-bone); }
+  .header-actions { display: flex; align-items: center; gap: 12px; }
+  .get-app { display: none; }
+  @media (min-width: 1024px) { .get-app { display: inline-flex; } }
+  .hide-xs { display: none; }
+  @media (min-width: 420px) { .hide-xs { display: inline; } }
+  .menu-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; background: none; border: 1px solid var(--color-slate); border-radius: 6px; color: var(--color-bone); font-weight: 600; cursor: pointer; font-size: 0.9375rem; }
+  @media (min-width: 1024px) { .header-actions .menu-btn { display: none; } }
+  .mobile-sheet { position: fixed; inset: 0; z-index: 90; background: var(--color-carbon); overflow-y: auto; }
+  .mobile-sheet::before { content: ""; position: absolute; inset: 0; background: url("/brand/topo.svg") center / 1200px auto; opacity: 0.08; pointer-events: none; }
+  .mobile-inner { position: relative; padding-bottom: 40px; }
+  .mobile-top { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+  .m-big, .m-mid, .m-small { list-style: none; margin: 0; padding: 0; }
+  .m-big { margin-top: 20px; }
+  .m-big li { position: relative; border-bottom: 1px solid var(--color-slate); padding: 10px 0; }
+  .m-big > li > a:first-child { font-family: var(--font-display); font-weight: 800; font-stretch: 125%; text-transform: uppercase; font-size: clamp(2.5rem, 12vw, 4rem); line-height: 1; text-decoration: none; display: block; }
+  .m-num { position: absolute; right: 0; top: 18px; font-family: var(--font-mono); color: var(--color-dawn); font-size: 0.8125rem; }
+  .m-ext { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; min-height: 44px; color: var(--color-bone); font-weight: 600; text-decoration: none; }
+  .m-ext-sub { font-weight: 400; color: var(--color-dust); font-size: 0.875rem; }
+  .m-mid { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 28px; }
+  .m-mid a { font-family: var(--font-display); font-weight: 800; font-stretch: 112%; font-size: 1.5rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+  .m-small { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; margin-top: 22px; }
+  .m-small a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-dust); text-decoration: none; font-size: 1.0625rem; }
+  .m-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .m-tag { margin-top: 36px; color: var(--color-dust); letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.8125rem; }
+</style>

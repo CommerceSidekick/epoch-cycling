@@ -1,0 +1,11 @@
+---
+// "Racing with a license?" (5.11.6). Body from the restricted-copy snippet, plus the honest certification line.
+import Callout from "../sections/Callout.astro";
+import CertificationLine from "../ui/CertificationLine.astro";
+import { snippetBlock } from "../../lib/snippets";
+const b = await snippetBlock("antidoping-short", "fuel");
+---
+<Callout title={b.title}>
+  <p>{b.body}</p>
+  <CertificationLine />
+</Callout>

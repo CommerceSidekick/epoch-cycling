@@ -1,0 +1,20 @@
+---
+interface Props { steps: { title: string; body: string }[]; class?: string; big?: boolean; accent?: string }
+const { steps, class: cls = "", big = false, accent = "var(--color-dawn)" } = Astro.props;
+---
+<ol class={`steps ${big ? "steps-big" : ""} ${cls}`} style={`--acc:${accent}`}>
+  {steps.map((s, i) => (
+    <li class={`step reveal reveal-d${Math.min(i, 3)}`}>
+      <span class="step-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+      <div><p class="t-h3 step-t">{s.title}</p><p class="muted mt-2" set:html={s.body} /></div>
+    </li>
+  ))}
+</ol>
+<style>
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; counter-reset: s; }
+  .step { display: grid; grid-template-columns: auto 1fr; gap: 20px; padding: 22px 0; border-top: 1px solid var(--color-slate); }
+  .step:last-child { border-bottom: 1px solid var(--color-slate); }
+  .step-n { font-family: var(--font-mono); font-weight: 500; color: var(--acc); font-size: 1rem; padding-top: 4px; min-width: 2.2em; }
+  .steps-big .step-n { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 0.9; padding: 0; color: transparent; -webkit-text-stroke: 1.5px var(--acc); }
+  .on-light .step { border-color: #ddd6c8; }
+</style>

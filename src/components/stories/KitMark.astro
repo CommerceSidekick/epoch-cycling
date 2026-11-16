@@ -1,0 +1,25 @@
+---
+// One kit mark with its name, for the kit story.
+import PillarIcon from "../brand/PillarIcon.astro";
+interface Props { name: "ride" | "fuel" | "optimize"; title: string; color?: string }
+const { name, title, color = "var(--color-bone)" } = Astro.props;
+---
+<div class="kit-mark not-prose" style={`--km:${color}`}>
+  <div class="km-icons" aria-hidden="true">
+    <span class="km-tile"><PillarIcon name={name} variant="outline" size={56} /></span>
+    <span class="km-tile km-solid"><PillarIcon name={name} variant="solid" size={56} /></span>
+  </div>
+  <div class="km-copy">
+    <p class="mono km-title">{title}</p>
+    <div class="km-body"><slot /></div>
+  </div>
+</div>
+<style>
+  .kit-mark { display: grid; gap: 18px; align-items: center; margin: 1.6em 0; padding: 22px; border-radius: var(--radius-md); background: var(--color-ridge); border: 1px solid var(--color-slate); border-left: 4px solid var(--km); }
+  @media (min-width: 700px) { .kit-mark { grid-template-columns: auto 1fr; gap: 28px; } }
+  .km-icons { display: flex; gap: 10px; }
+  .km-tile { display: grid; place-content: center; width: 84px; height: 84px; border-radius: 12px; background: var(--color-carbon); color: var(--km); border: 1px solid var(--color-slate); }
+  .km-solid { background: var(--km); color: var(--color-carbon); }
+  .km-title { color: var(--km); letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.875rem; }
+  .km-body :global(p) { margin-top: 6px; }
+</style>

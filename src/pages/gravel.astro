@@ -1,0 +1,30 @@
+---
+import ComingSoonDiscipline from "../components/sections/ComingSoonDiscipline.astro";
+---
+<ComingSoonDiscipline
+  discipline="gravel"
+  metaTitle="Epoch Gravel | Coming Soon | Epoch Cycling"
+  metaDescription="Epoch Gravel is coming. Long dirt roads, big days, group rides and a gravel kit. Get on the list for the launch."
+  path="/gravel"
+  crumb="Epoch Gravel"
+  eyebrow="EPOCH GRAVEL · COMING SOON"
+  h1={["Long roads.", "Loose dirt.", "Soon."]}
+  sub="Gravel is next for the Riders Club. Group rides, a gravel kit with real pockets, and fuel for five-hour days."
+  notifyHref="/join?interest=gravel"
+  heroImg="gravelDescentWide"
+  heroPos="center 62%"
+  sideImgs={["gravelRoad", "gravelMotion"]}
+  sidePos={["center", "center 40%"]}
+  coming={[
+    { t: "Gravel group rides.", b: "Big loops, coffee stops, no one left behind." },
+    { t: "The gravel kit.", b: "Semi-race fit, three pockets plus a zip, EPOCH on the chest, GRAVEL on the sleeve." },
+    { t: "Race deal for gravel.", b: "Gravel racers can apply now and get first look when spots open." },
+  ]}
+  untilBody="The club, the fuel and the app are open to gravel riders today."
+  links={[
+    { label: "Join the club", href: "/join?interest=gravel" },
+    { label: "Fueling a long ride", href: "/fuel/guide#long" },
+    { label: "Get the app", href: "/optimize#app" },
+    { label: "Apply to race", href: "/ride/apply?type=racer" },
+  ]}
+/>

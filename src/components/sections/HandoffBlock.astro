@@ -1,0 +1,80 @@
+---
+// The ONLY place (with /optimize/medical, FAQ 16, nav and footer) that renders BRAND.program.
+// Body text comes from src/content/snippets. Bone background, calm spacing, no product imagery.
+import Snippet from "./Snippet.astro";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Icon from "../ui/Icon.astro";
+import Ph from "../ui/Ph.astro";
+import { snippetBlocks } from "../../lib/snippets";
+import { BRAND } from "../../config/brand";
+import { SITE } from "../../config/site";
+const services = await snippetBlocks("total-health-services");
+const steps = await snippetBlocks("epochedge");
+---
+<section id="medical" class="handoff on-light" aria-labelledby="medical-title" data-section="medical">
+  <div class="wrap handoff-inner">
+    <div class="ho-head">
+      <Eyebrow bar="var(--color-ember)">MEDICALLY GUIDED · AT EPOCH HEALTH SYSTEM</Eyebrow>
+      <h2 id="medical-title" class="t-h2">Want a medically guided plan?</h2>
+      <Snippet id="handoff" class="body-l ho-body" />
+      {SITE.flags.showJason && (
+        <p>The medically guided track is led by Jason <Ph value={BRAND.cmo.surname} label="surname" />, <Ph value={BRAND.cmo.credentials} label="credentials" />.</p>
+      )}
+    </div>
+
+    <div class="ho-services">
+      <p class="eyebrow no-bar">{BRAND.program}: three ways in</p>
+      <ul class="ho-grid" role="list">
+        {services.map((s, i) => (
+          <li class={`ho-card ${i === 2 ? "ho-edge" : ""}`}>
+            <p class="mono small ho-label">{s.label}</p>
+            <h3 class="t-h3">{s.title}</h3>
+            <p>{s.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="ho-edgebox" id="epochedge" aria-labelledby="edge-title">
+      <div class="ho-edge-copy">
+        <p class="eyebrow">{BRAND.services.edge} · How it works</p>
+        <h3 id="edge-title" class="t-h2 ho-edge-title">{BRAND.services.edge}. Performance medicine, by the book.</h3>
+        <Snippet id="epochedge" />
+      </div>
+      <ol class="ho-steps" role="list">
+        {steps.map((s) => (
+          <li><span class="mono ho-step-n">{s.label}</span><div><p class="t-h4">{s.title}</p><p class="small ho-step-b">{s.body}</p></div></li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="ho-cta">
+      <a href="/optimize/medical" class="btn btn-dark btn-lg" data-cta="Explore Epoch Total Health" data-cta-location="optimize-handoff">Explore {BRAND.program} <Icon name="arrow-up-right" size={18} class="arr" /></a>
+      <p class="small">You'll leave Epoch Cycling for epochhealthsystem.com.</p>
+    </div>
+    <Snippet id="separation-line" class="fine ho-sep" />
+  </div>
+</section>
+<style>
+  .handoff { padding-block: clamp(64px, 9vw, 120px); }
+  .handoff-inner { display: grid; gap: clamp(40px, 6vw, 72px); }
+  .ho-head { display: grid; gap: 20px; max-width: 860px; }
+  .ho-body :global(p) { color: #26271f; }
+  .ho-grid { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 14px; }
+  @media (min-width: 900px) { .ho-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .ho-card { background: #fbf9f4; border: 1px solid #ddd6c8; border-radius: var(--radius-md); padding: 26px; display: grid; gap: 10px; align-content: start; }
+  .ho-label { color: var(--color-ember); letter-spacing: 0.1em; }
+  .ho-edge { background: var(--color-carbon); color: var(--color-bone); border-color: var(--color-carbon); }
+  .ho-edge .ho-label { color: var(--color-signal); }
+  .ho-edgebox { display: grid; gap: 36px; padding: clamp(24px, 4vw, 48px); border: 1px solid #ddd6c8; border-radius: var(--radius-md); background: #fbf9f4; }
+  @media (min-width: 1024px) { .ho-edgebox { grid-template-columns: 1.05fr 1fr; } }
+  .ho-edge-copy { display: grid; gap: 18px; align-content: start; }
+  .ho-edge-title { font-size: clamp(1.75rem, 3.4vw, 2.75rem); }
+  .ho-edge-copy :global(p) { color: #26271f; }
+  .ho-steps { list-style: none; padding: 0; margin: 0; display: grid; }
+  .ho-steps li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; padding: 16px 0; border-top: 1px solid #ddd6c8; }
+  .ho-step-n { color: var(--color-ember); padding-top: 3px; }
+  .ho-step-b { color: #3b3c33; margin-top: 4px; }
+  .ho-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 26px; }
+  .ho-sep { margin-top: -24px; }
+</style>

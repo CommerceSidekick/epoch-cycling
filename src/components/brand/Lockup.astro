@@ -1,0 +1,38 @@
+---
+// Lockups (3.5). variant: site (EPOCH / CYCLING), club (EPOCH / RIDERS CLUB), mtb|gravel|road, stacked (owner's logo layout)
+import Mark from "./Mark.astro";
+import Wordmark from "./Wordmark.astro";
+import { BRAND } from "../../config/brand";
+type V = "site" | "club" | "mtb" | "gravel" | "road" | "stacked";
+interface Props { variant?: V; class?: string; size?: "sm" | "md" | "lg" }
+const { variant = "site", class: cls = "", size = "md" } = Astro.props;
+const sub: Record<V, string> = {
+  site: BRAND.lockupSub,
+  club: "RIDERS CLUB",
+  mtb: "MTB",
+  gravel: "GRAVEL",
+  road: "ROAD",
+  stacked: "",
+};
+const discColor: Partial<Record<V, string>> = { mtb: "var(--color-dawn)", gravel: "var(--color-grit)", road: "var(--color-velo)" };
+const label = variant === "stacked" ? BRAND.wordmark : `${BRAND.wordmark} ${sub[variant]}`;
+const w = { sm: 104, md: 128, lg: 220 }[size];
+---
+{variant === "stacked" ? (
+  <span class={`inline-flex flex-col items-center gap-[0.9em] ${cls}`} role="img" aria-label={label}>
+    <Mark class="w-[62%] h-auto" />
+    <Wordmark class="w-full h-auto" />
+  </span>
+) : (
+  <span class={`lockup inline-flex items-center gap-3 ${cls}`} role="img" aria-label={label}>
+    <Mark class="h-auto shrink-0" style={`width:${Math.round(w * 0.36)}px`} />
+    <span class="flex flex-col gap-[5px]" style={`width:${w}px`}>
+      <Wordmark class="w-full h-auto" />
+      {discColor[variant] ? (
+        <span class="lockup-sub font-display font-black uppercase leading-none" style={`color:${discColor[variant]};font-stretch:125%;font-size:${Math.round(w * 0.17)}px;letter-spacing:0.18em`}>{sub[variant]}</span>
+      ) : (
+        <span class="lockup-sub mono uppercase leading-none" style={`font-size:${Math.max(9, Math.round(w * 0.095))}px;letter-spacing:0.3em;margin-right:-0.3em;text-align:justify;text-align-last:justify`}>{sub[variant]}</span>
+      )}
+    </span>
+  </span>
+)}

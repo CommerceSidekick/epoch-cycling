@@ -1,0 +1,115 @@
+---
+import Lockup from "../brand/Lockup.astro";
+import PillarIcon from "../brand/PillarIcon.astro";
+import Icon from "../ui/Icon.astro";
+import Ph from "../ui/Ph.astro";
+import ExternalLink from "../ui/ExternalLink.astro";
+import FooterSignup from "../forms/FooterSignup.astro";
+import { FOOTER_COLS } from "../../config/nav";
+import { SITE } from "../../config/site";
+import { BRAND } from "../../config/brand";
+interface Props { hideSignup?: boolean }
+const { hideSignup = false } = Astro.props;
+const socials = [
+  { key: "instagram", label: "Instagram", url: SITE.social.instagram },
+  { key: "tiktok", label: "TikTok", url: SITE.social.tiktok },
+  { key: "youtube", label: "YouTube", url: SITE.social.youtube },
+  { key: "strava", label: "Strava club", url: SITE.social.strava },
+].filter((s) => s.url) as { key: "instagram" | "tiktok" | "youtube" | "strava"; label: string; url: string }[];
+---
+<footer class="site-footer topo" aria-labelledby="footer-heading">
+  <h2 id="footer-heading" class="sr-only">Site footer</h2>
+  <div class="footer-giant" aria-hidden="true">
+    <span>RIDE.</span><span class="t-outline-bone">FUEL.</span><span>OPTIMIZE.</span>
+  </div>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" aria-label="Epoch Cycling home" class="inline-flex text-bone"><Lockup variant="site" size="md" /></a>
+        <p class="footer-tag t-h3">{BRAND.tagline}</p>
+        <p class="muted">{BRAND.promise}</p>
+        <div class="footer-icons" aria-hidden="true">
+          <PillarIcon name="ride" size={28} class="text-dawn" />
+          <PillarIcon name="fuel" size={28} class="text-signal" />
+          <PillarIcon name="optimize" size={28} class="text-sky" />
+        </div>
+      </div>
+      {!hideSignup && (
+        <div class="footer-signup">
+          <FooterSignup />
+        </div>
+      )}
+    </div>
+
+    <div class="footer-cols">
+      {FOOTER_COLS.map((col) => (
+        <nav aria-label={`${col.title} links`}>
+          <h3 class="eyebrow no-bar footer-col-title">{col.title}</h3>
+          <ul>
+            {col.links.map((l) => (
+              <li>
+                <a href={l.href}>
+                  {l.label}
+                  {l.soon && <span class="tag">SOON</span>}
+                  {l.external && <span aria-hidden="true"> ↗</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))}
+    </div>
+
+    <div class="footer-family">
+      <p>Part of {BRAND.family}. <ExternalLink href="https://epochhealthsystem.com/" campaign="footer" class="link">Visit epochhealthsystem.com</ExternalLink></p>
+      {socials.length > 0 && (
+        <ul class="footer-social">
+          {socials.map((s) => (
+            <li><a href={s.url} aria-label={s.label} target="_blank" rel="noopener"><Icon name={s.key} size={22} /></a></li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+    <div class="footer-disclaimer fine">
+      <p>Content on this site is general information, not medical advice. Talk to a qualified clinician before you start a new training, nutrition or supplement program. *These statements have not been evaluated by the Food and Drug Administration. Epoch products are not intended to diagnose, treat, cure, or prevent any disease. Any medical service offered through Epoch Health System is provided by independent licensed clinicians, only after an evaluation and only where permitted. Cycling has risks. Ride within your limits and wear a helmet. Results vary.</p>
+    </div>
+
+    <div class="footer-legal">
+      <p>© 2026 <Ph value={SITE.legalEntity} label="legal entity name" />. Epoch Cycling is part of Epoch Health System.</p>
+      <ul>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/terms">Terms</a></li>
+        <li><a href="/disclaimers">Disclaimers</a></li>
+        <li><a href="/riders-club-terms">Riders Club terms</a></li>
+        <li><a href="/accessibility">Accessibility</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--color-carbon); border-top: 1px solid var(--color-slate); padding-bottom: 32px; overflow: hidden; }
+  .footer-giant { display: flex; gap: 0.3em; white-space: nowrap; font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: clamp(3.5rem, 12.5vw, 12rem); line-height: 0.85; letter-spacing: -0.02em; color: var(--color-ridge); padding: 40px 0 0; transform: translateX(-1%); }
+  .footer-giant span:first-child { color: color-mix(in srgb, var(--color-dawn) 22%, var(--color-carbon)); }
+  .footer-giant .t-outline-bone { -webkit-text-stroke: 1.5px var(--color-slate); }
+  .footer-top { display: grid; gap: 40px; padding: 48px 0 40px; border-bottom: 1px solid var(--color-slate); }
+  @media (min-width: 900px) { .footer-top { grid-template-columns: 1.1fr 1fr; align-items: end; } }
+  .footer-tag { margin-top: 20px; text-transform: uppercase; }
+  .footer-icons { display: flex; gap: 18px; margin-top: 18px; }
+  .footer-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 24px; padding: 40px 0; border-bottom: 1px solid var(--color-slate); }
+  @media (min-width: 768px) { .footer-cols { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+  .footer-col-title { margin-bottom: 12px; }
+  .footer-cols ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 2px; }
+  .footer-cols a { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; color: var(--color-bone); text-decoration: none; font-size: 0.975rem; }
+  .footer-cols a:hover { color: var(--color-dawn); }
+  .footer-family { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 24px 0; color: var(--color-dust); font-size: 0.9375rem; }
+  .footer-social { display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; }
+  .footer-social a { display: grid; place-content: center; width: 44px; height: 44px; border: 1px solid var(--color-slate); border-radius: 50%; color: var(--color-bone); }
+  .footer-disclaimer { max-width: 110ch; padding-bottom: 24px; }
+  .footer-legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; padding-top: 20px; border-top: 1px solid var(--color-slate); color: var(--color-dust); font-size: 0.875rem; }
+  .footer-legal ul { display: flex; flex-wrap: wrap; gap: 4px 18px; list-style: none; margin: 0; padding: 0; }
+  .footer-legal a { color: var(--color-dust); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
+  .footer-legal a:hover { color: var(--color-bone); }
+</style>

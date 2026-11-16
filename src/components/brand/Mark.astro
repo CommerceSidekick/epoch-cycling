@@ -1,0 +1,8 @@
+---
+import { MARK_PATHS, MARK_VIEWBOX } from "../../lib/brand-geometry.mjs";
+interface Props { class?: string; title?: string; color?: string; style?: string }
+const { class: cls = "", title, color = "currentColor", style } = Astro.props;
+---
+<svg viewBox={MARK_VIEWBOX} class={cls} style={style} fill={color} role={title ? "img" : undefined} aria-label={title} aria-hidden={title ? undefined : "true"} focusable="false">
+  {MARK_PATHS.map((d) => <path d={d} />)}
+</svg>

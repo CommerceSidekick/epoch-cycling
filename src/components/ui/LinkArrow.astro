@@ -1,0 +1,6 @@
+---
+import Icon from "./Icon.astro";
+interface Props { href: string; external?: boolean; class?: string; accent?: string; [k: string]: any }
+const { href, external = false, class: cls = "", accent, ...rest } = Astro.props;
+---
+<a href={href} class={`link-arrow ${cls}`} style={accent ? `--link-accent:${accent}` : undefined} {...rest}><span><slot /></span><Icon name={external ? "arrow-up-right" : "arrow-right"} size={18} class="arr" /></a>

@@ -1,0 +1,13 @@
+---
+// Decorative ride profile that draws itself on scroll (static under reduced motion).
+interface Props { class?: string; color?: string }
+const { class: cls = "", color = "var(--color-dawn)" } = Astro.props;
+---
+<div class={`draw ${cls}`} aria-hidden="true">
+  <svg viewBox="0 0 1200 220" preserveAspectRatio="none" class="w-full h-full">
+    <defs><linearGradient id="ep-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color={color} stop-opacity=".22" /><stop offset="1" stop-color={color} stop-opacity="0" /></linearGradient></defs>
+    <path d="M0 200 L80 180 L130 190 L210 140 L260 156 L340 96 L390 118 L470 70 L520 88 L610 40 L660 62 L740 30 L790 52 L880 18 L930 44 L1010 74 L1080 60 L1200 120 V220 H0Z" fill="url(#ep-fill)" />
+    <path class="profile" d="M0 200 L80 180 L130 190 L210 140 L260 156 L340 96 L390 118 L470 70 L520 88 L610 40 L660 62 L740 30 L790 52 L880 18 L930 44 L1010 74 L1080 60 L1200 120" fill="none" stroke={color} stroke-width="3" vector-effect="non-scaling-stroke" />
+    <circle cx="880" cy="18" r="6" fill={color} />
+  </svg>
+</div>

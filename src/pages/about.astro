@@ -1,0 +1,103 @@
+---
+import BaseLayout from "../components/layout/BaseLayout.astro";
+import PageHero from "../components/sections/PageHero.astro";
+import CtaBand from "../components/sections/CtaBand.astro";
+import RiderGrid from "../components/sections/RiderGrid.astro";
+import Button from "../components/ui/Button.astro";
+import Eyebrow from "../components/ui/Eyebrow.astro";
+import Snippet from "../components/sections/Snippet.astro";
+import ExternalLink from "../components/ui/ExternalLink.astro";
+import PillarIcon from "../components/brand/PillarIcon.astro";
+import { SITE } from "../config/site";
+import { BRAND } from "../config/brand";
+const beliefs = [
+  { t: "Show up over show off.", b: "The club backs riders who come to the ride." },
+  { t: "Everyone gets a regroup.", b: "Every ride has a sweep. Nobody's left at the junction." },
+  { t: "Labels you can read.", b: "If it's in the bottle, it's on the label." },
+  { t: "Race clean.", b: "We fuel with food and electrolytes. The club never asks for anything else." },
+];
+---
+<BaseLayout lcp="crewRegroup"
+  title="About | Started at a Trailhead | Epoch Cycling"
+  description="Epoch Cycling started with a few friends at a trailhead. Meet the riding tribe of Epoch Health System, mountain bike first."
+  breadcrumbs={[{ name: "About", path: "/about" }]}
+  overlayHeader
+>
+  <PageHero img="crewRegroup" eyebrow="ABOUT EPOCH CYCLING" size="tall" position="center 40%">
+    <h1 class="t-display-xl reveal">Started at a <span class="text-dawn">trailhead.</span></h1>
+    <p class="body-l about-sub reveal reveal-d1">Epoch Cycling started the way most good rides do. A few friends, a trailhead, too early in the morning. We wanted a crew, a kit worth wearing, and fuel that works, without the fluff. So we're building it. Mountain bike first.</p>
+    <p class="fine reveal reveal-d2"><span class="ph" data-placeholder>[owner confirms this origin line and supplies the founding crew photo]</span></p>
+  </PageHero>
+
+  <section class="section why topo" aria-labelledby="why-title">
+    <div class="wrap why-inner">
+      <h2 id="why-title" class="t-h2 reveal">An epoch is a stretch of time <span class="t-outline-bone">that matters.</span></h2>
+      <p class="body-l why-body reveal reveal-d1">The season it clicked. The year you finally cleaned that climb. The race you came back for. Epoch is built for that stretch.</p>
+      <p class="why-sig reveal reveal-d2">Now is your time.</p>
+    </div>
+  </section>
+
+  <section class="section on-ridge" aria-labelledby="believe-title">
+    <div class="wrap">
+      <Eyebrow>WHAT WE BELIEVE</Eyebrow>
+      <h2 id="believe-title" class="t-h2 mt-5 mb-12 reveal">The rules we ride by.</h2>
+      <ul class="believe" role="list">
+        {beliefs.map((x, i) => (
+          <li class={`reveal reveal-d${i}`}>
+            <span class="race-number text-dawn">{String(i + 1).padStart(2, "0")}</span>
+            <p class="t-h3">{x.t}</p>
+            <p class="muted">{x.b}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="family-title">
+    <div class="wrap family">
+      <div class="grid gap-5">
+        <Eyebrow>THE FAMILY</Eyebrow>
+        <h2 id="family-title" class="t-h2 reveal">Part of Epoch Health System.</h2>
+        <p class="body-l muted measure">Epoch Cycling is the riding side of Epoch Health System, the company behind the Epoch app, Epoch Fuel and Salt, and {BRAND.program}. Running and triathlon get their own sites later. Cycling lives here.</p>
+        {SITE.flags.showJason && (
+          <Snippet id="jason-about" class="measure" />
+        )}
+        <p><ExternalLink href="https://epochhealthsystem.com/about#team" campaign="about_family" class="link-arrow">Meet the Epoch Health System team</ExternalLink></p>
+      </div>
+      <div class="family-art" aria-hidden="true">
+        <div class="fa-row"><PillarIcon name="ride" size={64} class="text-dawn" /><span>Ride</span></div>
+        <div class="fa-row"><PillarIcon name="fuel" size={64} class="text-signal" /><span>Fuel</span></div>
+        <div class="fa-row"><PillarIcon name="optimize" size={64} class="text-sky" /><span>Optimize</span></div>
+      </div>
+    </div>
+  </section>
+
+  {SITE.flags.showRiders && (
+    <section class="section" aria-labelledby="people-title">
+      <div class="wrap">
+        <h2 id="people-title" class="t-h2 mb-10">Who's behind it.</h2>
+        <RiderGrid role="staff" />
+      </div>
+    </section>
+  )}
+
+  <CtaBand title="Come ride with us." img="crewSilhouette" position="center 30%">
+    <Button href="/join" size="lg" arrow location="about-cta">Join the club</Button>
+    <Button href="/ride/events" variant="outline" size="lg" location="about-cta">Find a ride</Button>
+  </CtaBand>
+</BaseLayout>
+<style>
+  .about-sub { margin-top: 26px; max-width: 52ch; color: #e7e2d6; }
+  .why-inner { display: grid; gap: 28px; justify-items: center; text-align: center; padding-block: clamp(40px, 6vw, 80px); }
+  .why .t-h2 { font-size: clamp(2.25rem, 6vw, 5.5rem); max-width: 16ch; }
+  .why-body { max-width: 44ch; color: #ddd8cc; }
+  .why-sig { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; color: var(--color-dawn); font-size: clamp(1.5rem, 3vw, 2.25rem); }
+  .believe { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+  @media (min-width: 768px) { .believe { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .believe { grid-template-columns: repeat(4, 1fr); } }
+  .believe li { display: grid; gap: 10px; align-content: start; padding: 28px; border: 1px solid var(--color-slate); border-radius: var(--radius-md); background: var(--color-carbon); }
+  .family { display: grid; gap: 48px; align-items: center; }
+  @media (min-width: 1024px) { .family { grid-template-columns: 1.3fr 0.7fr; } }
+  .family-art { display: grid; gap: 18px; }
+  .fa-row { display: flex; align-items: center; gap: 22px; font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1; padding: 18px 0; border-bottom: 1px solid var(--color-slate); }
+</style>

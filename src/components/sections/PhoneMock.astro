@@ -1,0 +1,67 @@
+---
+// Illustrative app screen built in HTML (replace with a real screenshot, L12). Shows only features flagged live.
+import { SITE } from "../../config/site";
+import PillarIcon from "../brand/PillarIcon.astro";
+interface Props { class?: string; variant?: "dashboard" | "coach" }
+const { class: cls = "", variant = "dashboard" } = Astro.props;
+const f = SITE.appFeatures;
+---
+<figure class={`phone-wrap ${cls}`}>
+  <div class="phone" aria-hidden="true">
+    <div class="phone-notch"></div>
+    {variant === "dashboard" ? (
+      <div class="screen">
+        <div class="scr-top"><span class="mono">TODAY</span><PillarIcon name="optimize" size={18} class="text-sky" /></div>
+        <p class="scr-h">Good to go hard.</p>
+        {f.trainingLoad.live && (
+          <div class="scr-card">
+            <div class="scr-row"><span class="mono scr-k">TRAINING LOAD</span><span class="mono scr-tag">BUILDING</span></div>
+            <svg viewBox="0 0 200 50" class="scr-chart"><polyline points="0,40 20,36 40,38 60,30 80,32 100,24 120,26 140,18 160,20 180,12 200,14" fill="none" stroke="var(--color-sky)" stroke-width="2.5" /><polyline points="0,44 200,30" fill="none" stroke="var(--color-dust)" stroke-dasharray="3 4" stroke-width="1" /></svg>
+          </div>
+        )}
+        {f.recovery.live && (
+          <div class="scr-grid">
+            <div class="scr-card"><span class="mono scr-k">SLEEP</span><span class="scr-v">7h 42m</span></div>
+            <div class="scr-card"><span class="mono scr-k">HRV</span><span class="scr-v">68 ms</span></div>
+            <div class="scr-card"><span class="mono scr-k">RESTING HR</span><span class="scr-v">49 bpm</span></div>
+            <div class="scr-card"><span class="mono scr-k">LAST RIDE</span><span class="scr-v">2h 10m</span></div>
+          </div>
+        )}
+        {f.rideData.live && (
+          <div class="scr-card scr-ride">
+            <span class="mono scr-k">RIDE · DAWN LAPS</span>
+            <svg viewBox="0 0 200 40" class="scr-chart"><path d="M0 36 L22 30 L34 33 L58 18 L72 24 L96 10 L112 16 L140 6 L160 20 L184 14 L200 30" fill="none" stroke="var(--color-dawn)" stroke-width="2.5" /></svg>
+          </div>
+        )}
+      </div>
+    ) : (
+      <div class="screen">
+        <div class="scr-top"><span class="mono">EPOCH COACH</span><PillarIcon name="optimize" size={18} class="text-sky" /></div>
+        <div class="bubble me">Rough week. Two rides missed. Race is Saturday.</div>
+        <div class="bubble them">No stress. Skip the intervals. Tuesday: 60 min easy with 3 short openers. Thursday: rest. Friday: 30 min spin. Your sleep's been short, so bed by 10.</div>
+        <div class="bubble me">Fuel for a 2 hour race?</div>
+        <div class="bubble them">Aim for 30 to 60 g of carbs an hour, start in the first 30 minutes. Practice it Tuesday.</div>
+      </div>
+    )}
+  </div>
+  <figcaption class="fine phone-cap">Illustration of the app. Real screens at launch.</figcaption>
+</figure>
+<style>
+  .phone-wrap { display: grid; justify-items: center; gap: 12px; }
+  .phone { position: relative; width: min(300px, 78vw); aspect-ratio: 9 / 19; border-radius: 44px; padding: 12px; background: linear-gradient(145deg, #2a2c27, #111210); box-shadow: 0 0 0 1px #3a3d36, 0 40px 80px -30px rgb(0 0 0 / 0.9), 0 0 120px -40px color-mix(in srgb, var(--color-sky) 50%, transparent); transform: rotate(-3deg); }
+  .phone-notch { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 90px; height: 24px; border-radius: 20px; background: #050505; z-index: 2; }
+  .screen { height: 100%; border-radius: 34px; background: var(--color-carbon); padding: 52px 16px 16px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; font-size: 0.8125rem; }
+  .scr-top { display: flex; justify-content: space-between; align-items: center; color: var(--color-dust); letter-spacing: 0.14em; font-size: 0.8125rem; }
+  .scr-h { font-family: var(--font-display); font-weight: 900; font-stretch: 120%; text-transform: uppercase; font-size: 1.35rem; line-height: 1; }
+  .scr-card { background: var(--color-ridge); border: 1px solid var(--color-slate); border-radius: 14px; padding: 10px 12px; display: grid; gap: 4px; }
+  .scr-row { display: flex; justify-content: space-between; }
+  .scr-k { font-size: 0.8125rem; color: var(--color-dust); letter-spacing: 0.06em; }
+  .scr-tag { font-size: 0.8125rem; color: var(--color-carbon); background: var(--color-sky); padding: 1px 6px; border-radius: 3px; }
+  .scr-v { font-family: var(--font-mono); font-size: 1.05rem; color: var(--color-bone); }
+  .scr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .scr-chart { width: 100%; height: auto; }
+  .bubble { padding: 10px 12px; border-radius: 14px; max-width: 88%; line-height: 1.4; font-size: 0.8125rem; }
+  .bubble.me { background: var(--color-sky); color: var(--color-carbon); align-self: flex-end; border-bottom-right-radius: 4px; }
+  .bubble.them { background: var(--color-ridge); border: 1px solid var(--color-slate); border-bottom-left-radius: 4px; }
+  .phone-cap { text-align: center; }
+</style>

@@ -1,0 +1,15 @@
+---
+import Eyebrow from "../ui/Eyebrow.astro";
+interface Props { eyebrow?: string; title: string; id?: string; intro?: string; class?: string; center?: boolean; bar?: string; as?: "h2" | "h3" }
+const { eyebrow, title, id, intro, class: cls = "", center = false, bar, as = "h2" } = Astro.props;
+const Tag = as;
+---
+<div class={`section-head reveal ${center ? "text-center mx-auto items-center" : ""} ${cls}`}>
+  {eyebrow && <Eyebrow bar={bar}>{eyebrow}</Eyebrow>}
+  <Tag id={id} class="t-h2">{title}</Tag>
+  {intro && <p class="body-l muted measure">{intro}</p>}
+  <slot />
+</div>
+<style>
+  .section-head { display: flex; flex-direction: column; gap: 18px; margin-bottom: clamp(32px, 5vw, 56px); max-width: 900px; }
+</style>

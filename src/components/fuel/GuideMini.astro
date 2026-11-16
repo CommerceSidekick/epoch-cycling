@@ -1,0 +1,15 @@
+---
+// Small by-ride-length summary pulled from the guide data (used on product pages).
+import { GUIDE_ROWS } from "../../lib/fuel-guide";
+interface Props { caption?: string }
+const { caption = "During the ride, by ride length" } = Astro.props;
+---
+<div class="overflow-x-auto">
+  <table class="data">
+    <caption>{caption}</caption>
+    <thead><tr><th scope="col">Ride length</th><th scope="col">During</th></tr></thead>
+    <tbody>
+      {GUIDE_ROWS.map((r) => (<tr><th scope="row">{r.length}</th><td>{r.during}</td></tr>))}
+    </tbody>
+  </table>
+</div>

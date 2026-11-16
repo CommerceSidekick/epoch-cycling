@@ -1,0 +1,33 @@
+---
+// Common wrapper: hidden fields, honeypot, Turnstile (only when a site key is set), status region.
+import { SITE } from "../../config/site";
+import { MESSAGES, type FormName } from "../../lib/form-fields";
+interface Props { form: FormName; id: string; class?: string; success?: string; error?: string; submitLabel: string; light?: boolean }
+const { form, id, class: cls = "", submitLabel } = Astro.props;
+const success = Astro.props.success ?? MESSAGES[form].success;
+const error = Astro.props.error ?? MESSAGES[form].error;
+---
+<form id={id} class={`epoch-form ${cls}`} action="/api/forms" method="post" data-epoch-form={form} data-success={success} data-error={error}>
+  <input type="hidden" name="form" value={form} />
+  <input type="hidden" name="site" value="epochcycling" />
+  <input type="hidden" name="utm_source" value="" data-utm="utm_source" />
+  <input type="hidden" name="utm_medium" value="" data-utm="utm_medium" />
+  <input type="hidden" name="utm_campaign" value="" data-utm="utm_campaign" />
+  <div class="hp" aria-hidden="true">
+    <label for={`${id}-company`}>Company</label>
+    <input type="text" id={`${id}-company`} name="company" tabindex="-1" autocomplete="off" />
+  </div>
+  <slot />
+  {SITE.turnstileSiteKey && <div class="cf-turnstile" data-sitekey={SITE.turnstileSiteKey} data-theme="dark"></div>}
+  <slot name="before-submit" />
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary btn-lg" data-submit><span data-submit-label>{submitLabel}</span></button>
+  </div>
+  <slot name="after-submit" />
+  <div class="form-status" role="status" aria-live="polite" data-status></div>
+</form>
+{SITE.turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+<style>
+  .epoch-form { display: grid; gap: 22px; }
+  .form-actions { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+</style>

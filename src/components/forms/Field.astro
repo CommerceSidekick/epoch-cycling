@@ -1,0 +1,35 @@
+---
+import type { Opt } from "../../lib/form-fields";
+interface Props {
+  name: string; label: string; id?: string;
+  type?: "text" | "email" | "tel" | "url" | "textarea" | "select";
+  required?: boolean; hint?: string; placeholder?: string; autocomplete?: string;
+  maxlength?: number; pattern?: string; inputmode?: string; options?: Opt[]; emptyOption?: string;
+  class?: string; showWhen?: string; requiredWhen?: string; counter?: boolean; rows?: number;
+}
+const p = Astro.props;
+const id = p.id ?? `f-${p.name}`;
+const type = p.type ?? "text";
+const described = [p.hint ? `${id}-hint` : "", `${id}-err`, p.counter ? `${id}-count` : ""].filter(Boolean).join(" ");
+const common = {
+  id, name: p.name, required: p.required, "aria-required": p.required ? "true" : undefined,
+  "aria-describedby": described, maxlength: p.maxlength, autocomplete: p.autocomplete,
+  "data-required-when": p.requiredWhen,
+};
+---
+<div class={`field ${p.class ?? ""}`} data-field={p.name} data-show-when={p.showWhen} hidden={p.showWhen ? true : undefined}>
+  <label for={id}>{p.label}{p.required ? <span class="req" aria-hidden="true">*</span> : p.requiredWhen ? <span class="req" aria-hidden="true" data-req-mark hidden>*</span> : null}</label>
+  {p.hint && <p id={`${id}-hint`} class="hint">{p.hint}</p>}
+  {type === "textarea" ? (
+    <textarea class="textarea" rows={p.rows ?? 5} placeholder={p.placeholder} data-counter={p.counter ? "" : undefined} {...common}></textarea>
+  ) : type === "select" ? (
+    <select class="select" {...common}>
+      <option value="">{p.emptyOption ?? "Choose one"}</option>
+      {p.options?.map((o) => <option value={o.value}>{o.label}</option>)}
+    </select>
+  ) : (
+    <input class="input" type={type} placeholder={p.placeholder} pattern={p.pattern} inputmode={p.inputmode as any} {...common} />
+  )}
+  {p.counter && p.maxlength && <p id={`${id}-count`} class="hint" data-count-for={id}>0 of {p.maxlength}</p>}
+  <p id={`${id}-err`} class="field-error" data-error-for={p.name}></p>
+</div>

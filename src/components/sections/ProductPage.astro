@@ -1,0 +1,251 @@
+---
+// Product page template (5.12.A). Everything renders from src/content/products/<slug>.md.
+// Unset data hides its item; nothing is invented. Product JSON-LD only when live with a real price.
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import { Picture, getImage } from "astro:assets";
+import BaseLayout from "../layout/BaseLayout.astro";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Button from "../ui/Button.astro";
+import LinkArrow from "../ui/LinkArrow.astro";
+import Disclaimer from "../ui/Disclaimer.astro";
+import PillarIcon from "../brand/PillarIcon.astro";
+import FaqAccordion from "./FaqAccordion.astro";
+import FuelStandard from "../fuel/FuelStandard.astro";
+import RacingCallout from "../fuel/RacingCallout.astro";
+import GuideMini from "../fuel/GuideMini.astro";
+import ProductCard from "../fuel/ProductCard.astro";
+import { keyFacts, visibleClaims, price, caffeineAnswer, STATUS_TAG } from "../../lib/products";
+import { SITE } from "../../config/site";
+interface Props { product: CollectionEntry<"products">; metaTitle: string; metaDescription: string }
+const { product, metaTitle, metaDescription } = Astro.props;
+const p = product.data;
+const facts = keyFacts(product);
+const claims = visibleClaims(product);
+const pr = price(product);
+const word = p.line === "fuel" ? "FUEL" : "SALT";
+const others = (await getCollection("products")).filter((x) => x.id !== product.id);
+const certified = SITE.flags.certifiedForSport;
+const certText = certified
+  ? `Epoch Fuel and Epoch Salt are certified by ${SITE.certification.program || "[certification program]"}. Look up your batch at ${SITE.certification.lookupUrl || "[batch lookup URL]"}.`
+  : "Epoch Fuel and Salt aren't third-party certified for sport yet. We're working on it. Until then, check the label against your federation's rules yourself.";
+const faq = p.faq.map((f, i) => {
+  let a = f.a === "CAFFEINE_ANSWER" ? caffeineAnswer(product) : f.a;
+  if (/tested racers/i.test(f.q)) a = a.replace("Global DRO", "[Global DRO](https://www.globaldro.com)") + " " + certText;
+  return { id: `${product.id}-faq-${i + 1}`, group: "fuel" as const, q: f.q, a };
+});
+const panelTitle = p.factsPanel === "supplement" ? "Supplement Facts" : p.factsPanel === "nutrition" ? "Nutrition Facts" : undefined;
+const hasFacts = !!(p.factsHtml || p.factsImage || p.ingredients);
+const cta =
+  p.status === "waitlist" ? { label: "Get first access", href: "/join?interest=fuel" }
+  : p.status === "sold-out" ? { label: "Notify me", href: "/join?interest=fuel" }
+  : undefined;
+let schema: object[] = [];
+if (p.status === "live" && pr !== undefined) {
+  const imgs = await Promise.all(p.images.map((im) => getImage({ src: im.src, width: 1200, format: "jpg" })));
+  const v = p.variants.find((x) => typeof x.price === "number");
+  schema = [{
+    "@context": "https://schema.org", "@type": "Product", name: p.name, brand: { "@type": "Brand", name: "Epoch" },
+    image: imgs.map((i) => `${SITE.url}${i.src}`), description: p.oneLiner.replace(/\*$/, ""), sku: v?.sku, ...(v?.gtin ? { gtin13: v.gtin } : {}),
+    offers: { "@type": "Offer", price: pr.toFixed(2), priceCurrency: "USD", availability: "https://schema.org/InStock", url: `${SITE.url}/fuel/${product.id}` },
+  }];
+}
+const [main, ...rest] = p.images;
+---
+<BaseLayout title={metaTitle} description={metaDescription} breadcrumbs={[{ name: "Fuel", path: "/fuel" }, { name: p.name, path: `/fuel/${product.id}` }]} schema={schema}>
+  <!-- Hero -->
+  <section class="ph-hero topo">
+    <span class="ph-ghost" aria-hidden="true">{word}</span>
+    <div class="wrap ph-grid">
+      <div class="ph-gallery">
+        <div class="ph-main photo">
+          <Picture src={main.src} alt={main.alt} formats={["avif", "webp"]} widths={[640, 960, 1400]} sizes="(min-width: 1024px) 55vw, 100vw" loading="eager" fetchpriority="high" />
+          <span class="ph-plate" aria-hidden="true"><PillarIcon name="fuel" size={22} /><span class="race-number">{word}</span></span>
+        </div>
+        {rest.length > 0 && (
+          <div class="ph-thumbs">
+            {rest.map((im) => (
+              <div class="ph-thumb photo"><Picture src={im.src} alt={im.alt} formats={["avif", "webp"]} widths={[320, 640]} sizes="(min-width: 1024px) 18vw, 45vw" loading="lazy" /></div>
+            ))}
+          </div>
+        )}
+        <p class="fine">Lifestyle photos. Product photos at launch.</p>
+      </div>
+      <div class="ph-info">
+        <Eyebrow bar="var(--color-signal)">{p.eyebrow}</Eyebrow>
+        <h1 class="t-display ph-title">{p.name}</h1>
+        <p class="body-l ph-one">{p.oneLiner}</p>
+        <p class="muted">{p.sub}</p>
+        <div class="flex flex-wrap items-center gap-3">
+          <span class={`tag ${p.status === "sold-out" ? "tag-dark" : ""}`}>{STATUS_TAG[p.status]}</span>
+          {pr !== undefined && <span class="ph-price mono">${pr.toFixed(2)}</span>}
+        </div>
+        {p.flavors.length > 1 && (
+          <fieldset class="field">
+            <legend>Flavor</legend>
+            <div class="flex flex-wrap gap-2 mt-2">
+              {p.flavors.map((f, i) => (<label class="pill-check"><input type="radio" name="flavor" value={f} checked={i === 0} /><span>{f}</span></label>))}
+            </div>
+          </fieldset>
+        )}
+        <div class="flex flex-wrap items-center gap-5">
+          {cta ? (
+            <Button href={cta.href} variant="signal" size="lg" arrow location={`product-${product.id}`}>{cta.label}</Button>
+          ) : (
+            <button type="button" class="btn btn-signal btn-lg" data-add-to-cart={product.id}>Add to cart</button>
+          )}
+          <LinkArrow href="/fuel/guide" accent="var(--color-signal)">How to fuel a ride</LinkArrow>
+        </div>
+        {facts.length > 0 && (
+          <dl class="ph-facts">
+            {facts.map((f) => (<div><dt class="mono">{f.k}</dt><dd>{f.v}</dd></div>))}
+          </dl>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- What it's for -->
+  {claims.length > 0 && (
+    <section class="section on-moss" aria-labelledby="for-title">
+      <div class="wrap">
+        <Eyebrow bar="var(--color-signal)" class="text-bone">WHAT IT'S FOR</Eyebrow>
+        <h2 id="for-title" class="sr-only">What it's for</h2>
+        <ul class="claims" role="list">
+          {claims.map((c, i) => (
+            <li class={`reveal reveal-d${Math.min(i, 3)}`} data-placeholder={c.pending ? "" : undefined}>
+              <span class="claim-n mono">{String(i + 1).padStart(2, "0")}</span>
+              <p class="t-h2 claim-t">{c.text}</p>
+              {c.pending && <p class="ph claim-pending">[substantiation pending: hidden in production]</p>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- How to use it + What's in it -->
+  <section class="section" aria-label="How to use it and what's in it">
+    <div class="wrap use-grid">
+      <div class="use reveal">
+        <h2 class="t-h2">How to use it.</h2>
+        <p class="body-l">{p.directions ?? "Directions on the label at launch."}</p>
+        <GuideMini />
+        <LinkArrow href="/fuel/guide" accent="var(--color-signal)">Full fueling guide</LinkArrow>
+      </div>
+      <div class="inside card reveal reveal-d1">
+        <h2 class="t-h3 uppercase">What's in it.</h2>
+        {hasFacts ? (
+          <>
+            {panelTitle && <h3 class="t-h4">{panelTitle}</h3>}
+            {p.factsImage && <Picture src={p.factsImage} alt={`${panelTitle ?? "Facts"} panel for ${p.name}`} formats={["webp"]} widths={[480, 800]} sizes="(min-width: 1024px) 30vw, 90vw" />}
+            {p.factsHtml && <div class="facts-html" set:html={p.factsHtml} />}
+            {p.ingredients && <p><strong>Ingredients:</strong> {p.ingredients}</p>}
+            {p.allergens && <p><strong>Allergens:</strong> {p.allergens}</p>}
+            {p.madeIn && <p>{p.madeIn}</p>}
+          </>
+        ) : (
+          <div class="facts-empty">
+            <PillarIcon name="fuel" size={36} class="text-signal" />
+            <p class="t-h4">Full facts panel at launch.</p>
+            <p class="muted small">Every ingredient and amount goes here, the same as the label.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Our standard -->
+  <section class="section on-ridge" aria-label="Our standard">
+    <div class="wrap"><FuelStandard /></div>
+  </section>
+
+  <!-- Racing with a license + FAQ -->
+  <section class="section" aria-labelledby="pfaq-title">
+    <div class="wrap faq-grid">
+      <div class="grid gap-6 content-start">
+        <h2 id="pfaq-title" class="t-h2">Questions.</h2>
+        <RacingCallout />
+      </div>
+      <FaqAccordion entries={faq} />
+    </div>
+  </section>
+
+  <!-- Warnings and disclaimer -->
+  <section class="warn-sec" aria-labelledby="warn-title">
+    <div class="wrap">
+      <h2 id="warn-title" class="eyebrow no-bar">Warnings</h2>
+      <ul class="warn-list" role="list">
+        {p.warnings.map((w) => <li>{w}</li>)}
+      </ul>
+      <Disclaimer variant={p.line === "salt" ? "fda-salt" : "fda-full"} class="measure" />
+    </div>
+  </section>
+
+  <!-- Pairs with -->
+  <section class="section topo" aria-labelledby="pairs-title">
+    <div class="wrap">
+      <h2 id="pairs-title" class="t-h2 mb-10">Pairs with.</h2>
+      <div class="pairs">
+        {others.map((o) => <ProductCard product={o} />)}
+        <a href="/fuel/guide" class="guide-card reveal">
+          <span class="eyebrow">FUEL · THE GUIDE</span>
+          <span class="guide-big">How to fuel a ride.</span>
+          <span class="muted">Before, during and after, by how long you're out.</span>
+          <span class="link-arrow"><span>Read the guide</span><span class="arr" aria-hidden="true">→</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .ph-hero { position: relative; overflow: hidden; padding-top: clamp(120px, 13vw, 168px); padding-bottom: clamp(56px, 8vw, 96px); border-bottom: 1px solid var(--color-slate); }
+  .ph-ghost { position: absolute; right: -2vw; top: 90px; font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: clamp(8rem, 26vw, 26rem); line-height: 0.8; color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--color-signal) 18%, transparent); pointer-events: none; user-select: none; }
+  .ph-grid { position: relative; display: grid; gap: clamp(28px, 5vw, 64px); align-items: start; }
+  @media (min-width: 1024px) { .ph-grid { grid-template-columns: 1.15fr 1fr; } }
+  .ph-gallery { display: grid; gap: 12px; }
+  .ph-main { aspect-ratio: 4 / 3; border-radius: var(--radius-md); border: 1px solid var(--color-slate); }
+  .ph-main :global(img), .ph-thumb :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .ph-plate { position: absolute; left: 16px; bottom: 16px; display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--color-signal); color: var(--color-carbon); border-radius: 4px; }
+  .ph-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .ph-thumb { aspect-ratio: 1; border-radius: 8px; border: 1px solid var(--color-slate); }
+  .ph-info { display: grid; gap: 20px; align-content: start; }
+  @media (min-width: 1024px) { .ph-info { position: sticky; top: 110px; } }
+  .ph-title { font-size: clamp(3rem, 7vw, 6.5rem); }
+  .ph-one { font-weight: 500; }
+  .ph-price { font-size: 1.5rem; color: var(--color-signal); }
+  .ph-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 6px; }
+  .ph-facts div { border: 1px solid var(--color-slate); border-radius: 8px; padding: 12px 14px; background: var(--color-ridge); }
+  .ph-facts dt { font-size: 0.8125rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-dust); }
+  .ph-facts dd { font-family: var(--font-mono); color: var(--color-signal); font-size: 1.2rem; margin-top: 4px; }
+
+  .claims { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 0; }
+  .claims li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 24px; padding: 26px 0; border-top: 1px solid rgb(242 238 230 / 0.18); }
+  .claim-n { color: var(--color-signal); padding-top: 10px; }
+  .claim-t { font-size: clamp(1.6rem, 3.6vw, 3rem); text-transform: none; }
+  .claim-pending { grid-column: 2; justify-self: start; color: var(--color-signal); font-size: 0.8125rem; white-space: normal; }
+
+  .use-grid { display: grid; gap: 24px; align-items: start; }
+  @media (min-width: 1024px) { .use-grid { grid-template-columns: 1.3fr 1fr; gap: 48px; } }
+  .use { display: grid; gap: 20px; }
+  .inside { padding: clamp(22px, 3vw, 32px); display: grid; gap: 14px; border-top: 3px solid var(--color-signal); }
+  .facts-empty { display: grid; gap: 10px; justify-items: start; padding: 24px; border: 1px dashed #4a4e45; border-radius: 8px; }
+
+  .faq-grid { display: grid; gap: 32px; }
+  @media (min-width: 1024px) { .faq-grid { grid-template-columns: 1fr 1.2fr; gap: 56px; } }
+
+  .warn-sec { padding-block: 40px 48px; border-block: 1px solid var(--color-slate); background: var(--color-ridge); }
+  .warn-list { list-style: none; margin: 12px 0 16px; padding: 0; display: grid; gap: 6px; max-width: var(--measure); }
+  .warn-list li { position: relative; padding-left: 18px; font-size: 0.9375rem; }
+  .warn-list li::before { content: ""; position: absolute; left: 0; top: 0.65em; width: 8px; height: 2px; background: var(--color-signal); }
+
+  .pairs { display: grid; gap: 18px; }
+  @media (min-width: 900px) { .pairs { grid-template-columns: 1fr 1fr; } }
+  .guide-card { display: flex; flex-direction: column; justify-content: flex-end; gap: 16px; padding: clamp(24px, 3vw, 40px); min-height: 360px; border-radius: var(--radius-md); background: var(--color-moss); text-decoration: none; border: 1px solid transparent; transition: transform 300ms var(--ease), border-color 300ms var(--ease); }
+  .guide-card:hover { transform: translateY(-4px); border-color: var(--color-signal); }
+  .guide-card .eyebrow { color: var(--color-bone); --eyebrow-bar: var(--color-signal); }
+  .guide-big { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(2.25rem, 4vw, 3.5rem); line-height: 0.92; }
+  .guide-card .muted { color: #d7dccb; }
+  .guide-card .arr { color: var(--color-signal); }
+</style>

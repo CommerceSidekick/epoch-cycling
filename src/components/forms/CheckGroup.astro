@@ -1,0 +1,19 @@
+---
+import type { Opt } from "../../lib/form-fields";
+interface Props { name: string; legend: string; options: Opt[]; type?: "checkbox" | "radio"; required?: boolean; min?: number; preselectParam?: string; hint?: string; style?: "pill" | "list"; showWhen?: string; requiredWhen?: string }
+const p = Astro.props;
+const type = p.type ?? "checkbox";
+const id = `g-${p.name}`;
+---
+<fieldset class="field" id={id} data-group={p.name} data-min={p.min ?? (p.required && type === "checkbox" ? 1 : undefined)} data-required={p.required ? "true" : undefined} data-preselect={p.preselectParam} data-show-when={p.showWhen} hidden={p.showWhen ? true : undefined} aria-describedby={`${id}-err`}>
+  <legend>{p.legend}{p.required && <><span class="req" aria-hidden="true">*</span><span class="sr-only"> (required)</span></>}</legend>
+  {p.hint && <p class="hint">{p.hint}</p>}
+  <div class={p.style === "list" ? "grid gap-1 mt-2" : "flex flex-wrap gap-2 mt-2"}>
+    {p.options.map((o) => p.style === "list" ? (
+      <label class="check"><input type={type} name={p.name} value={o.value} required={type === "radio" && p.required} /><span>{o.label}</span></label>
+    ) : (
+      <label class="pill-check"><input type={type} name={p.name} value={o.value} required={type === "radio" && p.required} /><span>{o.label}</span></label>
+    ))}
+  </div>
+  <p id={`${id}-err`} class="field-error" data-error-for={p.name}></p>
+</fieldset>

@@ -1,0 +1,50 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Picture } from "astro:assets";
+import Button from "../ui/Button.astro";
+import { bullets, price, STATUS_TAG } from "../../lib/products";
+interface Props { product: CollectionEntry<"products">; index?: number }
+const { product, index = 0 } = Astro.props;
+const p = product.data;
+const bl = bullets(product);
+const pr = price(product);
+const href = `/fuel/${product.id}`;
+const word = p.line === "fuel" ? "FUEL" : "SALT";
+---
+<article class={`pcard reveal reveal-d${index}`}>
+  <div class="pc-media photo zoom-hover">
+    <Picture src={p.images[0].src} alt={p.images[0].alt} formats={["avif", "webp"]} widths={[480, 800, 1200]} sizes="(min-width: 1024px) 50vw, 100vw" loading="lazy" />
+    <span class="pc-word" aria-hidden="true">{word}</span>
+  </div>
+  <div class="pc-body">
+    <div class="flex flex-wrap items-center gap-3">
+      {pr !== undefined ? <span class="tag tag-outline">${pr.toFixed(2)}</span> : <span class="tag">{STATUS_TAG[p.status]}</span>}
+    </div>
+    <h3 class="pc-name"><a href={href} class="pc-link">{p.name}</a></h3>
+    <p class="body-l">{p.oneLiner}</p>
+    {bl.length > 0 && (
+      <ul class="pc-bullets" role="list">
+        {bl.map((b) => <li>{b}</li>)}
+      </ul>
+    )}
+    <div class="mt-auto pt-2"><Button href={href} variant="signal" arrow location="fuel-lineup">See {p.name}</Button></div>
+  </div>
+</article>
+<style>
+  .pcard { position: relative; display: grid; border-radius: var(--radius-md); overflow: hidden; background: var(--color-ridge); border: 1px solid var(--color-slate); transition: transform 300ms var(--ease), border-color 300ms var(--ease); }
+  .pcard:hover { transform: translateY(-4px); border-color: var(--color-signal); }
+  .pc-media { aspect-ratio: 16 / 10; position: relative; }
+  .pc-media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .pc-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgb(28 30 26 / 1) 0%, rgb(28 30 26 / 0) 55%), linear-gradient(90deg, rgb(61 74 53 / 0.55), transparent 70%); }
+  .pc-word { position: absolute; left: 20px; bottom: 6px; z-index: 1; font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: clamp(4rem, 9vw, 8rem); line-height: 0.8; color: transparent; -webkit-text-stroke: 2px var(--color-signal); opacity: 0.9; }
+  .pc-body { display: flex; flex-direction: column; gap: 16px; padding: clamp(22px, 3vw, 34px); }
+  .pc-name { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(2rem, 3.4vw, 3rem); line-height: 0.95; }
+  .pc-link { text-decoration: none; }
+  .pc-link::after { content: ""; position: absolute; inset: 0; z-index: 2; }
+  .pcard:has(.pc-link:focus-visible) { outline: 2px solid var(--color-signal); outline-offset: 3px; }
+  .pc-link:focus-visible { outline: none; }
+  .pc-body :global(.btn) { position: relative; z-index: 3; }
+  .pc-bullets { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .pc-bullets li { position: relative; padding-left: 22px; }
+  .pc-bullets li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 12px; height: 3px; background: var(--color-signal); }
+</style>

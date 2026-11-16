@@ -1,0 +1,70 @@
+---
+// Story filters: toggle buttons with aria-pressed, mirrored to the URL. Without JS every story shows.
+const groups = [
+  { key: "category", label: "Category", opts: [["all", "All"], ["ride", "Ride"], ["fuel", "Fuel"], ["optimize", "Optimize"], ["club", "Club"]] },
+  { key: "discipline", label: "Discipline", opts: [["all", "All"], ["mtb", "MTB"], ["gravel", "Gravel"], ["road", "Road"]] },
+];
+---
+<div class="sfilters" data-story-filters hidden>
+  {groups.map((g) => (
+    <div class="sf-group" role="group" aria-label={`Filter by ${g.label.toLowerCase()}`}>
+      <span class="eyebrow no-bar sf-label">{g.label}</span>
+      <div class="sf-opts">
+        {g.opts.map(([v, l]) => (
+          <button type="button" class="sf-btn" data-key={g.key} data-value={v} aria-pressed={v === "all" ? "true" : "false"} data-d={v}>{l}</button>
+        ))}
+      </div>
+    </div>
+  ))}
+  <p class="sr-only" aria-live="polite" data-filter-count></p>
+</div>
+<p class="sf-none muted" data-filter-none hidden>Nothing here yet. Check back soon.</p>
+<script>
+  import { track } from "../../lib/analytics";
+  const root = document.querySelector<HTMLElement>("[data-story-filters]");
+  const list = document.querySelector<HTMLElement>("[data-filter-list]");
+  if (root && list) {
+    root.hidden = false;
+    const none = document.querySelector<HTMLElement>("[data-filter-none]");
+    const count = root.querySelector<HTMLElement>("[data-filter-count]");
+    const params = new URLSearchParams(location.search);
+    const state: Record<string, string> = { category: params.get("category") ?? "all", discipline: params.get("discipline") ?? "all" };
+    const apply = (announce: boolean) => {
+      root.querySelectorAll<HTMLButtonElement>(".sf-btn").forEach((b) => b.setAttribute("aria-pressed", String(state[b.dataset.key!] === b.dataset.value)));
+      let n = 0;
+      Array.from(list.children).forEach((c) => {
+        const el = c as HTMLElement;
+        const cat = el.dataset.filterCategory ?? "";
+        const disc = (el.dataset.filterDiscipline ?? "all").split(" ");
+        const ok = (state.category === "all" || cat === state.category) && (state.discipline === "all" || disc.includes(state.discipline) || disc.includes("all"));
+        el.hidden = !ok;
+        if (ok) n++;
+      });
+      if (none) none.hidden = n > 0;
+      if (count && announce) count.textContent = `${n} ${n === 1 ? "story" : "stories"}`;
+      const u = new URL(location.href);
+      Object.entries(state).forEach(([k, v]) => (v === "all" ? u.searchParams.delete(k) : u.searchParams.set(k, v)));
+      history.replaceState(null, "", u);
+    };
+    root.addEventListener("click", (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLButtonElement>(".sf-btn");
+      if (!b) return;
+      state[b.dataset.key!] = b.dataset.value!;
+      track("filter_change", { page: "stories", filter: `${b.dataset.key}:${b.dataset.value}` });
+      apply(true);
+    });
+    apply(false);
+  }
+</script>
+<style>
+  .sfilters { display: flex; flex-wrap: wrap; gap: 18px 40px; margin-bottom: 36px; }
+  .sf-group { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+  .sf-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sf-btn { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid #4a4e45; background: transparent; color: var(--color-bone); font: inherit; font-weight: 500; cursor: pointer; transition: all var(--dur-ui) var(--ease); }
+  .sf-btn:hover { border-color: var(--color-dust); }
+  .sf-btn[aria-pressed="true"] { background: var(--color-bone); color: var(--color-carbon); border-color: var(--color-bone); }
+  .sf-btn[aria-pressed="true"][data-d="mtb"] { background: var(--color-dawn); border-color: var(--color-dawn); }
+  .sf-btn[aria-pressed="true"][data-d="gravel"] { background: var(--color-grit); border-color: var(--color-grit); }
+  .sf-btn[aria-pressed="true"][data-d="road"] { background: var(--color-velo); border-color: var(--color-velo); }
+  .sf-none { padding: 24px 0; }
+</style>

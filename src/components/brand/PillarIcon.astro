@@ -1,0 +1,8 @@
+---
+import { ICONS } from "../../lib/brand-geometry.mjs";
+interface Props { name: "ride" | "fuel" | "optimize"; variant?: "outline" | "solid" | "knockout"; size?: number; title?: string; class?: string }
+const { name, variant = "outline", size = 24, title, class: cls = "" } = Astro.props;
+const svg = ICONS[name](variant === "solid" ? "solid" : "outline", "currentColor");
+const labels = { ride: "Ride", fuel: "Fuel", optimize: "Optimize" };
+---
+<svg viewBox="0 0 24 24" width={size} height={size} class={cls} role={title ? "img" : undefined} aria-label={title ? labels[name] : undefined} aria-hidden={title ? undefined : "true"} focusable="false" set:html={svg} />

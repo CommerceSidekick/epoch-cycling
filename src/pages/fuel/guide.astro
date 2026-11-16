@@ -1,0 +1,181 @@
+---
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import PageHero from "../../components/sections/PageHero.astro";
+import Button from "../../components/ui/Button.astro";
+import Disclaimer from "../../components/ui/Disclaimer.astro";
+import PillarIcon from "../../components/brand/PillarIcon.astro";
+import { GUIDE_ROWS, SHORT_VERSION, SOURCES } from "../../lib/fuel-guide";
+import { SITE } from "../../config/site";
+const toc = [
+  { id: "short-version", label: "The short version" },
+  { id: "table", label: "By ride length" },
+  { id: "before", label: "Before the ride" },
+  { id: "during", label: "During the ride" },
+  { id: "after", label: "After the ride" },
+  { id: "hot", label: "Hot days" },
+  { id: "fits", label: "Where Epoch fits" },
+  { id: "sources", label: "Sources" },
+];
+const d = SITE.dietitian;
+---
+<BaseLayout lcp="gravelRoad"
+  title="How to Fuel a Ride | Before, During and After | Epoch Cycling"
+  description="How much to eat and drink before, during and after a ride, by ride length. Carbs per hour, fluids, salt and hot-day tips for mountain bike, gravel and road."
+  overlayHeader
+  breadcrumbs={[{ name: "Fuel", path: "/fuel" }, { name: "How to fuel a ride", path: "/fuel/guide" }]}
+>
+  <PageHero img="gravelRoad" eyebrow="FUEL · THE GUIDE" bar="var(--color-signal)" size="mid" position="center 55%">
+    <h1 class="t-display guide-h1 reveal">How to fuel <span class="text-signal">a ride.</span></h1>
+    <p class="body-l guide-sub reveal reveal-d1">Before, during and after, by how long you're out. General guidance for healthy adults. Your needs depend on you, the heat and the effort, so test it in training.</p>
+  </PageHero>
+
+  <div class="wrap guide-layout">
+    <nav class="toc" aria-label="On this page" data-toc>
+      <p class="eyebrow no-bar">On this page</p>
+      <ol role="list">
+        {toc.map((t, i) => (<li><a href={`#${t.id}`} data-toc-link={t.id}><span class="mono">{String(i + 1).padStart(2, "0")}</span>{t.label}</a></li>))}
+      </ol>
+    </nav>
+
+    <article class="guide prose-epoch">
+      <section id="short-version" aria-labelledby="h-short" class="g-sec">
+        <h2 id="h-short">The short version</h2>
+        <ul class="short-list" role="list">
+          {SHORT_VERSION.map((s) => { const [k, ...v] = s.split(": "); return <li><strong>{k}:</strong> {v.join(": ")}</li>; })}
+        </ul>
+      </section>
+
+      <section id="table" aria-labelledby="h-table" class="g-sec">
+        <h2 id="h-table">By ride length</h2>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Fueling by ride length table">
+          <table class="data guide-table">
+            <caption>How to fuel by ride length. General guidance for healthy adults.</caption>
+            <thead>
+              <tr><th scope="col">Ride length</th><th scope="col">Before</th><th scope="col">During</th><th scope="col">After</th></tr>
+            </thead>
+            <tbody>
+              {GUIDE_ROWS.map((r) => (
+                <tr id={r.id}>
+                  <th scope="row">{r.length}</th>
+                  <td>{r.before}</td>
+                  <td>{r.during}</td>
+                  <td>{r.after}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="before" aria-labelledby="h-before" class="g-sec">
+        <h2 id="h-before">Before the ride</h2>
+        <p>Eat food you know. Carbs are the main fuel for hard riding, so make the meal before a big ride carb-forward. Keep fat and fiber lower right before, so your stomach stays happy on the first climb. Start hydrated: pale pee is the cheap test.</p>
+      </section>
+
+      <section id="during" aria-labelledby="h-during" class="g-sec">
+        <h2 id="h-during">During the ride</h2>
+        <ul>
+          <li><strong>Start early.</strong> On rides over an hour, start fueling in the first 30 minutes. Waiting until you're hungry is waiting too long.</li>
+          <li><strong>Count carbs per hour, from everything.</strong> Bottles, gels, bars, gummies, a gas station burrito. It all counts.</li>
+          <li><strong>Train your gut.</strong> High carb rates (60 to 90 g an hour) take practice. Build up on training rides, never try it first on race day.</li>
+          <li><strong>Mix your carbs at high rates.</strong> Above about 60 g an hour, fuels that mix carb types (for example glucose and fructose) are easier to absorb.</li>
+          <li><strong>Drink to thirst, then adjust.</strong> A common range is about 400 to 800 ml an hour. Heat, altitude and effort push it up.</li>
+        </ul>
+      </section>
+
+      <section id="after" aria-labelledby="h-after" class="g-sec">
+        <h2 id="h-after">After the ride</h2>
+        <p>Refill the tank. A meal with carbs and protein within a couple of hours. Drink back what you lost: weigh yourself before and after, and for every kilo you lose, drink roughly 1.25 to 1.5 liters over the next few hours.</p>
+      </section>
+
+      <section id="hot" aria-labelledby="h-hot" class="g-sec">
+        <h2 id="h-hot">Hot days and salty sweaters</h2>
+        <p>Hot days raise sweat rates fast. Add sodium before and during. If your kit dries with white salt lines, you're probably a salty sweater and need more than most.</p>
+        <aside class="warn-box">
+          <p class="t-h4">Don't overdrink.</p>
+          <p>Drinking a lot more than you sweat, for hours, can drop your blood sodium to dangerous levels. If you feel confused, get a bad headache, or feel sick while drinking a lot, stop and get medical help.</p>
+        </aside>
+      </section>
+
+      <section id="fits" aria-labelledby="h-fits" class="g-sec">
+        <h2 id="h-fits">Where Epoch fits</h2>
+        <div class="fits">
+          <div class="fit-card"><PillarIcon name="fuel" size={30} class="text-signal" /><p><strong>Epoch Fuel:</strong> carbs and electrolytes in one bottle. Count its carbs toward your hourly total.*</p></div>
+          <div class="fit-card"><span class="mono text-signal">NA K MG</span><p><strong>Epoch Salt:</strong> electrolytes without the carbs, for hot days or to stack with food.*</p></div>
+        </div>
+        <div class="not-prose mt-6"><Button href="/fuel#lineup" variant="signal" arrow location="guide-fits">See the lineup</Button></div>
+      </section>
+
+      <section aria-labelledby="h-general" class="g-sec">
+        <h2 id="h-general">This is general information</h2>
+        <p>This guide is general information for healthy adults, not medical or dietary advice. If you have diabetes, kidney or heart conditions, high blood pressure, are pregnant, or take medication, talk to a clinician before changing how you fuel.</p>
+      </section>
+
+      <section id="sources" aria-labelledby="h-sources" class="g-sec sources">
+        <h2 id="h-sources">Sources</h2>
+        <ol class="src-list">
+          {SOURCES.map((s) => (
+            <li>{s.cite}{s.link && <>{" "}(<a href={s.link.href} target="_blank" rel="noopener" data-outbound>{s.link.label}<span class="sr-only"> (opens in a new tab)</span></a>).</>}{" "}{s.note}</li>
+          ))}
+        </ol>
+        {d.name && <p class="reviewed">Reviewed by {d.name}{d.credential && `, ${d.credential}`}.</p>}
+      </section>
+
+      <Disclaimer variant="fda-full" class="mt-10" />
+    </article>
+  </div>
+</BaseLayout>
+
+<script>
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-toc-link]"));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      links.forEach((a) => (a.dataset.tocLink === e.target.id ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current")));
+    });
+  }, { rootMargin: "-30% 0px -60% 0px" });
+  links.forEach((a) => { const s = document.getElementById(a.dataset.tocLink!); if (s) io.observe(s); });
+</script>
+
+<style>
+  .guide-h1 { max-width: 12ch; }
+  .guide-sub { margin-top: 24px; max-width: 52ch; color: #ece7dc; }
+  .guide-layout { display: grid; gap: 40px; padding-block: clamp(48px, 7vw, 96px); }
+  @media (min-width: 1024px) { .guide-layout { grid-template-columns: 240px minmax(0, 1fr); gap: 64px; } }
+  .toc { display: none; }
+  @media (min-width: 1024px) {
+    .toc { display: block; position: sticky; top: 110px; align-self: start; }
+    .toc ol { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 2px; border-left: 1px solid var(--color-slate); }
+    .toc a { display: flex; gap: 12px; align-items: center; min-height: 40px; padding: 4px 14px; margin-left: -1px; border-left: 2px solid transparent; text-decoration: none; color: var(--color-dust); font-size: 0.9375rem; }
+    .toc a .mono { font-size: 0.8125rem; color: var(--color-dust); }
+    .toc a:hover { color: var(--color-bone); }
+    .toc a[aria-current="true"] { color: var(--color-bone); border-left-color: var(--color-signal); }
+    .toc a[aria-current="true"] .mono { color: var(--color-signal); }
+  }
+  .guide { max-width: 860px; min-width: 0; }
+  .guide :global(h2) { margin-top: 0; }
+  .g-sec { padding-block: 28px; border-bottom: 1px solid var(--color-slate); scroll-margin-top: 100px; }
+  .g-sec:first-child { padding-top: 0; }
+  .g-sec p, .g-sec li { max-width: 68ch; }
+  .short-list li { font-size: 1.125rem; padding-block: 6px; }
+  .short-list li::before { background: var(--color-signal) !important; width: 10px !important; height: 3px !important; }
+  .prose-epoch :global(li)::before { background: var(--color-signal); }
+  .table-wrap { overflow-x: auto; margin-top: 8px; border: 1px solid var(--color-slate); border-radius: var(--radius-md); background: var(--color-ridge); }
+  .guide-table { min-width: 760px; }
+  .guide-table tbody tr { scroll-margin-top: 110px; }
+  .guide-table tbody tr:target { background: color-mix(in srgb, var(--color-signal) 10%, transparent); }
+  .guide-table caption { padding: 16px 14px 4px; }
+  .warn-box { margin-top: 18px; padding: 18px 20px; border-left: 4px solid var(--color-dawn); background: var(--color-ridge); border-radius: 0 var(--radius-md) var(--radius-md) 0; display: grid; gap: 6px; }
+  .fits { display: grid; gap: 14px; margin-top: 8px; }
+  @media (min-width: 768px) { .fits { grid-template-columns: 1fr 1fr; } }
+  .fit-card { display: grid; gap: 12px; align-content: start; padding: 22px; border-radius: var(--radius-md); background: var(--color-moss); }
+  .fit-card p { margin: 0; }
+  .sources { font-size: 0.9rem; color: var(--color-dust); }
+  .sources h2 { color: var(--color-bone); }
+  .guide a.btn { color: var(--btn-fg); text-decoration: none; }
+  .guide :global(a:not(.btn)) { text-decoration: underline; text-underline-offset: 3px; }
+  .src-list { padding-left: 1.3em; list-style: decimal; display: grid; gap: 10px; }
+  .src-list li { padding-left: 0.2em; }
+  .src-list li::before { display: none; }
+  .reviewed { margin-top: 14px; font-family: var(--font-mono); font-size: 0.875rem; }
+</style>

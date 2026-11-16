@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+import EventCard from "./EventCard.astro";
+import Icon from "../ui/Icon.astro";
+interface Props { limit?: number; discipline?: "mtb" | "gravel" | "road"; showEmpty?: boolean; emptyHost?: boolean; filterable?: boolean }
+const { limit, discipline, emptyHost = false, filterable = false } = Astro.props;
+const now = new Date();
+let events = (await getCollection("events"))
+  .filter((e) => e.data.start > now && (filterable || e.data.status === "scheduled"))
+  .filter((e) => !discipline || e.data.disciplines.includes(discipline))
+  .sort((a, b) => a.data.start.getTime() - b.data.start.getTime());
+if (limit) events = events.slice(0, limit);
+---
+{events.length > 0 ? (
+  <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3" data-filter-list>
+    {events.map((e) => <EventCard event={e} />)}
+  </div>
+) : (
+  <div class="empty card topo">
+    <Icon name="calendar" size={28} class="text-dawn" />
+    <p class="t-h3">No rides on the calendar yet.</p>
+    <p class="muted">The first ones drop soon.{emptyHost && " Want one near you?"}</p>
+    <div class="flex flex-wrap gap-4 items-center">
+      <a href="/join?interest=rides" class="btn btn-primary btn-sm">Get the drop</a>
+      {emptyHost && <a href="/contact?topic=host" class="link">or host one</a>}
+    </div>
+  </div>
+)}
+<style>
+  .empty { display: grid; gap: 12px; justify-items: start; padding: clamp(28px, 4vw, 44px); border-style: dashed; }
+</style>

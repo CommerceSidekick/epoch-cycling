@@ -1,0 +1,42 @@
+---
+// Dev-only style guide (spec 6.15 step 1). Not built in production.
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import Lockup from "../../components/brand/Lockup.astro";
+import PillarIcon from "../../components/brand/PillarIcon.astro";
+import KitArt from "../../components/sections/KitArt.astro";
+export function getStaticPaths() {
+  return import.meta.env.DEV ? [{ params: { page: "styleguide" } }] : [];
+}
+const C: Record<string, string> = { carbon: "#0E0F0C", ridge: "#1C1E1A", slate: "#2E312B", bone: "#F2EEE6", dust: "#A8A291", dawn: "#FF5A1F", ember: "#B83A0A", signal: "#D4FF3A", moss: "#3D4A35", sky: "#8FB8C9", grit: "#D9A441", gritInk: "#7A5512", velo: "#A592FF", veloInk: "#4B33B5" };
+const lum = (hex: string) => {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+const ratio = (a: string, b: string) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m); return ((x + 0.05) / (y + 0.05)).toFixed(2); };
+const pairs: [string, string][] = [["bone", "carbon"], ["dust", "carbon"], ["dawn", "carbon"], ["signal", "carbon"], ["sky", "carbon"], ["carbon", "dawn"], ["ember", "bone"], ["moss", "bone"], ["bone", "ridge"], ["dust", "ridge"], ["dawn", "ridge"], ["dawn", "slate"], ["grit", "carbon"], ["grit", "ridge"], ["grit", "slate"], ["gritInk", "bone"], ["velo", "carbon"], ["velo", "ridge"], ["velo", "slate"], ["veloInk", "bone"], ["carbon", "grit"], ["carbon", "velo"], ["bone", "moss"]];
+---
+<BaseLayout title="Style guide | Epoch Cycling" description="Dev-only style guide" noindex>
+  <section class="section"><div class="wrap grid gap-12 pt-24">
+    <h1 class="t-display">Style guide</h1>
+    <div><h2 class="t-h3 mb-4">Contrast pairs (WCAG 2.1)</h2>
+      <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        {pairs.map(([fg, bg]) => (<div class="p-4 rounded" style={`background:${C[bg]};color:${C[fg]};border:1px solid #333`}><p class="t-h4">{fg} on {bg}</p><p class="mono">{ratio(C[fg], C[bg])}:1</p></div>))}
+      </div>
+    </div>
+    <div class="grid gap-4"><h2 class="t-h3">Type</h2>
+      <p class="t-display">Display</p><p class="t-h2">Heading two</p><p class="t-h3">Heading three</p><p class="eyebrow">Eyebrow · mono</p><p class="body-l">Body large. Ride with a crew.</p><p>Body. Fuel for the long day.</p><p class="small">Small text.</p>
+    </div>
+    <div class="flex flex-wrap gap-4"><a class="btn btn-primary">Primary</a><a class="btn btn-signal">Signal</a><a class="btn btn-sky">Sky</a><a class="btn btn-bone">Bone</a><a class="btn btn-outline">Outline</a><span data-discipline="gravel"><a class="btn btn-accent">Grit</a></span><span data-discipline="road"><a class="btn btn-accent">Velo</a></span></div>
+    <div class="flex flex-wrap gap-3"><span class="tag">SOON</span><span class="tag">PLANNED</span><span class="tag">DROPPING SOON</span><span class="tag">RACE DEAL ELIGIBLE</span><span class="chip" data-d="mtb">MTB</span><span class="chip" data-d="gravel">GRAVEL</span><span class="chip" data-d="road">ROAD</span></div>
+    <div class="flex flex-wrap gap-10 items-center">
+      <Lockup variant="site" /><Lockup variant="club" /><Lockup variant="mtb" /><Lockup variant="gravel" /><Lockup variant="road" /><Lockup variant="site" size="lg" />
+      <span class="w-[400px] inline-block"><Lockup variant="stacked" /></span>
+    </div>
+    <div class="flex flex-wrap gap-8 items-end">
+      {(["ride", "fuel", "optimize"] as const).map((n) => (<div class="flex gap-4 items-end"><PillarIcon name={n} size={24} /><PillarIcon name={n} size={96} /><PillarIcon name={n} variant="solid" size={96} /></div>))}
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <KitArt art="trail-jersey" label="trail" /><KitArt art="race-jersey" label="race" racer /><KitArt art="baggies" label="baggies" /><KitArt art="trucker" label="trucker" />
+    </div>
+  </div></section>
+</BaseLayout>

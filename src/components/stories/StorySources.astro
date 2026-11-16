@@ -1,0 +1,16 @@
+---
+import { SOURCES } from "../../lib/fuel-guide";
+---
+<aside class="story-sources" aria-labelledby="story-sources-title">
+  <h2 id="story-sources-title" class="eyebrow no-bar">Sources</h2>
+  <ol>
+    {SOURCES.map((s) => (
+      <li>{s.cite}{s.link && <>{" "}(<a href={s.link.href} class="link" target="_blank" rel="noopener" data-outbound>{s.link.label}<span class="sr-only"> (opens in a new tab)</span></a>).</>}{" "}{s.note}</li>
+    ))}
+  </ol>
+  <p class="fine">Full numbers and context in the <a href="/fuel/guide#sources" class="link">fueling guide</a>.</p>
+</aside>
+<style>
+  .story-sources { margin-top: 40px; padding: 22px 24px; border: 1px solid var(--color-slate); border-radius: var(--radius-md); background: var(--color-ridge); font-size: 0.9rem; color: var(--color-dust); display: grid; gap: 12px; }
+  .story-sources ol { padding-left: 1.3em; list-style: decimal; display: grid; gap: 8px; }
+</style>

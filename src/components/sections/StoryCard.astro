@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import { shortDate } from "../../lib/format";
+interface Props { story: CollectionEntry<"stories">; minutes: number }
+const { story, minutes } = Astro.props;
+const s = story.data;
+const d = s.disciplines[0];
+---
+<article class="story card card-hover zoom-hover" data-discipline={d} data-filter-category={s.category} data-filter-discipline={s.disciplines.join(" ") || "all"}>
+  <div class="story-img photo">
+    <Image src={s.hero} alt={s.heroAlt} widths={[480, 800]} sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" />
+  </div>
+  <div class="p-6 grid gap-3">
+    <div class="flex flex-wrap gap-2">
+      <span class="chip">{s.category.toUpperCase()}</span>
+      {s.disciplines.map((x) => <span class="chip" data-d={x}>{x.toUpperCase()}</span>)}
+    </div>
+    <h3 class="t-h3"><a href={`/stories/${story.id}`} class="story-link">{s.title}</a></h3>
+    <p class="muted">{s.dek}</p>
+    <p class="race-number muted"><time datetime={s.date.toISOString()}>{shortDate(s.date).toUpperCase()}</time> · {minutes} MIN READ</p>
+  </div>
+</article>
+<style>
+  .story { display: flex; flex-direction: column; position: relative; }
+  .story-img { aspect-ratio: 16 / 10; }
+  .story-img :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .story-link { text-decoration: none; }
+  .story-link::after { content: ""; position: absolute; inset: 0; }
+  .story-link:focus-visible { outline: none; }
+  .story:has(.story-link:focus-visible) { outline: 2px solid var(--color-signal); outline-offset: 3px; }
+</style>

@@ -1,0 +1,73 @@
+---
+// Full-bleed photo hero with scrim, grain, optional speed lines and dust, and a ridge-cut bottom edge.
+import Photo from "./Photo.astro";
+import Eyebrow from "../ui/Eyebrow.astro";
+import type { ImgKey } from "../../lib/images";
+interface Props {
+  img: ImgKey; eyebrow?: string; position?: string; mobilePosition?: string; size?: "full" | "tall" | "mid";
+  duo?: string; speed?: boolean; dust?: boolean; align?: "left" | "bottom"; bar?: string; class?: string; titleClass?: string;
+}
+const { img, eyebrow, position = "center", size = "tall", duo, speed = false, dust = false, align = "left", bar, class: cls = "" } = Astro.props;
+---
+<section class={`hero hero-${size} hero-${align} ${cls}`} data-hero>
+  <div class={`hero-media photo kenburns ${duo ? "duo" : ""} ${speed ? "speedlines" : ""}`} style={duo ? `--duo:${duo}` : undefined}>
+    <Photo img={img} eager sizes="100vw" position={position} widths={[640, 960, 1280, 1600, 2000]} />
+  </div>
+  {dust && <canvas class="hero-dust" data-dust aria-hidden="true"></canvas>}
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="wrap hero-content">
+    {eyebrow && <Eyebrow class="hero-eyebrow" bar={bar}>{eyebrow}</Eyebrow>}
+    <slot />
+  </div>
+  <svg class="hero-ridge" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 120V92L180 58l120 30 210-74 150 52 110-40 170 64 130-34 180 50 190-70v84z" fill="var(--color-carbon)"/></svg>
+</section>
+{dust && (
+  <script>
+    const c = document.querySelector<HTMLCanvasElement>("[data-dust]");
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (c && !reduced) {
+      const ctx = c.getContext("2d")!;
+      let w = 0, h = 0, raf = 0, visible = true;
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const N = window.innerWidth < 768 ? 40 : 110;
+      const parts = Array.from({ length: N }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 1.8 + 0.4, vx: Math.random() * 0.0009 + 0.0003, vy: (Math.random() - 0.5) * 0.0003, a: Math.random() * 0.5 + 0.15 }));
+      const size = () => { w = c.clientWidth; h = c.clientHeight; c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+      size();
+      addEventListener("resize", size);
+      const tick = () => {
+        ctx.clearRect(0, 0, w, h);
+        for (const p of parts) {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x > 1.02) { p.x = -0.02; p.y = Math.random(); }
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(255, 196, 150, ${p.a})`;
+          ctx.arc(p.x * w, p.y * h, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        if (visible) raf = requestAnimationFrame(tick);
+      };
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting; cancelAnimationFrame(raf); if (visible) raf = requestAnimationFrame(tick); }).observe(c);
+    }
+  </script>
+)}
+<style>
+  .hero { position: relative; isolation: isolate; overflow: hidden; display: flex; background: var(--color-carbon); }
+  .hero-full { min-height: 100svh; }
+  .hero-tall { min-height: 88svh; }
+  .hero-mid { min-height: 72svh; }
+  .hero-media { position: absolute; inset: 0; z-index: -2; }
+  .hero-media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .hero-dust { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; mix-blend-mode: screen; }
+  .hero-scrim { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(14 15 12 / 0.92) 0%, rgb(14 15 12 / 0.7) 34%, rgb(14 15 12 / 0.15) 72%, rgb(14 15 12 / 0.05) 100%), linear-gradient(0deg, rgb(14 15 12 / 0.9) 0%, rgb(14 15 12 / 0) 40%); }
+  .hero-bottom .hero-scrim { background: linear-gradient(0deg, rgb(14 15 12 / 0.95) 0%, rgb(14 15 12 / 0.55) 45%, rgb(14 15 12 / 0.2) 100%); }
+  .hero-content { position: relative; z-index: 2; align-self: flex-end; padding-top: 140px; padding-bottom: clamp(80px, 12vw, 150px); }
+  .hero-ridge { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: clamp(36px, 6vw, 96px); z-index: 1; }
+  :global(.hero-eyebrow) { color: var(--color-bone); margin-bottom: 22px; }
+  @media (max-width: 767px) {
+    .hero { flex-direction: column; min-height: 0; }
+    .hero-media { position: relative; height: 55vh; min-height: 340px; inset: auto; }
+    .hero-scrim { background: linear-gradient(0deg, rgb(14 15 12 / 1) 0%, rgb(14 15 12 / 0) 50%); height: 55vh; min-height: 340px; }
+    .hero-dust { height: 55vh; }
+    .hero-content { padding-top: 0; margin-top: -90px; padding-bottom: 72px; }
+  }
+</style>

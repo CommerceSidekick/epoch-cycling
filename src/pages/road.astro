@@ -1,0 +1,30 @@
+---
+import ComingSoonDiscipline from "../components/sections/ComingSoonDiscipline.astro";
+---
+<ComingSoonDiscipline
+  discipline="road"
+  metaTitle="Epoch Road | Coming Soon | Epoch Cycling"
+  metaDescription="Epoch Road is coming. Pacelines, crits, fast mornings and a road kit. Get on the list for the launch."
+  path="/road"
+  crumb="Epoch Road"
+  eyebrow="EPOCH ROAD · COMING SOON"
+  h1={["Fast mornings.", "Tight pacelines.", "Soon."]}
+  sub="Road is third for the Riders Club. Group rides, a race-fit kit and fuel for the hard hour."
+  notifyHref="/join?interest=road"
+  heroImg="roadPeloton"
+  heroPos="center 40%"
+  sideImgs={["roadDawn", "roadCrit"]}
+  sidePos={["center 60%", "center"]}
+  coming={[
+    { t: "Road group rides.", b: "No-drop and fast groups, clearly labeled. Pick yours." },
+    { t: "The road kit.", b: "Race fit, clean lines, EPOCH on the chest, ROAD on the sleeve." },
+    { t: "Race deal for road.", b: "Road and crit racers can apply now and get first look when spots open." },
+  ]}
+  untilBody="The club, the fuel and the app are open to road riders today."
+  links={[
+    { label: "Join the club", href: "/join?interest=road" },
+    { label: "How to fuel a ride", href: "/fuel/guide" },
+    { label: "Get the app", href: "/optimize#app" },
+    { label: "Apply to race", href: "/ride/apply?type=racer" },
+  ]}
+/>

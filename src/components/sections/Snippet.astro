@@ -1,0 +1,10 @@
+---
+// Renders restricted copy from src/content/snippets (the only home for clinical-adjacent words).
+import { getEntry, render } from "astro:content";
+interface Props { id: string; class?: string }
+const { id, class: cls = "" } = Astro.props;
+const entry = await getEntry("snippets", id);
+if (!entry) throw new Error(`Missing snippet ${id}`);
+const { Content } = await render(entry);
+---
+<div class={`prose-epoch ${cls}`} data-snippet={id} data-counsel-approved={String(entry.data.counselApproved)}><Content /></div>

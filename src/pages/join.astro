@@ -1,0 +1,74 @@
+---
+import BaseLayout from "../components/layout/BaseLayout.astro";
+import Photo from "../components/sections/Photo.astro";
+import WaitlistForm from "../components/forms/WaitlistForm.astro";
+import Eyebrow from "../components/ui/Eyebrow.astro";
+import PillarIcon from "../components/brand/PillarIcon.astro";
+const next = [
+  { n: "01", t: "First email in a minute.", b: "Say hi back. We read replies." },
+  { n: "02", t: "Rides near you.", b: "When a ride is posted near your ZIP, you hear first." },
+  { n: "03", t: "Drops before anyone.", b: "Kits, fuel, and club racer spots." },
+];
+---
+<BaseLayout
+  title="Join the Epoch Riders Club | Free | Epoch Cycling"
+  description="Join the Epoch Riders Club free. Get group rides near you, first dibs on kits and fuel, and early access to the Epoch app."
+  breadcrumbs={[{ name: "Join the club", path: "/join" }]}
+>
+  <section class="join topo">
+    <div class="join-media photo" aria-hidden="true">
+      <Photo img="mtbJumpSun" sizes="(min-width: 1024px) 40vw, 100vw" widths={[480, 800, 1200]} position="center 40%" decorative eager />
+      <div class="join-plate">
+        <span class="race-number">#EPOCH 000</span>
+        <span class="plate-big">YOUR<br />NUMBER<br />HERE</span>
+        <span class="plate-icons"><PillarIcon name="ride" size={22} /><PillarIcon name="fuel" size={22} /><PillarIcon name="optimize" size={22} /></span>
+      </div>
+    </div>
+    <div class="join-body">
+      <div class="join-head">
+        <Eyebrow>FREE TO JOIN</Eyebrow>
+        <h1 class="t-display-xl">Get in.</h1>
+        <p class="body-l muted measure">Group rides near you, first dibs on kits and fuel, and early access to the app. Takes 30 seconds.</p>
+      </div>
+      <div class="join-form card">
+        <WaitlistForm id="join-form" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="next-title">
+    <div class="wrap">
+      <h2 id="next-title" class="eyebrow mb-8">What happens next</h2>
+      <ol class="next" role="list">
+        {next.map((x, i) => (
+          <li class={`next-item reveal reveal-d${i}`}>
+            <span class="next-n" aria-hidden="true">{x.n}</span>
+            <p class="t-h3">{x.t}</p>
+            <p class="muted">{x.b}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .join { display: grid; border-bottom: 1px solid var(--color-slate); }
+  @media (min-width: 1024px) { .join { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); min-height: 100vh; } }
+  .join-media { position: relative; min-height: 300px; order: 2; }
+  @media (min-width: 1024px) { .join-media { order: 0; } }
+  .join-media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .join-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgb(14 15 12 / 0.7), rgb(14 15 12 / 0) 50%), linear-gradient(90deg, transparent 70%, rgb(14 15 12 / 0.6)); }
+  @media (min-width: 1024px) { .join-media { position: sticky; top: 0; height: 100vh; } }
+  .join-plate { position: absolute; left: 24px; bottom: 28px; z-index: 2; display: grid; gap: 8px; padding: 16px 18px; background: var(--color-bone); color: var(--color-carbon); border-radius: 8px; transform: rotate(-4deg); box-shadow: 0 24px 50px -20px rgb(0 0 0 / 0.8); }
+  .plate-big { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 1.9rem; line-height: 0.88; }
+  .plate-icons { display: flex; gap: 10px; color: var(--color-ember); }
+  .join-body { display: grid; gap: 36px; align-content: start; padding: 168px clamp(20px, 5vw, 72px) clamp(56px, 7vw, 96px); }
+  @media (min-width: 1024px) { .join-body { padding-top: 150px; } }
+  .join-head { display: grid; gap: 18px; }
+  .join-form { padding: clamp(22px, 3vw, 36px); }
+  .next { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 900px) { .next { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .next-item { display: grid; gap: 10px; padding: 26px; border: 1px solid var(--color-slate); border-radius: var(--radius-md); background: var(--color-ridge); }
+  .next-n { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 3rem; line-height: 0.9; color: transparent; -webkit-text-stroke: 1.5px var(--color-dawn); }
+</style>

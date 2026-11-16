@@ -1,0 +1,26 @@
+---
+// No-JS fallback after any form POST (5.20). On-demand so it can read ?form=.
+import BaseLayout from "../components/layout/BaseLayout.astro";
+import PageHeader from "../components/sections/PageHeader.astro";
+import Button from "../components/ui/Button.astro";
+import { SITE } from "../config/site";
+export const prerender = false;
+const form = Astro.url.searchParams.get("form") ?? "";
+const failed = Astro.url.searchParams.get("error") === "1";
+const map: Record<string, { h1: string; body: string; cta: string; href: string }> = {
+  waitlist: { h1: "You're in.", body: "Watch your inbox. Now is your time.", cta: "Find a ride", href: "/ride/events" },
+  footer_signup: { h1: "You're in.", body: "Watch your inbox. Now is your time.", cta: "Find a ride", href: "/ride/events" },
+  riders_club_application: { h1: "Application in.", body: `We review ${SITE.ridersClub.reviewCadence}. Keep riding.`, cta: "Back to the club", href: "/ride" },
+  contact: { h1: "Message sent.", body: "We'll reply within two business days.", cta: "Back to Epoch Cycling", href: "/" },
+};
+const v = failed
+  ? { h1: "That didn't go through.", body: "Go back, check the highlighted fields and try again.", cta: "Back to Epoch Cycling", href: "/" }
+  : map[form] ?? { h1: "Got it.", body: "Thanks for reaching out.", cta: "Back to Epoch Cycling", href: "/" };
+---
+<BaseLayout title="Thanks | Epoch Cycling" description="Thanks from Epoch Cycling." noindex>
+  <PageHeader eyebrow="EPOCH CYCLING" ghost="THANKS">
+    <h1 class="t-display">{v.h1}</h1>
+    <p class="body-l measure">{v.body}</p>
+    <div><Button href={v.href} arrow size="lg">{v.cta}</Button></div>
+  </PageHeader>
+</BaseLayout>

@@ -1,0 +1,11 @@
+---
+interface Props { name: string; required?: boolean; id?: string }
+const { name, required = false, id = `c-${name}` } = Astro.props;
+---
+<div class="field" data-field={name}>
+  <label class="check" for={id}>
+    <input type="checkbox" id={id} name={name} required={required} aria-required={required ? "true" : undefined} aria-describedby={`${id}-err`} />
+    <span><slot />{required && <span class="req" aria-hidden="true">*</span>}</span>
+  </label>
+  <p id={`${id}-err`} class="field-error" data-error-for={name}></p>
+</div>

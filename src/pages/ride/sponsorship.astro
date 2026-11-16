@@ -1,0 +1,195 @@
+---
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import PageHero from "../../components/sections/PageHero.astro";
+import SectionHead from "../../components/sections/SectionHead.astro";
+import Steps from "../../components/sections/Steps.astro";
+import Callout from "../../components/sections/Callout.astro";
+import FaqAccordion from "../../components/sections/FaqAccordion.astro";
+import CtaBand from "../../components/sections/CtaBand.astro";
+import RidgeDivider from "../../components/sections/RidgeDivider.astro";
+import Button from "../../components/ui/Button.astro";
+import Ph from "../../components/ui/Ph.astro";
+import Icon from "../../components/ui/Icon.astro";
+import CertificationLine from "../../components/ui/CertificationLine.astro";
+import { snippetBlock } from "../../lib/snippets";
+import { faqById } from "../../content/faq";
+import { SITE } from "../../config/site";
+const rc = SITE.ridersClub;
+const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+const phHtml = (v: string, label: string) => (v ? esc(v) : `<span class="ph" data-placeholder title="Placeholder: the owner sets this before launch">[${label}]</span>`);
+const clean = await snippetBlock("antidoping-full", "sponsorship");
+const faq = ["how-race-deal-works", "which-races-count", "disclose-sponsorship", "race-deal-medical", "licensed-racer"].map(faqById);
+const claimItems = [
+  { t: "Your result.", b: "A link to the official results page with your name on it. DNF counts if you started.", ph: "DNF rule: owner confirms" },
+  { t: "A photo of you in the Epoch kit at the race.", b: "Start line, course or finish. Race number visible if you can." },
+  { t: "Your entry receipt.", b: "Screenshot or PDF from the registration site." },
+  { t: "Your post.", b: "A link to one public post about the race, with the sponsorship disclosed." },
+];
+const disclosureDont = await snippetBlock("disclosure-dont", "dont");
+---
+<BaseLayout lcp="mtbDustyRace"
+  title="The Race Deal | Fuel With Epoch, Race in the Kit | Epoch Riders Club"
+  description="Club racers fuel with Epoch, race in the kit, and get race entries covered. How it works, what counts, how to claim, and the rules."
+  overlayHeader
+  breadcrumbs={[{ name: "Riders Club", path: "/ride" }, { name: "The race deal", path: "/ride/sponsorship" }]}
+>
+  <!-- 5.6.1 Hero -->
+  <PageHero img="mtbDustyRace" eyebrow="RIDERS CLUB · THE RACE DEAL" size="full" position="62% center" bar="var(--color-signal)" speed>
+    <h1 class="deal-h1 reveal"><span>Fuel with Epoch.</span> <span class="t-outline-bone">Race in the kit.</span> <span class="text-signal">We cover your entry.</span></h1>
+    <p class="body-l deal-sub reveal reveal-d1">Simple deal. You race. You rep the crew. We help pay for it.</p>
+    <div class="mt-8 reveal reveal-d2"><Button href="/ride/apply?type=racer" variant="signal" size="lg" arrow location="deal-hero">Apply to race</Button></div>
+  </PageHero>
+
+  <!-- 5.6.2 How it works -->
+  <section class="section" aria-labelledby="how-title">
+    <div class="wrap how-grid">
+      <SectionHead eyebrow="HOW IT WORKS" title="Four steps. One season." id="how-title" bar="var(--color-signal)" />
+      <Steps
+        big
+        accent="var(--color-signal)"
+        steps={[
+          { title: "Apply.", body: "Tell us what you race and where. Every level is welcome." },
+          { title: "Get accepted.", body: "Spots are limited each season. We pick riders who show up and bring people with them." },
+          { title: "Race in Epoch.", body: "Wear the Epoch kit. Fuel with Epoch Fuel or Epoch Salt on race day." },
+          { title: "Claim it.", body: `Send your proof within ${phHtml(rc.claimWindowDays, "claim window")} days. We reimburse your entry.` },
+        ]}
+      />
+    </div>
+  </section>
+
+  <!-- 5.6.3 What counts -->
+  <section class="on-ridge topo counts" aria-labelledby="counts-title">
+    <RidgeDivider color="var(--color-carbon)" flip />
+    <div class="wrap counts-inner">
+      <SectionHead eyebrow="WHAT COUNTS" title="The numbers." id="counts-title" bar="var(--color-signal)" />
+      <dl class="counts-dl">
+        <div><dt>Who's eligible</dt><dd>Accepted Club racers, 18 and over, living in {rc.states.replace(/\.$/, "")}. <Ph label="other eligibility rules: owner sets" /></dd></div>
+        <div><dt>Which races</dt><dd><Ph value={rc.eligibleRaces} label="eligible races" /></dd></div>
+        <div><dt>How much</dt><dd>Up to <Ph value={rc.entryCap} label="entry cap" /> per race</dd></div>
+        <div><dt>How many</dt><dd>Up to <Ph value={rc.racesPerSeason} label="races per season" /> races per season</dd></div>
+        <div><dt>Season</dt><dd><Ph value={rc.seasonDates} label="season dates" /></dd></div>
+        <div><dt>Spots</dt><dd><Ph value={rc.spots} label="spots" /> Club racer spots per season</dd></div>
+      </dl>
+    </div>
+    <RidgeDivider color="var(--color-carbon)" />
+  </section>
+
+  <!-- 5.6.4 How to claim -->
+  <section class="section" aria-labelledby="claim-title">
+    <div class="wrap claim-grid">
+      <div class="grid gap-5 content-start">
+        <p class="eyebrow">CLAIMS</p>
+        <h2 id="claim-title" class="t-h2">How to claim.</h2>
+        <p class="body-l muted">Within <Ph value={rc.claimWindowDays} label="claim window" /> days of your race, send us:</p>
+      </div>
+      <div class="grid gap-6">
+        <ol class="claim-list" role="list">
+          {claimItems.map((c, i) => (
+            <li class="reveal">
+              <span class="race-number">{String(i + 1).padStart(2, "0")}</span>
+              <div><p class="t-h4">{c.t}</p><p class="muted">{c.b}{c.ph && <> <Ph label={c.ph} /></>}</p></div>
+            </li>
+          ))}
+        </ol>
+        <div class="card p-6 grid gap-3">
+          <p class="flex items-center gap-2 font-semibold"><Icon name="mail" size={20} class="text-signal" />How to send it at launch</p>
+          <p>Email <a href={`mailto:${SITE.emails.club}`} class="link">{SITE.emails.club}</a> with the subject "Claim: Race name".</p>
+          <p class="small muted">Payment: <Ph label="payment method and timing: owner sets" /></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5.6.5 Disclosure -->
+  <section class="section on-ridge" aria-labelledby="disclose-title">
+    <div class="wrap">
+      <SectionHead eyebrow="DISCLOSURE" title="Say you're sponsored. Every time." id="disclose-title" intro="When Epoch covers your entry or sends you free stuff, your posts about Epoch are ads in the eyes of the law. That's fine. Just say so, clearly, where people will see it." bar="var(--color-signal)" />
+      <div class="dodont">
+        <div class="dd-col dd-do reveal">
+          <h3 class="t-h3 flex items-center gap-3"><span class="dd-badge">DO</span></h3>
+          <ul role="list">
+            <li>Put #ad or #sponsored plus #EpochAthlete at the start of the caption, or use the platform's paid-partnership label.</li>
+            <li>Say it out loud in videos: "Epoch sponsors my racing."</li>
+            <li>Disclose on every post about Epoch, not just the first one.</li>
+          </ul>
+        </div>
+        <div class="dd-col dd-dont reveal reveal-d1">
+          <h3 class="t-h3 flex items-center gap-3"><span class="dd-badge">DON'T</span></h3>
+          <ul role="list">
+            <li>Hide the tag in a pile of hashtags at the end.</li>
+            <li>Rely on "#EpochRidersClub" alone. That's a community tag, not a disclosure.</li>
+            <li>Say anything about Epoch Fuel or Salt that we don't say. No health claims, no "it fixed my cramps".</li>
+            <li>{disclosureDont.body}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5.6.6 and 5.6.7 -->
+  <section class="section" aria-label="The rules behind the deal">
+    <div class="wrap grid gap-6">
+      <Callout variant="bone" title="What the deal is, and isn't.">
+        <p>The race deal is about racing in the kit and fueling with Epoch Fuel and Salt. That's it. It is never tied to the app's paid plans, to coaching, or to any medical program. You never need any of those to join, stay in, or get an entry covered. We'll never ask you to.</p>
+      </Callout>
+      <Callout title={clean.title}>
+        <p>{clean.body}</p>
+        <CertificationLine />
+      </Callout>
+    </div>
+  </section>
+
+  <!-- 5.6.8 Mini FAQ -->
+  <section class="section pt-0" aria-labelledby="dfaq-title">
+    <div class="wrap faq-grid">
+      <div class="grid gap-4 content-start">
+        <p class="eyebrow">QUESTIONS</p>
+        <h2 id="dfaq-title" class="t-h2">The fine print, answered.</h2>
+        <a href="/faq" class="link">All questions</a>
+      </div>
+      <FaqAccordion entries={faq} />
+    </div>
+  </section>
+
+  <!-- 5.6.9 CTA band -->
+  <CtaBand title="This is your season." img="mtbEnduroRocks" position="center 45%">
+    <Button href="/ride/apply?type=racer" variant="signal" size="lg" arrow location="deal-closing">Apply to race</Button>
+    <Button href="/riders-club-terms" variant="outline" size="lg" location="deal-closing">Read the full terms</Button>
+  </CtaBand>
+</BaseLayout>
+
+<style>
+  .deal-h1 { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(2.75rem, 8vw, 7.25rem); line-height: 0.88; letter-spacing: -0.02em; max-width: 13ch; }
+  .deal-h1 span { display: block; }
+  .deal-sub { margin-top: 24px; max-width: 40ch; color: #ece7dc; }
+  .how-grid { display: grid; gap: 24px; }
+  @media (min-width: 1024px) { .how-grid { grid-template-columns: 0.8fr 1.2fr; align-items: start; } }
+  .counts { overflow: hidden; }
+  .counts-inner { padding-block: clamp(48px, 7vw, 96px); }
+  .counts-dl { display: grid; gap: 1px; background: var(--color-slate); border: 1px solid var(--color-slate); border-radius: var(--radius-md); overflow: hidden; margin: 0; }
+  @media (min-width: 768px) { .counts-dl { grid-template-columns: 1fr 1fr; } }
+  .counts-dl > div { background: var(--color-ridge); padding: 24px 26px; display: grid; gap: 8px; }
+  .counts-dl dt { font-family: var(--font-mono); font-size: 0.8125rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-signal); }
+  .counts-dl dd { margin: 0; font-size: 1.125rem; min-width: 0; }
+  .counts-dl > div { min-width: 0; }
+  .counts-dl :global(.ph), .claim-list :global(.ph), .claim-grid :global(.ph) { white-space: normal; }
+  .claim-grid { display: grid; gap: 32px; }
+  @media (min-width: 1024px) { .claim-grid { grid-template-columns: 0.8fr 1.2fr; } }
+  .claim-list { list-style: none; margin: 0; padding: 0; display: grid; }
+  .claim-list li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; padding: 18px 0; border-top: 1px solid var(--color-slate); }
+  .claim-list .race-number { color: var(--color-signal); padding-top: 3px; }
+  .dodont { display: grid; gap: 16px; }
+  @media (min-width: 900px) { .dodont { grid-template-columns: 1fr 1fr; } }
+  .dd-col { padding: clamp(22px, 3vw, 34px); border-radius: var(--radius-md); background: var(--color-carbon); border: 1px solid var(--color-slate); display: grid; gap: 16px; align-content: start; }
+  .dd-do { border-top: 4px solid var(--color-signal); }
+  .dd-dont { border-top: 4px solid var(--color-dawn); }
+  .dd-badge { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 2.25rem; line-height: 1; }
+  .dd-do .dd-badge { color: var(--color-signal); }
+  .dd-dont .dd-badge { color: var(--color-dawn); }
+  .dd-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .dd-col li { padding-left: 22px; position: relative; }
+  .dd-do li::before { content: "+"; position: absolute; left: 0; color: var(--color-signal); font-weight: 700; }
+  .dd-dont li::before { content: "×"; position: absolute; left: 0; color: var(--color-dawn); font-weight: 700; }
+  .faq-grid { display: grid; gap: 32px; }
+  @media (min-width: 1024px) { .faq-grid { grid-template-columns: 0.7fr 1.3fr; } }
+</style>

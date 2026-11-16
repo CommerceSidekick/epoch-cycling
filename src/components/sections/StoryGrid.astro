@@ -1,0 +1,18 @@
+---
+import { getCollection } from "astro:content";
+import StoryCard from "./StoryCard.astro";
+import { readingTime } from "../../lib/format";
+interface Props { limit?: number; category?: string; exclude?: string; discipline?: string }
+const { limit, category, exclude, discipline } = Astro.props;
+let stories = (await getCollection("stories", (s) => !s.data.draft))
+  .filter((s) => !category || s.data.category === category)
+  .filter((s) => !discipline || s.data.disciplines.includes(discipline as any) || s.data.disciplines.length === 0)
+  .filter((s) => s.id !== exclude)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+if (limit) stories = stories.slice(0, limit);
+---
+{stories.length > 0 ? (
+  <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3" data-filter-list>
+    {stories.map((s) => <StoryCard story={s} minutes={readingTime(s.body ?? "")} />)}
+  </div>
+) : <slot name="empty" />}

@@ -1,0 +1,14 @@
+---
+import LegalPage from "../components/sections/LegalPage.astro";
+import ExternalLink from "../components/ui/ExternalLink.astro";
+---
+<LegalPage id="terms" path="/terms">
+  <h2>Related</h2>
+  <p>The Epoch app and medical programs are covered by the <ExternalLink href="https://epochhealthsystem.com/terms" campaign="terms" class="link">Epoch Health System terms</ExternalLink>.</p>
+</LegalPage>
+
+<style is:global>
+  .legal .ph { white-space: normal; display: inline; line-height: 1.7; }
+  .legal p.ph { display: block; padding: 12px 14px; margin-bottom: 1.2em; }
+  .legal a:not(.btn) { text-decoration: underline; text-underline-offset: 3px; }
+</style>

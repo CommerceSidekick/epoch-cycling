@@ -1,0 +1,193 @@
+---
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import PageHero from "../../components/sections/PageHero.astro";
+import SectionHead from "../../components/sections/SectionHead.astro";
+import Steps from "../../components/sections/Steps.astro";
+import EventList from "../../components/sections/EventList.astro";
+import KitGrid from "../../components/sections/KitGrid.astro";
+import RiderGrid from "../../components/sections/RiderGrid.astro";
+import Callout from "../../components/sections/Callout.astro";
+import CtaBand from "../../components/sections/CtaBand.astro";
+import RidgeDivider from "../../components/sections/RidgeDivider.astro";
+import Lockup from "../../components/brand/Lockup.astro";
+import Button from "../../components/ui/Button.astro";
+import LinkArrow from "../../components/ui/LinkArrow.astro";
+import Ph from "../../components/ui/Ph.astro";
+import Icon from "../../components/ui/Icon.astro";
+import { snippetBlock } from "../../lib/snippets";
+import { SITE } from "../../config/site";
+const rc = SITE.ridersClub;
+const clean = await snippetBlock("antidoping-short", "ride");
+const ways = [
+  {
+    n: "01", name: "Member", price: "Free", who: "Anyone.",
+    items: ["Group rides and events near you", "First dibs on kit drops and fuel drops", "The crew, inside the Epoch app"],
+    cta: "Join free", href: "/join", variant: "primary" as const,
+  },
+  {
+    n: "02", name: "Club racer", price: "By application", who: "Racers of any level.",
+    items: ["Everything members get", "Race entries covered, up to the club limit", "Club racer kit with the Signal cuff stripe"],
+    cta: "Apply to race", href: "/ride/apply?type=racer", variant: "signal" as const, racer: true,
+  },
+  {
+    n: "03", name: "Ambassador", price: "By application", who: "Riders who bring people together.",
+    items: ["Host rides, build the local crew", "Kit and fuel for the rides you host (owner confirms)", "Ambassador code on Fuel and kit"],
+    cta: "Apply to be an ambassador", href: "/ride/apply?type=ambassador", variant: "outline" as const,
+  },
+];
+---
+<BaseLayout lcp="crewSilhouette"
+  title="The Epoch Riders Club | Group Rides, Kits and Race Entry | Epoch Cycling"
+  description="Join the Epoch Riders Club. Group rides, events, team kits and ambassadors. Club racers fuel with Epoch, race in the kit, and get race entries covered."
+  overlayHeader
+  breadcrumbs={[{ name: "Riders Club", path: "/ride" }]}
+>
+  <!-- 5.2.1 Hero -->
+  <PageHero img="crewSilhouette" eyebrow="PILLAR 01 · RIDE" size="full" position="center 62%" dust>
+    <div class="ride-lockup reveal"><Lockup variant="club" size="md" /></div>
+    <h1 class="t-display-xl ride-h1 reveal">This is the <span class="text-dawn">Riders Club.</span></h1>
+    <p class="body-l ride-sub reveal reveal-d1">Group rides, race weekends and a kit you'll actually want to wear. Free to join. Racers can apply for more.</p>
+    <div class="ride-ctas reveal reveal-d2">
+      <Button href="/join" size="lg" arrow location="ride-hero">Join free</Button>
+      <Button href="/ride/apply" variant="outline" size="lg" location="ride-hero">Apply to race</Button>
+    </div>
+  </PageHero>
+
+  <!-- 5.2.2 Three ways in -->
+  <section class="section" aria-labelledby="ways-title">
+    <div class="wrap">
+      <SectionHead eyebrow="THE CLUB" title="Three ways in." id="ways-title" />
+      <ul class="ways" role="list">
+        {ways.map((w, i) => (
+          <li class={`way card reveal reveal-d${i} ${w.racer ? "way-racer" : ""}`}>
+            <div class="way-top">
+              <span class="race-number">#{w.n}</span>
+              <span class={`tag ${w.racer ? "" : "tag-outline"}`}>{w.price}</span>
+            </div>
+            <h3 class="way-name">{w.name}</h3>
+            <p class="way-who">{w.who}</p>
+            <ul class="way-list" role="list">
+              {w.items.map((it) => <li><Icon name="check" size={18} class="way-check" />{it}</li>)}
+            </ul>
+            <div class="mt-auto pt-4"><Button href={w.href} variant={w.variant} arrow location={`ride-ways-${w.n}`}>{w.cta}</Button></div>
+          </li>
+        ))}
+      </ul>
+      <p class="fine mt-8 measure">Club racer and ambassador spots are limited each season and picked at Epoch's discretion. Full rules in the <a href="/riders-club-terms" class="link">Riders Club terms</a>.</p>
+    </div>
+  </section>
+
+  <!-- 5.2.3 The race deal, short version -->
+  <section class="deal on-ridge topo" aria-labelledby="deal-title">
+    <RidgeDivider color="var(--color-carbon)" flip />
+    <div class="wrap deal-grid">
+      <div class="deal-left">
+        <p class="eyebrow" style="--eyebrow-bar: var(--color-signal)">THE RACE DEAL</p>
+        <h2 id="deal-title" class="deal-title reveal"><span>Fuel with Epoch.</span> <span class="t-outline-bone">Race in the kit.</span> <span class="text-signal">We cover your entry.</span></h2>
+      </div>
+      <div class="deal-right">
+        <Steps
+          big
+          accent="var(--color-signal)"
+          steps={[
+            { title: "Get in.", body: "Apply and get accepted as a Club racer." },
+            { title: "Race in Epoch.", body: "Wear the kit. Fuel with Epoch Fuel or Salt on race day." },
+            { title: "Send proof. Get covered.", body: "Your result, a photo in the kit, and your entry receipt. We reimburse your entry under the club terms." },
+          ]}
+        />
+        <div class="deal-fine">
+          <p>Coverage is up to <Ph value={rc.entryCap} label="entry cap" /> per race and <Ph value={rc.racesPerSeason} label="races per season" /> races per season, for eligible races (<Ph value={rc.eligibleRaces} label="eligible races" />).</p>
+          <p>Posts about Epoch must say you're sponsored (#EpochAthlete plus #ad, or the platform's paid-partnership label).</p>
+          <p><strong>The race deal is about fuel and kit. It has nothing to do with any medical program, ever.</strong></p>
+        </div>
+        <Button href="/ride/sponsorship" variant="signal" arrow location="ride-deal">Get the full details</Button>
+      </div>
+    </div>
+    <RidgeDivider color="var(--color-carbon)" />
+  </section>
+
+  <!-- 5.2.4 Group rides and events -->
+  <section class="section" aria-labelledby="rides-title">
+    <div class="wrap">
+      <SectionHead eyebrow="ON THE CALENDAR" title="Ride with us." id="rides-title" intro="Open to anyone who wants in. All levels. Every ride has a regroup plan and a sweep." />
+      <EventList limit={4} emptyHost />
+      <div class="flex flex-wrap items-center gap-6 mt-10">
+        <Button href="/ride/events" variant="outline" arrow location="ride-events">See the calendar</Button>
+        <LinkArrow href="/contact?topic=host">Want to host a ride?</LinkArrow>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5.2.5 Team kits -->
+  <section class="section on-ridge topo" aria-labelledby="kit-title">
+    <div class="wrap">
+      <div class="kit-head">
+        <SectionHead eyebrow="TEAM KITS" title="The kit." id="kit-title" intro="EPOCH on the chest. Your discipline on the sleeve. Three small marks for Ride, Fuel and Optimize. That's it. No clutter.">
+          <span class="tag self-start">COMING SOON</span>
+        </SectionHead>
+      </div>
+      <KitGrid />
+      <div class="flex flex-wrap items-center gap-6 mt-10">
+        <Button href="/join?interest=kits" arrow location="ride-kit">Get notified</Button>
+        <LinkArrow href="/stories/whats-on-the-kit">What the marks mean</LinkArrow>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5.2.6 The team preview (hidden while showRiders is false) -->
+  {SITE.flags.showRiders && (
+    <section class="section" aria-labelledby="team-title">
+      <div class="wrap">
+        <SectionHead eyebrow="THE TEAM" title="The team." id="team-title" />
+        <RiderGrid featured limit={4} />
+        <div class="mt-10"><Button href="/ride/team" variant="outline" arrow location="ride-team">Meet the team</Button></div>
+      </div>
+    </section>
+  )}
+
+  <!-- 5.2.7 Racing clean -->
+  <section class="section pt-0" aria-label="Racing clean">
+    <div class="wrap">
+      <Callout title={clean.title}>
+        <p>{clean.body}</p>
+        <p><LinkArrow href="/faq#anti-doping" accent="var(--color-signal)">Read the anti-doping FAQ</LinkArrow></p>
+      </Callout>
+    </div>
+  </section>
+
+  <!-- 5.2.8 CTA band -->
+  <CtaBand title="Get in the crew." img="crewRegroup" position="center 40%">
+    <Button href="/join" size="lg" arrow location="ride-closing">Join free</Button>
+    <Button href="/ride/apply" variant="outline" size="lg" location="ride-closing">Apply to race</Button>
+  </CtaBand>
+</BaseLayout>
+
+<style>
+  .ride-lockup { color: var(--color-bone); margin-bottom: 26px; }
+  .ride-h1 { max-width: 12ch; }
+  .ride-sub { margin-top: 24px; max-width: 40ch; color: #ece7dc; }
+  .ride-ctas { display: flex; flex-wrap: wrap; gap: 16px 22px; margin-top: 32px; }
+
+  .ways { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 960px) { .ways { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .way { position: relative; display: flex; flex-direction: column; gap: 14px; padding: clamp(24px, 3vw, 34px); border-top: 4px solid var(--color-slate); }
+  .way-racer { border-top-color: var(--color-signal); background: color-mix(in srgb, var(--color-signal) 5%, var(--color-ridge)); }
+  .way-top { display: flex; justify-content: space-between; align-items: center; color: var(--color-dust); }
+  .way-racer .way-top .race-number { color: var(--color-signal); }
+  .way-name { font-family: var(--font-display); font-weight: 900; font-stretch: 112%; text-transform: uppercase; font-size: clamp(1.6rem, 2vw, 2.1rem); line-height: 0.95; margin-top: 18px; overflow-wrap: break-word; hyphens: auto; }
+  .way-who { color: var(--color-dust); }
+  .way-list { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 10px; }
+  .way-list li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; }
+  :global(.way-check) { color: var(--color-dawn); margin-top: 3px; }
+  .way-racer :global(.way-check) { color: var(--color-signal); }
+
+  .deal { overflow: hidden; }
+  .deal-grid { display: grid; gap: 48px; padding-block: clamp(56px, 8vw, 110px); }
+  @media (min-width: 1024px) { .deal-grid { grid-template-columns: 1fr 1fr; align-items: start; } .deal-left { position: sticky; top: 120px; } }
+  .deal-left { display: grid; gap: 20px; }
+  .deal-title { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(2.5rem, 6vw, 5.25rem); line-height: 0.9; letter-spacing: -0.015em; }
+  .deal-title span { display: block; }
+  .deal-right { display: grid; gap: 26px; justify-items: start; }
+  .deal-fine { display: grid; gap: 8px; font-size: 0.9375rem; color: #d9d4c8; border-left: 3px solid var(--color-signal); padding: 4px 0 4px 18px; }
+  .deal-fine strong { color: var(--color-bone); font-weight: 600; }
+</style>

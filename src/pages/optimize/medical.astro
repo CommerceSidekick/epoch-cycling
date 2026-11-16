@@ -1,0 +1,57 @@
+---
+// 18+ handoff page (5.14). noindex, no imagery, no form, no pixels. The click is a self-attestation only and is never stored.
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import Snippet from "../../components/sections/Snippet.astro";
+import Eyebrow from "../../components/ui/Eyebrow.astro";
+import Icon from "../../components/ui/Icon.astro";
+import Mark from "../../components/brand/Mark.astro";
+import { snippetBlocks } from "../../lib/snippets";
+import { withUtm } from "../../lib/utm";
+import { SITE } from "../../config/site";
+import { BRAND } from "../../config/brand";
+const things = await snippetBlocks("handoff-page");
+const handoff = withUtm(SITE.handoffUrl, "optimize_handoff");
+---
+<BaseLayout
+  title="Heading to Epoch Total Health | Epoch Cycling"
+  description="Epoch Total Health is the medically guided side of Epoch, run on epochhealthsystem.com. Adults 18 and over."
+  noindex
+  hideSignup
+  breadcrumbs={[{ name: "Optimize", path: "/optimize" }, { name: BRAND.program, path: "/optimize/medical" }]}
+>
+  <section class="handoff-page on-light">
+    <div class="hp-col">
+      <Mark class="hp-mark" />
+      <Eyebrow bar="var(--color-ember)">ONE STEP OUT</Eyebrow>
+      <h1 class="t-h2 hp-h1">You're heading to Epoch Health System.</h1>
+      <Snippet id="handoff-page" class="body-l hp-body" />
+      <h2 class="t-h3 mt-4">Four things to know</h2>
+      <ol class="hp-list" role="list">
+        {things.map((t, i) => (
+          <li><span class="mono hp-n">{String(i + 1).padStart(2, "0")}</span><div><p class="t-h4">{t.title}</p><p class="hp-b">{t.body}</p></div></li>
+        ))}
+      </ol>
+      <div class="hp-ctas">
+        <a href={handoff} class="btn btn-dark btn-lg" rel="noopener" data-outbound>I'm 18 or older. Continue to {BRAND.program} <Icon name="arrow-up-right" size={18} class="arr" /><span class="sr-only"> (opens Epoch Health System)</span></a>
+        <a href="/optimize#app" class="link-arrow"><span>Not now. Back to the app and coaching</span><Icon name="arrow-right" size={18} class="arr" /></a>
+      </div>
+      <p class="hp-u18">Under 18? The club, the app and coaching are all yours. Medical programs aren't, yet.</p>
+      <p class="fine">This page doesn't collect any information.</p>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .handoff-page { padding: clamp(140px, 16vw, 200px) 20px clamp(64px, 9vw, 120px); }
+  .hp-col { max-width: 720px; margin: 0 auto; display: grid; gap: 22px; }
+  :global(.hp-mark) { width: 72px; height: auto; color: var(--color-carbon); }
+  .hp-h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+  .hp-body :global(p) { color: #26271f; }
+  .hp-list { list-style: none; padding: 0; margin: 0; }
+  .hp-list li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; padding: 18px 0; border-top: 1px solid #ddd6c8; }
+  .hp-list li:last-child { border-bottom: 1px solid #ddd6c8; }
+  .hp-n { color: var(--color-ember); padding-top: 2px; }
+  .hp-b { color: #3b3c33; margin-top: 4px; }
+  .hp-ctas { display: flex; flex-wrap: wrap; gap: 16px 26px; align-items: center; margin-top: 10px; }
+  .hp-ctas .btn { white-space: normal; text-align: left; line-height: 1.25; padding-block: 14px; }
+  .hp-u18 { font-weight: 600; }
+</style>

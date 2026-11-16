@@ -1,0 +1,44 @@
+---
+// "Our standard" (5.11.3). GMP, testing and certification items render only when confirmed.
+import Icon from "../ui/Icon.astro";
+import PillarIcon from "../brand/PillarIcon.astro";
+import Ph from "../ui/Ph.astro";
+import { SITE } from "../../config/site";
+interface Props { headingTag?: "h2" | "h3"; compact?: boolean }
+const { headingTag = "h2", compact = false } = Astro.props;
+const H = headingTag;
+const items = [
+  { show: true, icon: "check", title: "Full labels.", body: "Every ingredient and amount, in plain sight. No proprietary blends." },
+  { show: SITE.fuelClaims.gmpConfirmed, icon: "shield", title: "Made in GMP facilities.", body: "Made under FDA current Good Manufacturing Practice rules." },
+  { show: SITE.fuelClaims.testingConfirmed, icon: "check", title: "Tested.", body: "Batches tested for identity and purity before they ship." },
+  { show: true, icon: "mountain", title: "Built for riding.", body: "Picked for long climbs and hot days, not for a drugstore shelf." },
+].filter((i) => i.show) as { icon: "check" | "shield" | "mountain"; title: string; body: string }[];
+const cert = SITE.flags.certifiedForSport;
+---
+<div class={`standard ${compact ? "compact" : ""}`}>
+  <H class={compact ? "t-h3 uppercase" : "t-h2 reveal"}>What goes in your bottle should be on the label.</H>
+  <ul class="std-grid" role="list">
+    {items.map((it, i) => (
+      <li class={`std-item reveal reveal-d${Math.min(i, 3)}`}>
+        <span class="std-icon"><Icon name={it.icon} size={24} /></span>
+        <p class="t-h4">{it.title}</p>
+        <p class="muted small">{it.body}</p>
+      </li>
+    ))}
+    {cert && (
+      <li class="std-item reveal">
+        <span class="std-icon"><PillarIcon name="fuel" size={24} /></span>
+        <p class="t-h4">Certified for sport.</p>
+        <p class="muted small">Certified by <Ph value={SITE.certification.program} label="certification program" />. Look up your batch at <Ph value={SITE.certification.lookupUrl} label="batch lookup URL" />.</p>
+      </li>
+    )}
+  </ul>
+</div>
+<style>
+  .standard { display: grid; gap: clamp(28px, 4vw, 48px); }
+  .standard > :first-child { max-width: 20ch; }
+  .compact > :first-child { max-width: none; }
+  .std-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .std-item { display: grid; gap: 10px; align-content: start; padding: 24px; border-radius: var(--radius-md); background: var(--color-ridge); border: 1px solid var(--color-slate); border-top: 3px solid var(--color-signal); }
+  .std-icon { display: inline-grid; place-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--color-moss); color: var(--color-signal); }
+</style>

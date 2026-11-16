@@ -1,0 +1,28 @@
+---
+import Icon from "./Icon.astro";
+interface Props {
+  href?: string;
+  variant?: "primary" | "signal" | "accent" | "sky" | "bone" | "dark" | "outline";
+  size?: "sm" | "md" | "lg";
+  arrow?: boolean | "external";
+  type?: "button" | "submit";
+  class?: string;
+  location?: string;
+  [key: string]: any;
+}
+const { href, variant = "primary", size = "md", arrow = false, type = "button", class: cls = "", location, ...rest } = Astro.props;
+const classes = `btn btn-${variant} ${size !== "md" ? `btn-${size}` : ""} ${cls}`;
+const label = (await Astro.slots.render("default")).replace(/<[^>]+>/g, "").trim();
+---
+{href ? (
+  <a href={href} class={classes} data-cta={label} data-cta-location={location} {...rest}>
+    <slot />
+    {arrow === true && <Icon name="arrow-right" size={18} class="arr" />}
+    {arrow === "external" && <Icon name="arrow-up-right" size={18} class="arr" />}
+  </a>
+) : (
+  <button type={type} class={classes} {...rest}>
+    <slot />
+    {arrow === true && <Icon name="arrow-right" size={18} class="arr" />}
+  </button>
+)}

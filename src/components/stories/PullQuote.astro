@@ -1,0 +1,14 @@
+---
+// Real quotes only, from a real person with consent on file. Never invent one.
+interface Props { by?: string }
+const { by } = Astro.props;
+---
+<figure class="pq not-prose">
+  <blockquote><slot /></blockquote>
+  {by && <figcaption class="mono">{by}</figcaption>}
+</figure>
+<style>
+  .pq { margin: 2.2em 0; padding-left: 24px; border-left: 4px solid var(--color-dawn); }
+  .pq blockquote { font-family: var(--font-display); font-weight: 800; font-stretch: 115%; font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1.1; text-transform: uppercase; }
+  .pq figcaption { margin-top: 12px; color: var(--color-dust); font-size: 0.875rem; letter-spacing: 0.08em; }
+</style>

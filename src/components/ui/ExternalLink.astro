@@ -1,0 +1,11 @@
+---
+// Master-domain links: UTM + hidden "(opens Epoch Health System)" + same tab (it's the family).
+// Third-party links (WADA, Global DRO, USADA, race registration): new tab + hidden "(opens in a new tab)".
+import { withUtm, isMasterDomain } from "../../lib/utm";
+import Icon from "./Icon.astro";
+interface Props { href: string; campaign?: string; class?: string; arrow?: boolean; [k: string]: any }
+const { href, campaign = "link", class: cls = "", arrow = true, ...rest } = Astro.props;
+const master = isMasterDomain(href);
+const url = master ? withUtm(href, campaign) : href;
+---
+<a href={url} class={cls} rel="noopener" target={master ? undefined : "_blank"} data-outbound {...rest}><slot />{arrow && <Icon name="arrow-up-right" size={16} class="inline-block align-[-2px] ml-1" />}<span class="sr-only">{master ? " (opens Epoch Health System)" : " (opens in a new tab)"}</span></a>

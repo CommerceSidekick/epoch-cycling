@@ -1,0 +1,18 @@
+---
+import FormShell from "./FormShell.astro";
+import Field from "./Field.astro";
+import { TOPIC_OPTS } from "../../lib/form-fields";
+---
+<FormShell form="contact" id="contact-form" submitLabel="Send message">
+  <div class="grid gap-5 sm:grid-cols-2">
+    <Field name="name" label="Name" required autocomplete="name" maxlength={80} />
+    <Field name="email" label="Email" type="email" required autocomplete="email" maxlength={254} />
+  </div>
+  <div data-preselect-select="topic">
+    <Field name="topic" label="Topic" type="select" options={TOPIC_OPTS} required id="f-topic" />
+  </div>
+  <p class="hint" data-show-when="topic=app|privacy" hidden>The app is run by Epoch Health System. We'll pass this to their support team.</p>
+  <Field name="event_name" label="Race or event name" maxlength={120} showWhen="topic=claim|host" />
+  <p class="notice small">Please don't include medical details, symptoms or medications here.</p>
+  <Field name="message" label="Message" type="textarea" required maxlength={2000} counter rows={6} />
+</FormShell>

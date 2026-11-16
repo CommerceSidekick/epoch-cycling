@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../components/layout/BaseLayout.astro";
+import Photo from "../components/sections/Photo.astro";
+import Button from "../components/ui/Button.astro";
+import Eyebrow from "../components/ui/Eyebrow.astro";
+---
+<BaseLayout lcp="mtbFogJump" lcpWidths={[640, 1024, 1600]} title="Wrong turn | Epoch Cycling" description="This trail dead-ends. Let's get you back to the trailhead." noindex overlayHeader>
+  <section class="nf">
+    <div class="nf-media photo"><Photo img="mtbFogJump" eager sizes="100vw" widths={[640, 1024, 1600]} decorative /></div>
+    <div class="nf-shade" aria-hidden="true"></div>
+    <div class="wrap nf-inner">
+      <Eyebrow class="text-bone">ERROR 404 · OFF COURSE</Eyebrow>
+      <h1 class="t-display-xl">Wrong <span class="text-dawn">turn.</span></h1>
+      <p class="body-l nf-body">This trail dead-ends. Happens to the best of us. Let's get you back to the trailhead.</p>
+      <div class="flex flex-wrap gap-4">
+        <Button href="/" size="lg" arrow>Home</Button>
+        <Button href="/ride/events" variant="outline" size="lg">Find a ride</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .nf { position: relative; isolation: isolate; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; }
+  .nf-media { position: absolute; inset: 0; z-index: -2; }
+  .nf-media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .nf-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(14 15 12 / 0.92), rgb(14 15 12 / 0.35)), linear-gradient(0deg, var(--color-carbon), transparent 40%); }
+  .nf-inner { display: grid; gap: 24px; padding-top: 160px; padding-bottom: 110px; }
+  .nf-body { max-width: 40ch; color: #e4dfd3; }
+</style>

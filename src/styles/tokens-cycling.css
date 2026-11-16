@@ -1,0 +1,35 @@
+/* Epoch Cycling deltas (spec 3.2, 3.3, 6.5). Never edit master values in tokens.css. */
+@theme {
+  --color-grit: #D9A441;
+  --color-grit-ink: #7A5512;
+  --color-velo: #A592FF;
+  --color-velo-ink: #4B33B5;
+}
+
+:root {
+  /* discipline accents (3.3) */
+  --disc-mtb: var(--color-dawn);
+  --disc-mtb-on-light: var(--color-ember);
+  --disc-gravel: var(--color-grit);
+  --disc-gravel-on-light: var(--color-grit-ink);
+  --disc-road: var(--color-velo);
+  --disc-road-on-light: var(--color-velo-ink);
+
+  /* pillar mapping on this site */
+  --pillar-ride: var(--color-dawn);
+  --pillar-fuel: var(--color-moss);
+  --pillar-optimize: var(--color-sky);
+  --handoff-bg: var(--color-bone);
+  --handoff-text: var(--color-carbon);
+
+  /* texture */
+  --grain-opacity: 0.05; /* master 0.02 to 0.04 */
+  --topo-opacity: 0.05;
+
+  --disc: var(--color-dawn);
+  --disc-on-light: var(--color-ember);
+}
+
+[data-discipline="mtb"] { --disc: var(--disc-mtb); --disc-on-light: var(--disc-mtb-on-light); }
+[data-discipline="gravel"] { --disc: var(--disc-gravel); --disc-on-light: var(--disc-gravel-on-light); }
+[data-discipline="road"] { --disc: var(--disc-road); --disc-on-light: var(--disc-road-on-light); }

@@ -1,0 +1,9 @@
+---
+interface Props { variant?: "slate" | "bone"; class?: string; title?: string; titleTag?: "h2" | "h3" }
+const { variant = "slate", class: cls = "", title, titleTag = "h3" } = Astro.props;
+const T = titleTag;
+---
+<aside class={`callout ${variant === "bone" ? "callout-bone" : ""} reveal ${cls}`}>
+  {title && <T class="t-h3 mb-3">{title}</T>}
+  <div class="grid gap-3 measure"><slot /></div>
+</aside>

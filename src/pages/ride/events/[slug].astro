@@ -1,0 +1,161 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import { getImage, Image } from "astro:assets";
+import BaseLayout from "../../../components/layout/BaseLayout.astro";
+import Eyebrow from "../../../components/ui/Eyebrow.astro";
+import Button from "../../../components/ui/Button.astro";
+import LinkArrow from "../../../components/ui/LinkArrow.astro";
+import Icon from "../../../components/ui/Icon.astro";
+import Ph from "../../../components/ui/Ph.astro";
+import { eventLabel, eventLong } from "../../../lib/format";
+import { eventSchema } from "../../../lib/event-schema";
+import { SITE } from "../../../config/site";
+
+export const getStaticPaths = (async () => {
+  const events = await getCollection("events");
+  return events.map((event) => ({ params: { slug: event.id }, props: { event } }));
+}) satisfies GetStaticPaths;
+
+const { event } = Astro.props as { event: CollectionEntry<"events"> };
+const e = event.data;
+const { Content } = await render(event);
+const disc = e.disciplines[0];
+const typeLabel = { "group-ride": "Group ride", race: "Race", clinic: "Clinic", meetup: "Meetup" }[e.type];
+const dateShort = new Intl.DateTimeFormat("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: e.timezone }).format(e.start);
+const firstSentence = (event.body ?? "").replace(/[#*_>`\n]+/g, " ").trim().split(/(?<=\.)\s/)[0] ?? "";
+const description = `${dateShort}. ${disc.toUpperCase()} ${typeLabel.toLowerCase()} in ${e.location.city}. ${e.level}. ${firstSentence}`.trim();
+const pageUrl = `${SITE.url}/ride/events/${event.id}`;
+const img = e.image ? await getImage({ src: e.image, width: 1200, format: "jpg" }) : null;
+const schema = eventSchema(event, pageUrl, img?.src ?? "/og/default.png", (event.body ?? e.title).replace(/[#*_>`\n]+/g, " ").trim());
+const bring = e.whatToBring ?? ["Helmet", "Water", "A snack", "A spare tube", "Epoch Salt if it's hot"];
+const needsWaiver = e.waiverRequired;
+---
+<BaseLayout
+  title={`${e.title} | ${e.location.city}, ${e.location.state} | Epoch Riders Club`}
+  description={description}
+  discipline={disc}
+  breadcrumbs={[{ name: "Riders Club", path: "/ride" }, { name: "Events", path: "/ride/events" }, { name: e.title, path: `/ride/events/${event.id}` }]}
+  schema={schema ? [schema] : []}
+>
+  <section class={`ev-hero topo ${e.image ? "has-img" : ""}`}>
+    {e.image && (
+      <div class="ev-media photo" aria-hidden="true">
+        <Image src={e.image} alt="" widths={[640, 1024, 1600]} sizes="100vw" loading="eager" />
+      </div>
+    )}
+    <div class="wrap ev-inner">
+      <Eyebrow bar="var(--disc)">{typeLabel.toUpperCase()} · {disc.toUpperCase()}</Eyebrow>
+      <p class="race-number ev-date"><time datetime={e.start.toISOString()}><span aria-hidden="true">{eventLabel(e.start, e.timezone)}</span><span class="sr-only">{eventLong(e.start, e.timezone)}</span></time></p>
+      <h1 class="t-display">{e.title}</h1>
+      <p class="body-l flex items-center gap-2"><Icon name="map-pin" size={20} />{e.location.name}, {e.location.city}, {e.location.state}</p>
+      <p class="muted">{eventLong(e.start, e.timezone)}</p>
+      <div class="flex flex-wrap gap-2">
+        {e.disciplines.map((x) => <span class="chip" data-d={x}>{x.toUpperCase()}</span>)}
+        <span class="chip">{typeLabel}</span>
+        <span class="chip">{e.level}</span>
+        {e.entryEligible && <span class="tag">RACE DEAL ELIGIBLE</span>}
+      </div>
+      {(e.distanceMi || e.climbingFt) && (
+        <p class="race-number ev-stats">
+          {e.distanceMi && <span>{e.distanceMi} MI ({Math.round(e.distanceMi * 1.609)} KM)</span>}
+          {e.climbingFt && <span>{e.climbingFt.toLocaleString()} FT ({Math.round(e.climbingFt * 0.3048).toLocaleString()} M)</span>}
+        </p>
+      )}
+      {e.status !== "scheduled" && (
+        <p class="ev-status"><strong>{e.status === "cancelled" ? "Cancelled" : "Postponed"}</strong>{e.statusNote && `. ${e.statusNote}`}</p>
+      )}
+      <div class="flex flex-wrap gap-4 mt-2">
+        {e.type === "race" && e.registrationUrl ? (
+          <a href={e.registrationUrl} class="btn btn-accent btn-lg" target="_blank" rel="noopener" data-outbound>Race info <Icon name="arrow-up-right" size={18} class="arr" /><span class="sr-only"> (opens in a new tab)</span></a>
+        ) : e.rsvpUrl ? (
+          <a href={e.rsvpUrl} class="btn btn-accent btn-lg" target="_blank" rel="noopener" data-outbound>Count me in<span class="sr-only"> (opens in a new tab)</span></a>
+        ) : null}
+        <a href={`/ride/events/${event.id}.ics`} class="btn btn-outline btn-lg" download><Icon name="calendar" size={18} />Add to calendar</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap ev-grid">
+      <div class="prose-epoch ev-body">
+        <Content />
+      </div>
+      <aside class="ev-aside">
+        <div class="card p-6 grid gap-3">
+          <h2 class="t-h4 uppercase">What to bring</h2>
+          <ul class="ev-list" role="list">{bring.map((b) => <li><Icon name="check" size={18} />{b}</li>)}</ul>
+        </div>
+        {e.location.mapsUrl && (
+          <div class="card p-6 grid gap-2">
+            <h2 class="t-h4 uppercase">Where</h2>
+            <p>{e.location.name}<br />{e.location.city}, {e.location.state}</p>
+            <a href={e.location.mapsUrl} class="link-arrow" target="_blank" rel="noopener" data-outbound><span>Open in maps</span><Icon name="arrow-up-right" size={18} class="arr" /><span class="sr-only"> (opens in a new tab)</span></a>
+          </div>
+        )}
+        <div class="card p-6 grid gap-2">
+          <h2 class="t-h4 uppercase">Host</h2>
+          <p>{e.host}</p>
+          {e.capacity && <p class="small muted">Capped at {e.capacity} riders.</p>}
+        </div>
+        {needsWaiver && (
+          <div class="card p-6 grid gap-3 ev-waiver">
+            <h2 class="t-h4 uppercase">Sign the waiver before you roll.</h2>
+            <p class="small muted">It takes two minutes. Sign once per season.</p>
+            {SITE.waiverUrl ? (
+              <a href={SITE.waiverUrl} class="btn btn-accent btn-sm" target="_blank" rel="noopener" data-outbound>Sign the waiver<span class="sr-only"> (opens in a new tab)</span></a>
+            ) : (
+              <p><Ph value={SITE.waiverUrl} label="waiver URL" /></p>
+            )}
+            <LinkArrow href="/group-ride-waiver">About the waiver</LinkArrow>
+          </div>
+        )}
+        <div class="card p-6 grid gap-2">
+          <h2 class="t-h4 uppercase">Share</h2>
+          <button type="button" class="link-arrow ev-share" data-share={pageUrl} data-title={e.title}><span>Share this ride</span><Icon name="share" size={18} class="arr" /></button>
+          <p class="small muted" data-share-status aria-live="polite"></p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="wrap flex flex-wrap gap-6 items-center">
+      <Button href="/ride/events" variant="outline" arrow>All events</Button>
+      <LinkArrow href="/ride">The Riders Club</LinkArrow>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-share]").forEach((b) => {
+    const status = b.parentElement?.querySelector<HTMLElement>("[data-share-status]");
+    b.addEventListener("click", async () => {
+      const url = b.dataset.share!;
+      try {
+        if (navigator.share) { await navigator.share({ title: b.dataset.title, url }); return; }
+        await navigator.clipboard.writeText(url);
+        if (status) status.textContent = "Link copied.";
+      } catch { if (status) status.textContent = url; }
+    });
+  });
+</script>
+
+<style>
+  .ev-hero { position: relative; isolation: isolate; overflow: hidden; padding-top: clamp(140px, 16vw, 200px); padding-bottom: clamp(56px, 8vw, 96px); border-bottom: 6px solid var(--disc); }
+  .ev-media { position: absolute; inset: 0; z-index: -2; }
+  .ev-media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .has-img::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(14 15 12 / 0.94), rgb(14 15 12 / 0.6) 60%, rgb(14 15 12 / 0.3)); }
+  .ev-inner { display: grid; gap: 16px; }
+  .ev-date { color: var(--disc); font-size: 1rem; }
+  .ev-stats { display: flex; gap: 18px; flex-wrap: wrap; color: var(--color-dust); }
+  .ev-status { background: var(--color-slate); padding: 10px 14px; border-radius: 6px; justify-self: start; }
+  .ev-grid { display: grid; gap: 40px; }
+  @media (min-width: 1024px) { .ev-grid { grid-template-columns: minmax(0, 1fr) 360px; align-items: start; } }
+  .ev-aside { display: grid; gap: 14px; }
+  .ev-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .ev-list li { display: flex; gap: 10px; align-items: center; }
+  .ev-list :global(svg) { color: var(--disc); flex: none; }
+  .ev-waiver { border-top: 4px solid var(--disc); }
+  .ev-share { background: none; border: 0; cursor: pointer; padding: 0; font: inherit; font-weight: 600; justify-self: start; }
+</style>

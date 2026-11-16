@@ -1,0 +1,16 @@
+---
+// EPOCH wordmark: uniform-stroke letters vectorized from the owner's logo.
+// If BRAND.wordmark ever changes, falls back to live Archivo text so a rename is a config edit.
+import { WORDMARK_STROKES, WORDMARK_VIEWBOX } from "../../lib/brand-geometry.mjs";
+import { BRAND } from "../../config/brand";
+interface Props { class?: string; title?: string }
+const { class: cls = "", title } = Astro.props;
+const isEpoch = BRAND.wordmark === "EPOCH";
+---
+{isEpoch ? (
+  <svg viewBox={WORDMARK_VIEWBOX} class={cls} fill="none" stroke="currentColor" stroke-width="13.5" role={title ? "img" : undefined} aria-label={title} aria-hidden={title ? undefined : "true"} focusable="false">
+    {WORDMARK_STROKES.map((d) => <path d={d} />)}
+  </svg>
+) : (
+  <span class={`font-display font-black uppercase tracking-[0.3em] ${cls}`} aria-label={title}>{BRAND.wordmark}</span>
+)}

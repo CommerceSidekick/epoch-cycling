@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layout/BaseLayout.astro";
+import PageHeader from "./PageHeader.astro";
+import { getEntry, render } from "astro:content";
+import { SITE } from "../../config/site";
+interface Props { id: string; path: string }
+const { id, path } = Astro.props;
+const entry = await getEntry("legal", id);
+if (!entry) throw new Error(`Missing legal doc ${id}`);
+const { Content } = await render(entry);
+---
+<BaseLayout title={entry.data.metaTitle} description={entry.data.description} noindex={!SITE.flags.legalApproved} breadcrumbs={[{ name: entry.data.title, path }]}>
+  <PageHeader eyebrow="LEGAL" ghost="LEGAL">
+    <h1 class="t-display">{entry.data.title}</h1>
+    {!SITE.flags.legalApproved && <p class="notice small measure" data-placeholder>Draft for counsel review. Bracketed items are placeholders. Not final.</p>}
+    {entry.data.effectiveDate && <p class="mono small muted">Effective {entry.data.effectiveDate}</p>}
+  </PageHeader>
+  <section class="section">
+    <div class="wrap">
+      <div class="prose-epoch legal measure"><Content /><slot /></div>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .legal :global(h2) { font-size: 1.5rem; }
+  .legal :global(ol) { padding-left: 1.4em; list-style: decimal; }
+  .legal :global(ol li) { margin-top: 0.5em; padding-left: 0.2em; }
+  .legal :global(ol li::before) { display: none; }
+</style>

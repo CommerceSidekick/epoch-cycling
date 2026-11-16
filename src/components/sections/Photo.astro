@@ -1,0 +1,22 @@
+---
+import { Picture } from "astro:assets";
+import { IMG, type ImgKey } from "../../lib/images";
+interface Props { img: ImgKey; class?: string; sizes?: string; eager?: boolean; position?: string; widths?: number[]; alt?: string; decorative?: boolean }
+const { img, class: cls = "", sizes = "100vw", eager = false, position = "center", widths = [480, 800, 1200, 1600], alt, decorative = false } = Astro.props;
+const i = IMG[img];
+const w = widths.filter((x) => x <= i.src.width);
+if (!w.length) w.push(i.src.width);
+---
+<Picture
+  src={i.src}
+  alt={decorative ? "" : (alt ?? i.alt)}
+  formats={["avif", "webp"]}
+  widths={w}
+  sizes={sizes}
+  loading={eager ? "eager" : "lazy"}
+  fetchpriority={eager ? "high" : undefined}
+  decoding={eager ? "sync" : "async"}
+  quality={eager ? 62 : 66}
+  class={cls}
+  style={`object-position:${position}`}
+/>

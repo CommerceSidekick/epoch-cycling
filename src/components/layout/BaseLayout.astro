@@ -1,0 +1,54 @@
+---
+import "../../styles/global.css";
+import Seo from "./Seo.astro";
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+import { SITE } from "../../config/site";
+import { getImage } from "astro:assets";
+import { IMG, type ImgKey } from "../../lib/images";
+interface Props {
+  title: string; description: string; noindex?: boolean; ogImage?: string;
+  breadcrumbs?: { name: string; path: string }[]; schema?: object[]; type?: "website" | "article";
+  discipline?: "mtb" | "gravel" | "road"; overlayHeader?: boolean; mainClass?: string; noPixels?: boolean; hideSignup?: boolean;
+  /** LCP hero image: preloaded as AVIF with the same widths and quality the hero renders (Photo eager = q62). */
+  lcp?: ImgKey; lcpWidths?: number[]; lcpSizes?: string;
+}
+const p = Astro.props;
+let lcpSrcset = "";
+if (p.lcp) {
+  const src = IMG[p.lcp].src;
+  const widths = (p.lcpWidths ?? [640, 960, 1280, 1600, 2000]).filter((w) => w <= src.width);
+  const img = await getImage({ src, widths, format: "avif", quality: 62 });
+  lcpSrcset = img.srcSet.attribute;
+}
+---
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0E0F0C" />
+    <meta name="color-scheme" content="dark" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
+    <link rel="preload" href="/fonts/archivo-wdth.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin />
+    {lcpSrcset && <link rel="preload" as="image" type="image/avif" imagesrcset={lcpSrcset} imagesizes={p.lcpSizes ?? "100vw"} fetchpriority="high" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <Seo title={p.title} description={p.description} noindex={p.noindex} ogImage={p.ogImage} breadcrumbs={p.breadcrumbs} schema={p.schema} type={p.type} />
+    {SITE.analyticsDomain && <script is:inline defer data-domain={SITE.analyticsDomain} src="https://plausible.io/js/script.js"></script>}
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Header overlay={p.overlayHeader} />
+    <main id="main" tabindex="-1" data-discipline={p.discipline} class={p.mainClass}>
+      <slot />
+    </main>
+    <Footer hideSignup={p.hideSignup} />
+    <script>
+      import "../../scripts/site.ts";
+      import "../../scripts/forms.ts";
+    </script>
+  </body>
+</html>

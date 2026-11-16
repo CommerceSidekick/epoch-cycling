@@ -1,0 +1,58 @@
+---
+import FormShell from "./FormShell.astro";
+import Field from "./Field.astro";
+import CheckGroup from "./CheckGroup.astro";
+import Check from "./Check.astro";
+import { APPLY_AS_OPTS, DISCIPLINE_OPTS, LICENSE_OPTS, RACES_OPTS, FOLLOWER_OPTS, HOST_OPTS, JERSEY_OPTS, CONSENT_TEXT } from "../../lib/form-fields";
+import { SITE } from "../../config/site";
+const rc = SITE.ridersClub;
+const success = `Application in. We review ${rc.reviewCadence}. Keep riding.`;
+---
+<FormShell form="riders_club_application" id="apply-form" submitLabel="Send my application" success={success}>
+  <section class="app-sec" aria-labelledby="sec-a">
+    <h2 id="sec-a" class="app-sec-title"><span class="race-number text-dawn">A</span> About you</h2>
+    <div class="grid gap-5 sm:grid-cols-2">
+      <Field name="first_name" label="First name" required autocomplete="given-name" maxlength={60} />
+      <Field name="last_name" label="Last name" required autocomplete="family-name" maxlength={60} />
+      <Field name="email" label="Email" type="email" required autocomplete="email" maxlength={254} />
+      <Field name="phone" label="Phone" type="tel" autocomplete="tel" hint="Only if you want a text when we decide." maxlength={30} />
+      <Field name="city_state" label="City and state" required placeholder="Bend, OR" hint={`We're starting in ${rc.states.replace(/\.$/, "")}.`} autocomplete="address-level2" maxlength={80} />
+    </div>
+    <CheckGroup name="apply_as" legend="I'm applying to be" type="radio" options={APPLY_AS_OPTS} required preselectParam="type" />
+  </section>
+
+  <section class="app-sec" aria-labelledby="sec-b">
+    <h2 id="sec-b" class="app-sec-title"><span class="race-number text-dawn">B</span> Your riding</h2>
+    <CheckGroup name="disciplines" legend="What do you race or ride?" options={DISCIPLINE_OPTS} required min={1} />
+    <CheckGroup name="license" legend="Do you race with a license?" type="radio" options={LICENSE_OPTS} required />
+    <div class="grid gap-5 sm:grid-cols-2">
+      <Field name="races_count" label="How many races this season?" type="select" options={RACES_OPTS} requiredWhen="apply_as=racer|both" />
+      <Field name="jersey" label="Jersey size" type="select" options={JERSEY_OPTS} />
+    </div>
+    <Field name="races_calendar" label="Races on your calendar" type="textarea" rows={3} placeholder="Event names and dates, if you know them" maxlength={1000} />
+    <div class="grid gap-5 sm:grid-cols-2">
+      <Field name="results_url" label="Results or profile link" type="url" placeholder="Race results, Strava or a results site" maxlength={500} />
+      <Field name="social" label="Instagram or TikTok" placeholder="@yourhandle" maxlength={80} />
+      <Field name="followers" label="Roughly how many followers?" type="select" options={FOLLOWER_OPTS} requiredWhen="apply_as=ambassador|both" />
+    </div>
+    <CheckGroup name="host_ride" legend="Would you host a group ride?" type="radio" options={HOST_OPTS} />
+    <Field name="about" label="Tell us about you" type="textarea" required maxlength={800} counter placeholder="What you ride, why you race, who you ride with, what you're chasing this season." />
+  </section>
+
+  <section class="app-sec" aria-labelledby="sec-c">
+    <h2 id="sec-c" class="app-sec-title"><span class="race-number text-dawn">C</span> The fine print</h2>
+    <div class="grid gap-1">
+      <Check name="over18" required>I'm 18 or older.</Check>
+      <Check name="read_terms" required>I've read the <a href="/riders-club-terms" class="link" target="_blank" rel="noopener">Riders Club terms<span class="sr-only"> (opens in a new tab)</span></a>.</Check>
+      <Check name="will_disclose" required>I'll clearly disclose that Epoch sponsors me in any post about Epoch.</Check>
+      <Check name="anti_doping" required>If I race under anti-doping rules, I know I'm responsible for everything I take.</Check>
+      <Check name="marketing">{CONSENT_TEXT.riders_club_application}</Check>
+    </div>
+  </section>
+  <p slot="before-submit" class="notice small">Don't include medical information, medications or health details. We don't need them, and this form isn't the place for them.</p>
+</FormShell>
+<style>
+  .app-sec { display: grid; gap: 22px; padding: clamp(20px, 3vw, 32px); background: var(--color-ridge); border: 1px solid var(--color-slate); border-radius: var(--radius-md); }
+  .app-sec-title { font-family: var(--font-display); font-weight: 800; font-stretch: 115%; text-transform: uppercase; font-size: 1.375rem; display: flex; align-items: center; gap: 12px; }
+  .app-sec-title .race-number { display: inline-grid; place-content: center; width: 36px; height: 36px; border: 2px solid currentColor; border-radius: 6px; font-size: 1rem; }
+</style>

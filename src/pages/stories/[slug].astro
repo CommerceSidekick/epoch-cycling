@@ -1,0 +1,119 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import { Picture, getImage } from "astro:assets";
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import Eyebrow from "../../components/ui/Eyebrow.astro";
+import Button from "../../components/ui/Button.astro";
+import StoryGrid from "../../components/sections/StoryGrid.astro";
+import CtaBand from "../../components/sections/CtaBand.astro";
+import StorySources from "../../components/stories/StorySources.astro";
+import { articleSchema } from "../../lib/schema";
+import { readingTime, shortDate } from "../../lib/format";
+import { SITE } from "../../config/site";
+
+export async function getStaticPaths() {
+  const stories = await getCollection("stories", (s) => !s.data.draft);
+  return stories.map((story) => ({ params: { slug: story.id }, props: { story } }));
+}
+const { story } = Astro.props;
+const s = story.data;
+const { Content } = await render(story);
+const minutes = readingTime(story.body ?? "");
+const og = await getImage({ src: s.hero, width: 1200, height: 630, format: "jpg" });
+const url = `${SITE.url}/stories/${story.id}`;
+
+const riders = (await Promise.all(s.riders.map((r) => getEntry(r)))).filter(Boolean);
+const sponsoredRiders = riders.filter((r) => r!.data.sponsored && r!.data.consentOnFile && !r!.data.placeholder);
+const showDisclosure = s.sponsoredDisclosure || sponsoredRiders.length > 0;
+const disclosure = sponsoredRiders.length
+  ? sponsoredRiders.map((r) => `${r!.data.name} is an ${r!.data.role === "ambassador" ? "Epoch ambassador" : "Epoch Riders Club racer"}.`).join(" ") + " Epoch supports their racing."
+  : "Epoch supports the riders in this story.";
+
+const CAT_LABEL = { ride: "RIDE", fuel: "FUEL", optimize: "OPTIMIZE", club: "CLUB" } as const;
+const eyebrow = s.eyebrow ?? `${CAT_LABEL[s.category]} · ${s.disciplines.length ? s.disciplines.map((d) => d.toUpperCase()).join(" / ") : "ALL DISCIPLINES"}`;
+const BAND = {
+  ride: { title: "Get in the crew.", label: "Join the club", href: "/join", img: "crewSingletrack" as const },
+  fuel: { title: "Fuel the ride.", label: "How to fuel a ride", href: "/fuel/guide", img: "gravelMotion" as const },
+  optimize: { title: "Better every season.", label: "Get the app free", href: "/optimize#app", img: "mtbMountain" as const },
+  club: { title: "This is your season.", label: "Apply to race", href: "/ride/apply", img: "mtbDustyRace" as const },
+}[s.category];
+const accent = { ride: "var(--color-dawn)", fuel: "var(--color-signal)", optimize: "var(--color-sky)", club: "var(--color-dawn)" }[s.category];
+const related = (await getCollection("stories", (x) => !x.data.draft && x.data.category === s.category && x.id !== story.id)).length;
+---
+<BaseLayout
+  title={s.metaTitle ?? `${s.title.replace(/\.$/, "")} | Epoch Cycling`}
+  description={s.metaDescription ?? s.dek}
+  type="article"
+  ogImage={og.src}
+  overlayHeader
+  breadcrumbs={[{ name: "Stories", path: "/stories" }, { name: s.title.replace(/\.$/, ""), path: `/stories/${story.id}` }]}
+  schema={[articleSchema({ title: s.title, author: s.author, date: s.date, image: `${SITE.url}${og.src}`, url, dek: s.dek })]}
+  discipline={s.disciplines[0]}
+>
+  <header class="st-hero">
+    <div class="st-media photo">
+      <Picture src={s.hero} alt={s.heroAlt} formats={["avif", "webp"]} widths={[640, 1024, 1600, 2000]} sizes="100vw" loading="eager" fetchpriority="high" />
+    </div>
+    <div class="st-scrim" aria-hidden="true"></div>
+    <div class="wrap st-head">
+      <Eyebrow bar={accent}>{eyebrow}</Eyebrow>
+      <h1 class="t-display st-title">{s.title}</h1>
+      <p class="body-l st-dek">{s.dek}</p>
+      <p class="race-number st-byline">By {s.author} · <time datetime={s.date.toISOString()}>{shortDate(s.date).toUpperCase()}</time> · {minutes} MIN READ</p>
+    </div>
+  </header>
+
+  <div class="wrap st-body">
+    {showDisclosure && (
+      <aside class="st-box st-disclosure" aria-label="Sponsorship disclosure">
+        <p><strong>Heads up:</strong> {disclosure}</p>
+      </aside>
+    )}
+    {s.category === "optimize" && (
+      <aside class="st-box" aria-label="General information">
+        <p>General information, not medical advice.{s.reviewedBy && ` Reviewed by ${s.reviewedBy}.`}</p>
+      </aside>
+    )}
+    <article class="prose-epoch st-prose body-l">
+      <Content />
+    </article>
+    {s.cta && (
+      <div class="st-cta">
+        <Button href={s.cta.href} variant="primary" size="lg" arrow location={`story-${story.id}`}>{s.cta.label}</Button>
+      </div>
+    )}
+    {s.sources && <StorySources />}
+  </div>
+
+  {related > 0 && (
+    <section class="section on-ridge" aria-labelledby="related-title">
+      <div class="wrap">
+        <h2 id="related-title" class="t-h2 mb-10">More stories.</h2>
+        <StoryGrid limit={3} category={s.category} exclude={story.id} />
+      </div>
+    </section>
+  )}
+
+  <CtaBand title={BAND.title} img={BAND.img} position="center">
+    <Button href={BAND.href} size="lg" arrow location={`story-band-${s.category}`}>{BAND.label}</Button>
+    <Button href="/stories" variant="outline" size="lg" location={`story-band-${s.category}`}>All stories</Button>
+  </CtaBand>
+</BaseLayout>
+
+<style>
+  .st-hero { position: relative; isolation: isolate; overflow: hidden; min-height: 78svh; display: flex; align-items: flex-end; }
+  .st-media { position: absolute; inset: 0; z-index: -2; }
+  .st-media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .st-scrim { position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgb(14 15 12 / 0.97) 0%, rgb(14 15 12 / 0.6) 45%, rgb(14 15 12 / 0.25) 100%); }
+  .st-head { display: grid; gap: 18px; padding-top: 150px; padding-bottom: clamp(48px, 7vw, 88px); }
+  .st-title { max-width: 16ch; }
+  .st-dek { max-width: 52ch; color: #e7e2d6; }
+  .st-byline { color: var(--color-dust); }
+  .st-body { max-width: 820px; padding-block: clamp(48px, 7vw, 96px); }
+  .st-prose { font-size: 1.1875rem; }
+  .st-prose :global(h2) { margin-top: 1.8em; }
+  .st-prose :global(p) { max-width: 68ch; }
+  .st-prose :global(a:not(.btn)), .st-body :global(.story-sources a) { text-decoration: underline; text-underline-offset: 3px; }
+  .st-box { margin-bottom: 32px; padding: 16px 20px; border-left: 4px solid var(--color-signal); background: var(--color-slate); border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+  .st-cta { margin-top: 40px; }
+</style>

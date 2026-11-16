@@ -1,0 +1,16 @@
+---
+import KitArt from "../sections/KitArt.astro";
+interface Props { caption: string }
+const { caption } = Astro.props;
+---
+<figure class="kit-fig not-prose">
+  <div class="kf-grid topo">
+    <KitArt art="trail-jersey" label="Illustrated MTB trail jersey: EPOCH on the chest, MTB on the left sleeve, three marks on the right sleeve" />
+    <KitArt art="race-jersey" racer label="Illustrated enduro race jersey with the Signal cuff stripe that marks Club racers" />
+  </div>
+  <figcaption class="fine">{caption}</figcaption>
+</figure>
+<style>
+  .kit-fig { margin: 2.2em 0; display: grid; gap: 10px; }
+  .kf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 18px; border-radius: var(--radius-md); background: radial-gradient(circle at 50% 40%, #2a2c27, var(--color-ridge) 70%); border: 1px solid var(--color-slate); }
+</style>
