@@ -37,7 +37,7 @@ const BAND = {
   optimize: { title: "Better every season.", label: "Get the app free", href: "/optimize#app", img: "mtbMountain" as const },
   club: { title: "This is your season.", label: "Apply to race", href: "/ride/apply", img: "mtbDustyRace" as const },
 }[s.category];
-const accent = { ride: "var(--color-dawn)", fuel: "var(--color-signal)", optimize: "var(--color-sky)", club: "var(--color-dawn)" }[s.category];
+const accent = { ride: "var(--color-summit)", fuel: "var(--color-signal)", optimize: "var(--color-sky)", club: "var(--color-summit)" }[s.category];
 const related = (await getCollection("stories", (x) => !x.data.draft && x.data.category === s.category && x.id !== story.id)).length;
 ---
 <BaseLayout

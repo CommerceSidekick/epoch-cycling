@@ -3,7 +3,7 @@ import PillarIcon from "../brand/PillarIcon.astro";
 import LinkArrow from "../ui/LinkArrow.astro";
 import { BRAND } from "../../config/brand";
 const cards = [
-  { n: "01", key: "ride" as const, word: BRAND.PILLAR_1_WORD, line1: "Find your crew.", line2: "Group rides, events, team kits, and a race deal that covers your entry.", cta: "Join the club", href: "/ride", color: "var(--color-dawn)" },
+  { n: "01", key: "ride" as const, word: BRAND.PILLAR_1_WORD, line1: "Find your crew.", line2: "Group rides, events, team kits, and a race deal that covers your entry.", cta: "Join the club", href: "/ride", color: "var(--color-summit)" },
   { n: "02", key: "fuel" as const, word: BRAND.PILLAR_2_WORD, line1: "Put in what works.", line2: "Epoch Fuel for long rides. Epoch Salt for hot ones.", cta: "See the fuel", href: "/fuel", color: "var(--color-signal)" },
   { n: "03", key: "optimize" as const, word: BRAND.PILLAR_3_WORD, line1: "Know when to send it and when to rest.", line2: "A free app and coaching built for riders.", cta: "Get the app", href: "/optimize", color: "var(--color-sky)" },
 ];
@@ -25,11 +25,11 @@ const cards = [
 </div>
 <style>
   .pillars { display: grid; gap: 16px; }
-  @media (min-width: 900px) { .pillars { grid-template-columns: repeat(3, minmax(0, 1fr)); } .pillar { min-height: 440px; } }
+  @media (min-width: 1024px) { .pillars { grid-template-columns: repeat(3, minmax(0, 1fr)); } .pillar { min-height: 440px; } }
   .pillar { display: flex; flex-direction: column; gap: 14px; padding: clamp(24px, 3vw, 36px); min-height: 300px; border-top: 4px solid var(--pc); transition: transform 300ms var(--ease), background 300ms var(--ease); overflow: hidden; }
   .pillar:hover { transform: translateY(-6px); background: color-mix(in srgb, var(--pc) 7%, var(--color-ridge)); }
   .pillar-top { display: flex; justify-content: space-between; align-items: center; color: var(--pc); }
-  .pillar-word { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(2.25rem, 3.3vw, 3.4rem); line-height: 0.9; margin-top: 28px; overflow-wrap: anywhere; }
+  .pillar-word { font-family: var(--font-display); font-weight: 900; font-stretch: 118%; text-transform: uppercase; font-size: clamp(2.25rem, 2.75vw, 3.1rem); line-height: 0.9; margin-top: 28px; white-space: nowrap; }
   .pillar-ghost { position: absolute; right: -0.1em; bottom: -0.25em; font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: 9rem; line-height: 1; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--pc) 16%, transparent); pointer-events: none; font-size: 7rem; }
   .pillar > :not(.pillar-ghost) { position: relative; z-index: 1; }
 </style>

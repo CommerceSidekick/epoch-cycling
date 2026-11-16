@@ -1,6 +1,6 @@
 ---
 interface Props { steps: { title: string; body: string }[]; class?: string; big?: boolean; accent?: string }
-const { steps, class: cls = "", big = false, accent = "var(--color-dawn)" } = Astro.props;
+const { steps, class: cls = "", big = false, accent = "var(--color-summit)" } = Astro.props;
 ---
 <ol class={`steps ${big ? "steps-big" : ""} ${cls}`} style={`--acc:${accent}`}>
   {steps.map((s, i) => (

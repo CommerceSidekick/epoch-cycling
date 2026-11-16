@@ -55,7 +55,7 @@ const logoStacked = (fg, bg) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox
 out("brand/logo-stacked-bone.svg", logoStacked("#F2EEE6"));
 out("brand/logo-stacked-carbon.svg", logoStacked("#0E0F0C"));
 
-const favicon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0E0F0C"/><g transform="translate(7.5 13) scale(0.118)"><g fill="#FF5A1F" transform="translate(-205 -82)">${MARK_PATHS.map((d) => `<path d="${d}"/>`).join("")}</g></g><rect x="14" y="48" width="36" height="3" rx="1.5" fill="#FF5A1F"/></svg>`;
+const favicon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0E0F0C"/><g transform="translate(7.5 13) scale(0.118)"><g fill="#2D8CFF" transform="translate(-205 -82)">${MARK_PATHS.map((d) => `<path d="${d}"/>`).join("")}</g></g><rect x="14" y="48" width="36" height="3" rx="1.5" fill="#2D8CFF"/></svg>`;
 out("favicon.svg", favicon);
 
 // ---------- Pillar icons (kit marks) ----------

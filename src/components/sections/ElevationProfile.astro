@@ -1,7 +1,7 @@
 ---
 // Decorative ride profile that draws itself on scroll (static under reduced motion).
 interface Props { class?: string; color?: string }
-const { class: cls = "", color = "var(--color-dawn)" } = Astro.props;
+const { class: cls = "", color = "var(--color-summit)" } = Astro.props;
 ---
 <div class={`draw ${cls}`} aria-hidden="true">
   <svg viewBox="0 0 1200 220" preserveAspectRatio="none" class="w-full h-full">

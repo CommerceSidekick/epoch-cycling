@@ -28,7 +28,7 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
 >
   <!-- 5.1.1 Hero -->
   <PageHero img="mtbBlur" eyebrow="EPOCH CYCLING · MTB / GRAVEL / ROAD" size="full" position="35% center" dust speed>
-    <h1 class="t-display-xl hero-h1 reveal">Now is<br /> your <span class="text-dawn">time.</span></h1>
+    <h1 class="t-display-xl hero-h1 reveal">Now is<br /> your <span class="text-summit">time.</span></h1>
     <p class="body-l hero-sub reveal reveal-d1">Ride with a crew. Fuel for the long day. Train smarter every week.</p>
     <div class="hero-ctas reveal reveal-d2">
       <Button href="/join" size="lg" arrow location="home-hero">Join the Riders Club</Button>
@@ -184,10 +184,10 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
     .hero-plate::before, .hero-plate::after { content: ""; position: absolute; top: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--color-carbon); opacity: 0.7; }
     .hero-plate::before { left: 10px; } .hero-plate::after { right: 10px; }
     .plate-word { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 2.4rem; line-height: 0.88; }
-    .plate-icons { display: flex; gap: 10px; color: var(--color-ember); }
+    .plate-icons { display: flex; gap: 10px; color: var(--color-summit-ink); }
   }
 
-  .club-band { position: relative; isolation: isolate; overflow: hidden; color: var(--color-carbon); background: var(--color-dawn); }
+  .club-band { position: relative; isolation: isolate; overflow: hidden; color: var(--color-carbon); background: var(--color-summit); }
   .club-media { position: absolute; inset: 0; z-index: -2; background: transparent; -webkit-mask-image: linear-gradient(100deg, transparent 18%, #000 70%); mask-image: linear-gradient(100deg, transparent 18%, #000 70%); }
   .club-media :global(img) { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.35) brightness(1.15); mix-blend-mode: multiply; opacity: 0.7; }
   .club-shade { position: absolute; inset: 0; z-index: -1; background: repeating-linear-gradient(-60deg, transparent 0 22px, rgb(14 15 12 / 0.05) 22px 23px); }
@@ -200,7 +200,7 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
   .club-items { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 14px; }
   @media (min-width: 900px) { .club-items { grid-template-columns: repeat(3, 1fr); } }
   .club-items li { background: rgb(14 15 12 / 0.92); color: var(--color-bone); padding: 24px; border-radius: var(--radius-md); display: grid; gap: 8px; align-content: start; }
-  .club-items .race-number { color: var(--color-dawn); }
+  .club-items .race-number { color: var(--color-summit); }
   .club-fine { font-weight: 500; }
   .club-link { color: var(--color-carbon); text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
   .club-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 26px; }

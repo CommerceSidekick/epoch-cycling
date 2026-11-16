@@ -10,7 +10,7 @@ const success = `Application in. We review ${rc.reviewCadence}. Keep riding.`;
 ---
 <FormShell form="riders_club_application" id="apply-form" submitLabel="Send my application" success={success}>
   <section class="app-sec" aria-labelledby="sec-a">
-    <h2 id="sec-a" class="app-sec-title"><span class="race-number text-dawn">A</span> About you</h2>
+    <h2 id="sec-a" class="app-sec-title"><span class="race-number text-summit">A</span> About you</h2>
     <div class="grid gap-5 sm:grid-cols-2">
       <Field name="first_name" label="First name" required autocomplete="given-name" maxlength={60} />
       <Field name="last_name" label="Last name" required autocomplete="family-name" maxlength={60} />
@@ -22,7 +22,7 @@ const success = `Application in. We review ${rc.reviewCadence}. Keep riding.`;
   </section>
 
   <section class="app-sec" aria-labelledby="sec-b">
-    <h2 id="sec-b" class="app-sec-title"><span class="race-number text-dawn">B</span> Your riding</h2>
+    <h2 id="sec-b" class="app-sec-title"><span class="race-number text-summit">B</span> Your riding</h2>
     <CheckGroup name="disciplines" legend="What do you race or ride?" options={DISCIPLINE_OPTS} required min={1} />
     <CheckGroup name="license" legend="Do you race with a license?" type="radio" options={LICENSE_OPTS} required />
     <div class="grid gap-5 sm:grid-cols-2">
@@ -40,7 +40,7 @@ const success = `Application in. We review ${rc.reviewCadence}. Keep riding.`;
   </section>
 
   <section class="app-sec" aria-labelledby="sec-c">
-    <h2 id="sec-c" class="app-sec-title"><span class="race-number text-dawn">C</span> The fine print</h2>
+    <h2 id="sec-c" class="app-sec-title"><span class="race-number text-summit">C</span> The fine print</h2>
     <div class="grid gap-1">
       <Check name="over18" required>I'm 18 or older.</Check>
       <Check name="read_terms" required>I've read the <a href="/riders-club-terms" class="link" target="_blank" rel="noopener">Riders Club terms<span class="sr-only"> (opens in a new tab)</span></a>.</Check>

@@ -15,7 +15,7 @@ const count = (await getCollection("stories", (s) => !s.data.draft)).length;
   breadcrumbs={[{ name: "Stories", path: "/stories" }]}
 >
   <PageHero img="mtbFogJump" eyebrow="STORIES" size="mid" position="center 45%" speed>
-    <h1 class="t-display-xl reveal">From the <span class="text-dawn">trail.</span></h1>
+    <h1 class="t-display-xl reveal">From the <span class="text-summit">trail.</span></h1>
     <p class="body-l stories-sub reveal reveal-d1">Race reports, ride recaps, fuel nerdery and the people in the crew.</p>
   </PageHero>
 
@@ -25,7 +25,7 @@ const count = (await getCollection("stories", (s) => !s.data.draft)).length;
       {count > 0 && <StoryFilters />}
       <StoryGrid>
         <div slot="empty" class="empty card topo">
-          <Icon name="mountain" size={28} class="text-dawn" />
+          <Icon name="mountain" size={28} class="text-summit" />
           <p class="t-h3">First stories drop soon.</p>
           <Button href="/join" size="sm" location="stories-empty">Get the drop</Button>
         </div>

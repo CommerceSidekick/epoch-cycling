@@ -24,7 +24,7 @@ const beliefs = [
   overlayHeader
 >
   <PageHero img="crewRegroup" eyebrow="ABOUT EPOCH CYCLING" size="tall" position="center 40%">
-    <h1 class="t-display-xl reveal">Started at a <span class="text-dawn">trailhead.</span></h1>
+    <h1 class="t-display-xl reveal">Started at a <span class="text-summit">trailhead.</span></h1>
     <p class="body-l about-sub reveal reveal-d1">Epoch Cycling started the way most good rides do. A few friends, a trailhead, too early in the morning. We wanted a crew, a kit worth wearing, and fuel that works, without the fluff. So we're building it. Mountain bike first.</p>
     <p class="fine reveal reveal-d2"><span class="ph" data-placeholder>[owner confirms this origin line and supplies the founding crew photo]</span></p>
   </PageHero>
@@ -44,7 +44,7 @@ const beliefs = [
       <ul class="believe" role="list">
         {beliefs.map((x, i) => (
           <li class={`reveal reveal-d${i}`}>
-            <span class="race-number text-dawn">{String(i + 1).padStart(2, "0")}</span>
+            <span class="race-number text-summit">{String(i + 1).padStart(2, "0")}</span>
             <p class="t-h3">{x.t}</p>
             <p class="muted">{x.b}</p>
           </li>
@@ -65,7 +65,7 @@ const beliefs = [
         <p><ExternalLink href="https://epochhealthsystem.com/about#team" campaign="about_family" class="link-arrow">Meet the Epoch Health System team</ExternalLink></p>
       </div>
       <div class="family-art" aria-hidden="true">
-        <div class="fa-row"><PillarIcon name="ride" size={64} class="text-dawn" /><span>Ride</span></div>
+        <div class="fa-row"><PillarIcon name="ride" size={64} class="text-summit" /><span>Ride</span></div>
         <div class="fa-row"><PillarIcon name="fuel" size={64} class="text-signal" /><span>Fuel</span></div>
         <div class="fa-row"><PillarIcon name="optimize" size={64} class="text-sky" /><span>Optimize</span></div>
       </div>
@@ -91,7 +91,7 @@ const beliefs = [
   .why-inner { display: grid; gap: 28px; justify-items: center; text-align: center; padding-block: clamp(40px, 6vw, 80px); }
   .why .t-h2 { font-size: clamp(2.25rem, 6vw, 5.5rem); max-width: 16ch; }
   .why-body { max-width: 44ch; color: #ddd8cc; }
-  .why-sig { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; color: var(--color-dawn); font-size: clamp(1.5rem, 3vw, 2.25rem); }
+  .why-sig { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; color: var(--color-summit); font-size: clamp(1.5rem, 3vw, 2.25rem); }
   .believe { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
   @media (min-width: 768px) { .believe { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1100px) { .believe { grid-template-columns: repeat(4, 1fr); } }

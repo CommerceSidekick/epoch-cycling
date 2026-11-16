@@ -7,13 +7,13 @@ import KitArt from "../../components/sections/KitArt.astro";
 export function getStaticPaths() {
   return import.meta.env.DEV ? [{ params: { page: "styleguide" } }] : [];
 }
-const C: Record<string, string> = { carbon: "#0E0F0C", ridge: "#1C1E1A", slate: "#2E312B", bone: "#F2EEE6", dust: "#A8A291", dawn: "#FF5A1F", ember: "#B83A0A", signal: "#D4FF3A", moss: "#3D4A35", sky: "#8FB8C9", grit: "#D9A441", gritInk: "#7A5512", velo: "#A592FF", veloInk: "#4B33B5" };
+const C: Record<string, string> = { carbon: "#0E0F0C", ridge: "#1C1E1A", slate: "#2E312B", bone: "#F2EEE6", dust: "#A8A291", summit: "#2D8CFF", summitInk: "#1A4FD6", dawnMaster: "#FF5A1F", signal: "#D4FF3A", moss: "#3D4A35", sky: "#8FB8C9", grit: "#D9A441", gritInk: "#7A5512", velo: "#A592FF", veloInk: "#4B33B5" };
 const lum = (hex: string) => {
   const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 };
 const ratio = (a: string, b: string) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m); return ((x + 0.05) / (y + 0.05)).toFixed(2); };
-const pairs: [string, string][] = [["bone", "carbon"], ["dust", "carbon"], ["dawn", "carbon"], ["signal", "carbon"], ["sky", "carbon"], ["carbon", "dawn"], ["ember", "bone"], ["moss", "bone"], ["bone", "ridge"], ["dust", "ridge"], ["dawn", "ridge"], ["dawn", "slate"], ["grit", "carbon"], ["grit", "ridge"], ["grit", "slate"], ["gritInk", "bone"], ["velo", "carbon"], ["velo", "ridge"], ["velo", "slate"], ["veloInk", "bone"], ["carbon", "grit"], ["carbon", "velo"], ["bone", "moss"]];
+const pairs: [string, string][] = [["bone", "carbon"], ["dust", "carbon"], ["summit", "carbon"], ["signal", "carbon"], ["sky", "carbon"], ["carbon", "summit"], ["summitInk", "bone"], ["moss", "bone"], ["bone", "ridge"], ["dust", "ridge"], ["summit", "ridge"], ["summit", "slate"], ["grit", "carbon"], ["grit", "ridge"], ["grit", "slate"], ["gritInk", "bone"], ["velo", "carbon"], ["velo", "ridge"], ["velo", "slate"], ["veloInk", "bone"], ["carbon", "grit"], ["carbon", "velo"], ["bone", "moss"]];
 ---
 <BaseLayout title="Style guide | Epoch Cycling" description="Dev-only style guide" noindex>
   <section class="section"><div class="wrap grid gap-12 pt-24">
