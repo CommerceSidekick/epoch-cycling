@@ -136,7 +136,7 @@ const markers = [
         </ul>
         <div class="flex flex-wrap items-center gap-4">
           <ExternalLink href={`${SITE.appUrl}?plan=coach`} campaign="optimize_coach" class="btn btn-sky" arrow={false}>Get Epoch Coach <Icon name="arrow-up-right" size={18} class="arr" /></ExternalLink>
-          <span class="mono price">{SITE.prices.coach}</span>
+          <span class="mono price">{SITE.prices.coach}{SITE.prices.period}</span>
         </div>
         {SITE.flags.coachIsAI && <p class="small muted">Epoch Coach is an AI coach.</p>}
         <div class="human card">

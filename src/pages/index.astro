@@ -16,6 +16,8 @@ import LinkArrow from "../components/ui/LinkArrow.astro";
 import Eyebrow from "../components/ui/Eyebrow.astro";
 import Disclaimer from "../components/ui/Disclaimer.astro";
 import PillarIcon from "../components/brand/PillarIcon.astro";
+import ProductPacks from "../components/sections/ProductPacks.astro";
+import Icon from "../components/ui/Icon.astro";
 import { getCollection } from "astro:content";
 import { SITE } from "../config/site";
 const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length > 0;
@@ -26,7 +28,7 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
   overlayHeader
 >
   <!-- 5.1.1 Hero -->
-  <PageHero img="mtbBlur" eyebrow="EPOCH CYCLING · MTB / GRAVEL / ROAD" size="full" position="35% center" dust speed>
+  <PageHero img="mtbBlur" eyebrow="EPOCH CYCLING · MTB / GRAVEL / ROAD" size="full" position="35% center" dust speed class="hero-home">
     <h1 class="t-display hero-h1 reveal">Now is your <span class="text-summit">time.</span></h1>
     <dl class="def reveal reveal-d1">
       <dt class="def-head"><dfn class="def-word">epoch</dfn> <span class="def-ipa" aria-hidden="true">/<span class="def-stress">ˈ</span>epək/</span><span class="sr-only">, pronounced EP-uck,</span> <span class="def-pos">noun</span></dt>
@@ -41,12 +43,12 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
       <Button href="/join" size="lg" arrow location="home-hero">Join the Riders Club</Button>
       <Button href="/ride/apply" variant="outline" size="lg" location="home-hero">Apply to race</Button>
     </div>
-    <p class="small hero-micro reveal reveal-d3">Free to join. First race or fiftieth, you belong here.</p>
-    <div class="hero-plate" aria-hidden="true">
-      <span class="race-number">#EPOCH 001</span>
-      <span class="plate-word">DAWN<br />PATROL</span>
-      <span class="plate-icons"><PillarIcon name="ride" size={22} /><PillarIcon name="fuel" size={22} /><PillarIcon name="optimize" size={22} /></span>
-    </div>
+    <ul class="chips-row reveal reveal-d3" role="list" aria-label="Why Epoch">
+      <li><Icon name="check" size={16} />Free to join</li>
+      <li><PillarIcon name="ride" size={16} />First race or fiftieth</li>
+      <li><PillarIcon name="optimize" size={16} />Free app. Real depth.</li>
+      <li><Icon name="shield" size={16} />Your data stays yours</li>
+    </ul>
   </PageHero>
 
   <!-- 5.1.3 Riders Club band -->
@@ -82,10 +84,20 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
     </div>
   </section>
 
+  <!-- Stats band (carried over from epochhealthsystem.com; honest counts only) -->
+  <section class="stats" aria-label="Epoch Cycling in numbers">
+    <ul class="wrap-wide stats-row" role="list">
+      <li><span class="stat-n"><span data-countup="3">3</span></span><span class="stat-l">pillars. One system.</span></li>
+      <li><span class="stat-n"><span data-countup="3">3</span></span><span class="stat-l">disciplines. One club.</span></li>
+      <li><span class="stat-n">$0</span><span class="stat-l">to join the Riders Club.</span></li>
+      <li><span class="stat-n">$0</span><span class="stat-l">for the app, with the advanced numbers.</span></li>
+    </ul>
+  </section>
+
   <!-- 5.1.5 Fuel teaser -->
   <section class="fuel-teaser on-moss" aria-labelledby="fuel-title">
-    <div class="ft-media photo">
-      <Photo img="fuelTrail" sizes="(min-width: 1024px) 50vw, 100vw" widths={[640, 1024, 1400]} position="center 60%" />
+    <div class="ft-media topo">
+      <ProductPacks size="lg" class="reveal" />
     </div>
     <div class="ft-copy">
       <Eyebrow bar="var(--color-signal)" class="text-bone">FUEL</Eyebrow>
@@ -173,9 +185,11 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
 </BaseLayout>
 
 <style>
-  .hero-h1 { max-width: 14ch; }
+  .hero-h1 { max-width: 14ch; font-size: min(var(--text-display), 11.5vh); }
+  /* Home hero carries more content than other heroes: trim its padding so it fits one laptop screen */
+  @media (min-width: 768px) { :global(.hero-home .hero-content) { padding-top: 124px; padding-bottom: 104px; } }
   /* Dictionary definition under the slogan */
-  .def { margin: 26px 0 0; padding-left: 18px; border-left: 3px solid var(--color-summit); max-width: 40rem; }
+  .def { margin: 20px 0 0; padding-left: 18px; border-left: 3px solid var(--color-summit); max-width: 40rem; }
   .def-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
   .def-word { font-family: var(--font-display); font-weight: 800; font-stretch: 112%; font-style: normal; font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1; }
   .def-ipa { font-family: var(--font-mono); font-size: 1rem; color: var(--color-dust); }
@@ -185,7 +199,7 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
   .def-text { margin: 8px 0 0; font-size: var(--text-body-l); line-height: 1.45; color: #ece7dc; max-width: 38ch; }
   /* Three squares: Ride, Fuel, Optimize */
   /* container-type lets the square labels scale with the squares, so OPTIMIZE always fits */
-  .squares { container-type: inline-size; list-style: none; padding: 0; margin: 30px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 640px; }
+  .squares { container-type: inline-size; list-style: none; padding: 0; margin: 22px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 600px; }
   .sq { position: relative; display: flex; flex-direction: column; aspect-ratio: 1 / 1; padding: clamp(10px, 1.6vw, 18px); border-radius: 10px; text-decoration: none; color: var(--color-bone); background: rgb(14 15 12 / 0.62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgb(242 238 230 / 0.14); border-top: 3px solid var(--sq); transition: transform 240ms var(--ease), background 240ms var(--ease), border-color 240ms var(--ease); overflow: hidden; }
   .sq::after { content: ""; position: absolute; inset: auto 0 0 0; height: 3px; background: var(--sq); transform: scaleX(0); transform-origin: left; transition: transform 320ms var(--ease); }
   .sq:hover, .sq:focus-visible { transform: translateY(-4px); background: rgb(14 15 12 / 0.82); border-color: rgb(242 238 230 / 0.28); border-top-color: var(--sq); }
@@ -202,16 +216,13 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
   @media (max-width: 399px) {
     .sq { padding: 8px; }
   }
-  .hero-ctas { display: flex; flex-wrap: wrap; gap: 16px 22px; margin-top: 30px; }
-  .hero-micro { margin-top: 18px; color: #cfc9bb; }
-  .hero-plate { display: none; }
-  @media (min-width: 1200px) {
-    .hero-plate { position: absolute; right: 48px; bottom: 170px; display: grid; gap: 10px; padding: 18px 20px; background: var(--color-bone); color: var(--color-carbon); border-radius: 8px; transform: rotate(4deg); box-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.7); min-width: 170px; }
-    .hero-plate::before, .hero-plate::after { content: ""; position: absolute; top: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--color-carbon); opacity: 0.7; }
-    .hero-plate::before { left: 10px; } .hero-plate::after { right: 10px; }
-    .plate-word { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 2.4rem; line-height: 0.88; }
-    .plate-icons { display: flex; gap: 10px; color: var(--color-summit-ink); }
-  }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 16px 22px; margin-top: 24px; }
+  /* Short laptop screens: smaller squares so the buttons stay above the fold (after the base rule on purpose) */
+  @media (min-width: 768px) and (max-height: 820px) { .squares { max-width: 500px; } }
+  /* Trust chips (carried over from epochhealthsystem.com) */
+  .chips-row { list-style: none; padding: 0; margin: 18px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips-row li { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; border: 1px solid rgb(242 238 230 / 0.16); background: rgb(14 15 12 / 0.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); font-size: 0.875rem; color: #e7e2d6; }
+  .chips-row :global(svg) { color: var(--color-signal); flex: none; }
 
   /* Riders Club band: solid black behind the text, fading to Summit blue with a blue-toned photo on the right */
   .club-band { position: relative; isolation: isolate; overflow: hidden; color: var(--color-bone); background: var(--color-carbon); }
@@ -239,10 +250,17 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
     .club-inner { padding-top: 220px; }
   }
 
+  .stats { border-block: 1px solid var(--color-slate); background: var(--color-ridge); }
+  .stats-row { list-style: none; margin: 0 auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 900px) { .stats-row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .stats-row li { display: grid; gap: 10px; padding: clamp(24px, 4vw, 44px) clamp(16px, 2.5vw, 32px); border-left: 1px solid var(--color-slate); }
+  .stats-row li:first-child, .stats-row li:nth-child(3) { border-left: 0; }
+  @media (min-width: 900px) { .stats-row li:nth-child(3) { border-left: 1px solid var(--color-slate); } }
+  .stat-n { font-family: var(--font-mono); font-weight: 500; font-size: clamp(2.75rem, 6vw, 5rem); line-height: 1; color: var(--color-signal); }
+  .stat-l { color: var(--color-dust); font-size: 0.975rem; }
   .fuel-teaser { display: grid; }
   @media (min-width: 1024px) { .fuel-teaser { grid-template-columns: 1fr 1fr; } }
-  .ft-media { min-height: 380px; }
-  .ft-media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .ft-media { min-height: 420px; display: grid; place-content: center; background: radial-gradient(ellipse at 50% 45%, #4a5a40, #2b3526 70%); }
   .ft-copy { display: grid; gap: 22px; align-content: center; padding: clamp(48px, 7vw, 110px) clamp(20px, 5vw, 80px); position: relative; }
   .ft-cards { display: grid; gap: 14px; }
   @media (min-width: 640px) { .ft-cards { grid-template-columns: 1fr 1fr; } }
