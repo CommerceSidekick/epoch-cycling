@@ -260,7 +260,7 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
   .stat-l { color: var(--color-dust); font-size: 0.975rem; }
   .fuel-teaser { display: grid; }
   @media (min-width: 1024px) { .fuel-teaser { grid-template-columns: 1fr 1fr; } }
-  .ft-media { min-height: 420px; display: grid; place-content: center; background: radial-gradient(ellipse at 50% 45%, #4a5a40, #2b3526 70%); }
+  .ft-media { min-height: 420px; display: grid; place-items: center; padding-inline: 20px; background: radial-gradient(ellipse at 50% 45%, #4a5a40, #2b3526 70%); }
   .ft-copy { display: grid; gap: 22px; align-content: center; padding: clamp(48px, 7vw, 110px) clamp(20px, 5vw, 80px); position: relative; }
   .ft-cards { display: grid; gap: 14px; }
   @media (min-width: 640px) { .ft-cards { grid-template-columns: 1fr 1fr; } }
