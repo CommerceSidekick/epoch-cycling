@@ -30,6 +30,7 @@ import gravelDescentWide from "../assets/img/gravel-descent-wide.jpg";
 // Saved from Epoch Health System for Epoch MTB ("Find your edge.", see docs/saved/find-your-edge.md).
 import mtbDownhillToward from "../assets/img/mtb-downhill-toward-camera.jpg";
 import mtbBermRoost from "../assets/img/mtb-berm-roost.jpg";
+import mtbTrailToward from "../assets/img/mtb-trail-toward-camera.jpg";
 
 export const IMG = {
   mtbBlur: { src: mtbBlur, alt: "Black-and-white panning shot of a mountain biker at speed, the forest a blur behind" },
@@ -61,5 +62,6 @@ export const IMG = {
   trailheadSunset: { src: trailheadSunset, alt: "Rider silhouetted with a bike against a sunset sky" },
   mtbDownhillToward: { src: mtbDownhillToward, alt: "Downhill rider in a full-face helmet charging down a rocky course toward the camera" },
   mtbBermRoost: { src: mtbBermRoost, alt: "Mountain biker carving a forest berm, throwing up a spray of dirt" },
+  mtbTrailToward: { src: mtbTrailToward, alt: "Mountain biker in a trail helmet riding down a rocky forest trail toward the camera" },
 } as const;
 export type ImgKey = keyof typeof IMG;

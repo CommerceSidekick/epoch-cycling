@@ -33,6 +33,7 @@ Launch photography is stock, used under the [Unsplash License](https://unsplash.
 | gravel-descent-wide.jpg | crop of gravel-descent.jpg | Unsplash License |
 | mtb-downhill-toward-camera.jpg | https://www.pexels.com/photo/photograph-of-a-man-wit-a-green-helmet-riding-a-bicycle-11049373/ (Javier Piva Flos) | Pexels License |
 | mtb-berm-roost.jpg | https://www.pexels.com/photo/man-riding-bicycle-on-dirt-road-4138738/ | Pexels License |
+| mtb-trail-toward-camera.jpg | https://www.pexels.com/photo/a-man-riding-a-bike-in-the-forest-12328608/ (Jonathan Cooper) | Pexels License |
 
 Known photographers: mtb-dusty-race.jpg by Sunil Chandra Sharma; road-peloton.jpg by Quino Al. Others are credited on their photo pages.
 

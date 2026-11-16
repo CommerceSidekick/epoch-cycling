@@ -13,6 +13,7 @@ site uses it yet.
 | Eyebrow on the general site | Personalized Health · Performance |
 | Photo, first choice | `src/assets/img/mtb-downhill-toward-camera.jpg`, key `mtbDownhillToward`: a downhill rider charging a rocky course straight at the camera. Full-bleed hero, `object-position: 50% 35%` (share image `50% 8%`) |
 | Photo, alternate | `src/assets/img/mtb-berm-roost.jpg`, key `mtbBermRoost`: a rider carving a forest berm with dirt flying. Hero `45% 45%` |
+| Also saved | `src/assets/img/mtb-trail-toward-camera.jpg`, key `mtbTrailToward`: a trail rider coming down a rocky forest trail straight at the camera. Portrait (1600x2400); it was the fifth tall photo on the Epoch Health System home page, where the woman on the road bike replaced it |
 | Share images, for reference | `docs/saved/find-your-edge-share.png` (downhill), `docs/saved/find-your-edge-share-berm.png` (berm) |
 
 Usage: `<PageHero img="mtbDownhillToward" position="center 35%" ... >` or
