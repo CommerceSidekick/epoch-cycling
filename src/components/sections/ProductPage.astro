@@ -72,7 +72,7 @@ const [main, ...rest] = p.images;
         <p class="fine">Lifestyle photos. Product photos at launch.</p>
       </div>
       <div class="ph-info">
-        <Eyebrow bar="var(--color-signal)">{p.eyebrow}</Eyebrow>
+        <Eyebrow bar="var(--color-sage)">{p.eyebrow}</Eyebrow>
         <h1 class="t-display ph-title">{p.name}</h1>
         <p class="body-l ph-one">{p.oneLiner}</p>
         <p class="muted">{p.sub}</p>
@@ -94,7 +94,7 @@ const [main, ...rest] = p.images;
           ) : (
             <button type="button" class="btn btn-signal btn-lg" data-add-to-cart={product.id}>Add to cart</button>
           )}
-          <LinkArrow href="/fuel/guide" accent="var(--color-signal)">How to fuel a ride</LinkArrow>
+          <LinkArrow href="/fuel/guide" accent="var(--color-sage)">How to fuel a ride</LinkArrow>
         </div>
         {facts.length > 0 && (
           <dl class="ph-facts">
@@ -109,7 +109,7 @@ const [main, ...rest] = p.images;
   {claims.length > 0 && (
     <section class="section on-moss" aria-labelledby="for-title">
       <div class="wrap">
-        <Eyebrow bar="var(--color-signal)" class="text-bone">WHAT IT'S FOR</Eyebrow>
+        <Eyebrow bar="var(--color-sage)" class="text-bone">WHAT IT'S FOR</Eyebrow>
         <h2 id="for-title" class="sr-only">What it's for</h2>
         <ul class="claims" role="list">
           {claims.map((c, i) => (
@@ -131,7 +131,7 @@ const [main, ...rest] = p.images;
         <h2 class="t-h2">How to use it.</h2>
         <p class="body-l">{p.directions ?? "Directions on the label at launch."}</p>
         <GuideMini />
-        <LinkArrow href="/fuel/guide" accent="var(--color-signal)">Full fueling guide</LinkArrow>
+        <LinkArrow href="/fuel/guide" accent="var(--color-sage)">Full fueling guide</LinkArrow>
       </div>
       <div class="inside card reveal reveal-d1">
         <h2 class="t-h3 uppercase">What's in it.</h2>
@@ -146,7 +146,7 @@ const [main, ...rest] = p.images;
           </>
         ) : (
           <div class="facts-empty">
-            <PillarIcon name="fuel" size={36} class="text-signal" />
+            <PillarIcon name="fuel" size={36} class="text-sage" />
             <p class="t-h4">Full facts panel at launch.</p>
             <p class="muted small">Every ingredient and amount goes here, the same as the label.</p>
           </div>
@@ -201,35 +201,35 @@ const [main, ...rest] = p.images;
 
 <style>
   .ph-hero { position: relative; overflow: hidden; padding-top: clamp(120px, 13vw, 168px); padding-bottom: clamp(56px, 8vw, 96px); border-bottom: 1px solid var(--color-slate); }
-  .ph-ghost { position: absolute; right: -2vw; top: 90px; font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: clamp(8rem, 26vw, 26rem); line-height: 0.8; color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--color-signal) 18%, transparent); pointer-events: none; user-select: none; }
+  .ph-ghost { position: absolute; right: -2vw; top: 90px; font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: clamp(8rem, 26vw, 26rem); line-height: 0.8; color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--color-sage) 18%, transparent); pointer-events: none; user-select: none; }
   .ph-grid { position: relative; display: grid; gap: clamp(28px, 5vw, 64px); align-items: start; }
   @media (min-width: 1024px) { .ph-grid { grid-template-columns: 1.15fr 1fr; } }
   .ph-gallery { display: grid; gap: 12px; }
   .ph-main { aspect-ratio: 4 / 3; border-radius: var(--radius-md); border: 1px solid var(--color-slate); }
   .ph-main :global(img), .ph-thumb :global(img) { width: 100%; height: 100%; object-fit: cover; }
-  .ph-plate { position: absolute; left: 16px; bottom: 16px; display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--color-signal); color: var(--color-carbon); border-radius: 4px; }
+  .ph-plate { position: absolute; left: 16px; bottom: 16px; display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--color-sage); color: var(--color-carbon); border-radius: 4px; }
   .ph-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .ph-thumb { aspect-ratio: 1; border-radius: 8px; border: 1px solid var(--color-slate); }
   .ph-info { display: grid; gap: 20px; align-content: start; }
   @media (min-width: 1024px) { .ph-info { position: sticky; top: 110px; } }
   .ph-title { font-size: clamp(3rem, 7vw, 6.5rem); }
   .ph-one { font-weight: 500; }
-  .ph-price { font-size: 1.5rem; color: var(--color-signal); }
+  .ph-price { font-size: 1.5rem; color: var(--color-sage); }
   .ph-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 6px; }
   .ph-facts div { border: 1px solid var(--color-slate); border-radius: 8px; padding: 12px 14px; background: var(--color-ridge); }
   .ph-facts dt { font-size: 0.8125rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-dust); }
-  .ph-facts dd { font-family: var(--font-mono); color: var(--color-signal); font-size: 1.2rem; margin-top: 4px; }
+  .ph-facts dd { font-family: var(--font-mono); color: var(--color-sage); font-size: 1.2rem; margin-top: 4px; }
 
   .claims { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 0; }
   .claims li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 24px; padding: 26px 0; border-top: 1px solid rgb(242 238 230 / 0.18); }
-  .claim-n { color: var(--color-signal); padding-top: 10px; }
+  .claim-n { color: var(--color-sage); padding-top: 10px; }
   .claim-t { font-size: clamp(1.6rem, 3.6vw, 3rem); text-transform: none; }
-  .claim-pending { grid-column: 2; justify-self: start; color: var(--color-signal); font-size: 0.8125rem; white-space: normal; }
+  .claim-pending { grid-column: 2; justify-self: start; color: var(--color-sage); font-size: 0.8125rem; white-space: normal; }
 
   .use-grid { display: grid; gap: 24px; align-items: start; }
   @media (min-width: 1024px) { .use-grid { grid-template-columns: 1.3fr 1fr; gap: 48px; } }
   .use { display: grid; gap: 20px; }
-  .inside { padding: clamp(22px, 3vw, 32px); display: grid; gap: 14px; border-top: 3px solid var(--color-signal); }
+  .inside { padding: clamp(22px, 3vw, 32px); display: grid; gap: 14px; border-top: 3px solid var(--color-sage); }
   .facts-empty { display: grid; gap: 10px; justify-items: start; padding: 24px; border: 1px dashed #4a4e45; border-radius: 8px; }
 
   .faq-grid { display: grid; gap: 32px; }
@@ -238,14 +238,14 @@ const [main, ...rest] = p.images;
   .warn-sec { padding-block: 40px 48px; border-block: 1px solid var(--color-slate); background: var(--color-ridge); }
   .warn-list { list-style: none; margin: 12px 0 16px; padding: 0; display: grid; gap: 6px; max-width: var(--measure); }
   .warn-list li { position: relative; padding-left: 18px; font-size: 0.9375rem; }
-  .warn-list li::before { content: ""; position: absolute; left: 0; top: 0.65em; width: 8px; height: 2px; background: var(--color-signal); }
+  .warn-list li::before { content: ""; position: absolute; left: 0; top: 0.65em; width: 8px; height: 2px; background: var(--color-sage); }
 
   .pairs { display: grid; gap: 18px; }
   @media (min-width: 900px) { .pairs { grid-template-columns: 1fr 1fr; } }
   .guide-card { display: flex; flex-direction: column; justify-content: flex-end; gap: 16px; padding: clamp(24px, 3vw, 40px); min-height: 360px; border-radius: var(--radius-md); background: var(--color-moss); text-decoration: none; border: 1px solid transparent; transition: transform 300ms var(--ease), border-color 300ms var(--ease); }
-  .guide-card:hover { transform: translateY(-4px); border-color: var(--color-signal); }
-  .guide-card .eyebrow { color: var(--color-bone); --eyebrow-bar: var(--color-signal); }
+  .guide-card:hover { transform: translateY(-4px); border-color: var(--color-sage); }
+  .guide-card .eyebrow { color: var(--color-bone); --eyebrow-bar: var(--color-sage); }
   .guide-big { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(2.25rem, 4vw, 3.5rem); line-height: 0.92; }
   .guide-card .muted { color: #d7dccb; }
-  .guide-card .arr { color: var(--color-signal); }
+  .guide-card .arr { color: var(--color-sage); }
 </style>

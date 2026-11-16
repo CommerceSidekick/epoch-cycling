@@ -26,7 +26,7 @@ type Plan = { name: string; who: string; price: string; per?: string; note?: str
 // The club: free to join, racer and ambassador spots by application.
 const club: Plan[] = [
   { name: "Member", who: "Anyone. Every level.", price: P.free, items: ["Group rides and events near you", "First dibs on jersey and fuel drops", "The crew, inside the Epoch app"], cta: "Join free", href: "/join", accent: "var(--color-summit)" },
-  { name: "Club racer", who: "Racers of any level.", price: "By application", items: ["Everything members get", "Help with race entries, up to the club limit", "Club racer jersey with the Signal cuff stripe"], cta: "Apply to race", href: "/ride/apply?type=racer", featured: true, accent: "var(--color-signal)" },
+  { name: "Club racer", who: "Racers of any level.", price: "By application", items: ["Everything members get", "Help with race entries, up to the club limit", "Club racer jersey with the Signal cuff stripe"], cta: "Apply to race", href: "/ride/apply?type=racer", featured: true, accent: "var(--color-sage)" },
   { name: "Ambassador", who: "Riders who bring people together.", price: "By application", items: ["Host rides and build the local crew", "Kit and fuel for the rides you host", "Ambassador code on Fuel and jerseys"], cta: "Apply to be an ambassador", href: "/ride/apply?type=ambassador", accent: "var(--color-summit)" },
 ];
 
@@ -101,11 +101,11 @@ const faq = ["cost-to-join", "is-the-app-free", "how-race-deal-works", "which-ra
   <!-- Fuel and jerseys -->
   <section class="section" aria-labelledby="gear-title">
     <div class="wrap">
-      <SectionHead eyebrow="03 · FUEL AND JERSEYS" title="Priced at launch." id="gear-title" intro="Fuel, Salt and jerseys get real prices when they ship. Plus members get member pricing on Fuel and Salt." bar="var(--color-signal)" />
+      <SectionHead eyebrow="03 · FUEL AND JERSEYS" title="Priced at launch." id="gear-title" intro="Fuel, Salt and jerseys get real prices when they ship. Plus members get member pricing on Fuel and Salt." bar="var(--color-sage)" />
       <ul class="gear" role="list">
         {gear.map((g, i) => (
           <li class={`gear-card card card-hover reveal reveal-d${i}`}>
-            <div class="flex items-center justify-between gap-3"><span class="tag">{g.tag}</span><PillarIcon name={g.icon} size={30} class="text-signal" /></div>
+            <div class="flex items-center justify-between gap-3"><span class="tag">{g.tag}</span><PillarIcon name={g.icon} size={30} class="text-sage" /></div>
             <h3 class="t-h3"><a href={g.href} class="gear-link">{g.name}</a></h3>
             <p class="small muted">{g.line}</p>
             <p class="mono small gear-price">Price at launch</p>
@@ -153,7 +153,7 @@ const faq = ["cost-to-join", "is-the-app-free", "how-race-deal-works", "which-ra
   @media (min-width: 900px) { .plans { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .plan { position: relative; display: flex; flex-direction: column; gap: 10px; padding: clamp(24px, 3vw, 32px); border-top: 3px solid var(--acc); overflow: visible; }
   .plan.is-featured { border-color: var(--acc); box-shadow: 0 0 0 1px var(--acc), 0 30px 60px -30px color-mix(in srgb, var(--acc) 45%, transparent); }
-  .plan-flag { position: absolute; top: -12px; right: 18px; }
+  .plan-flag { position: absolute; top: -12px; right: 18px; background: var(--color-ridge); }
   .plan-price { font-family: var(--font-display); font-weight: 900; font-stretch: 112%; font-size: clamp(2.5rem, 4vw, 3.25rem); line-height: 1; margin: 14px 0 6px; padding-bottom: 18px; border-bottom: 1px solid var(--color-slate); }
   .plan-price.is-text { font-size: clamp(1.5rem, 2.4vw, 1.9rem); padding-top: 10px; }
   .plan-per { font-family: var(--font-mono); font-weight: 500; font-size: 0.9375rem; color: var(--color-dust); margin-left: 6px; letter-spacing: 0.02em; }
@@ -165,11 +165,11 @@ const faq = ["cost-to-join", "is-the-app-free", "how-race-deal-works", "which-ra
   .plan-cta { margin-top: 18px; }
   .gear { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
   @media (min-width: 900px) { .gear { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .gear-card { position: relative; display: grid; gap: 10px; padding: 24px; align-content: start; border-top: 3px solid var(--color-signal); }
+  .gear-card { position: relative; display: grid; gap: 10px; padding: 24px; align-content: start; border-top: 3px solid var(--color-sage); }
   .gear-link { text-decoration: none; }
   .gear-link::after { content: ""; position: absolute; inset: 0; }
-  .gear-card:has(.gear-link:focus-visible) { outline: 2px solid var(--color-signal); outline-offset: 3px; }
-  .gear-price { color: var(--color-signal); margin-top: 6px; }
+  .gear-card:has(.gear-link:focus-visible) { outline: 2px solid var(--color-sage); outline-offset: 3px; }
+  .gear-price { color: var(--color-sage); margin-top: 6px; }
   .th-grid { display: grid; gap: 24px; max-width: 900px; }
   .th-body { color: #26271f; }
   .pfaq { display: grid; gap: 40px; }

@@ -36,7 +36,7 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
     </dl>
     <ul class="squares reveal reveal-d2" role="list" aria-label="The system">
       <li><a href="/ride" class="sq" style="--sq: var(--color-summit)" data-cta="Ride" data-cta-location="home-hero-squares"><span class="sq-top"><span class="race-number">01</span><PillarIcon name="ride" size={30} /></span><span class="sq-word">Ride</span><span class="sq-line">Group rides. Jerseys. The race deal.</span></a></li>
-      <li><a href="/fuel" class="sq" style="--sq: var(--color-signal)" data-cta="Fuel" data-cta-location="home-hero-squares"><span class="sq-top"><span class="race-number">02</span><PillarIcon name="fuel" size={30} /></span><span class="sq-word">Fuel</span><span class="sq-line">Epoch Fuel. Epoch Salt. The guide.</span></a></li>
+      <li><a href="/fuel" class="sq" style="--sq: var(--color-sage)" data-cta="Fuel" data-cta-location="home-hero-squares"><span class="sq-top"><span class="race-number">02</span><PillarIcon name="fuel" size={30} /></span><span class="sq-word">Fuel</span><span class="sq-line">Epoch Fuel. Epoch Salt. The guide.</span></a></li>
       <li><a href="/optimize" class="sq" style="--sq: var(--color-sky)" data-cta="Optimize" data-cta-location="home-hero-squares"><span class="sq-top"><span class="race-number">03</span><PillarIcon name="optimize" size={30} /></span><span class="sq-word">Optimize</span><span class="sq-line">The free app. Coaching. Labs.</span></a></li>
     </ul>
     <div class="hero-ctas reveal reveal-d3">
@@ -100,7 +100,7 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
       <ProductPacks size="lg" class="reveal" />
     </div>
     <div class="ft-copy">
-      <Eyebrow bar="var(--color-signal)" class="text-bone">FUEL</Eyebrow>
+      <Eyebrow bar="var(--color-sage)" class="text-bone">FUEL</Eyebrow>
       <h2 id="fuel-title" class="t-h2 reveal">Fuel the ride.</h2>
       <p class="body-l reveal reveal-d1">Carbs for the long climb. Salt for the hot day. Labels you can actually read.</p>
       <div class="ft-cards">
@@ -119,7 +119,7 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
       </div>
       <div class="flex flex-wrap items-center gap-5">
         <Button href="/join?interest=fuel" variant="signal" arrow location="home-fuel">Get first access</Button>
-        <LinkArrow href="/fuel/guide" accent="var(--color-signal)">How to fuel a ride</LinkArrow>
+        <LinkArrow href="/fuel/guide" accent="var(--color-sage)">How to fuel a ride</LinkArrow>
       </div>
       <Disclaimer variant="fda" class="ft-fine" />
     </div>
@@ -222,7 +222,7 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
   /* Trust chips (carried over from epochhealthsystem.com) */
   .chips-row { list-style: none; padding: 0; margin: 18px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .chips-row li { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; border: 1px solid rgb(242 238 230 / 0.16); background: rgb(14 15 12 / 0.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); font-size: 0.875rem; color: #e7e2d6; }
-  .chips-row :global(svg) { color: var(--color-signal); flex: none; }
+  .chips-row :global(svg) { color: var(--color-dust); flex: none; }
 
   /* Riders Club band: solid black behind the text, fading to Summit blue with a blue-toned photo on the right */
   .club-band { position: relative; isolation: isolate; overflow: hidden; color: var(--color-bone); background: var(--color-carbon); }
@@ -256,7 +256,7 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
   .stats-row li { display: grid; gap: 10px; padding: clamp(24px, 4vw, 44px) clamp(16px, 2.5vw, 32px); border-left: 1px solid var(--color-slate); }
   .stats-row li:first-child, .stats-row li:nth-child(3) { border-left: 0; }
   @media (min-width: 900px) { .stats-row li:nth-child(3) { border-left: 1px solid var(--color-slate); } }
-  .stat-n { font-family: var(--font-mono); font-weight: 500; font-size: clamp(2.75rem, 6vw, 5rem); line-height: 1; color: var(--color-signal); }
+  .stat-n { font-family: var(--font-mono); font-weight: 500; font-size: clamp(2.75rem, 6vw, 5rem); line-height: 1; color: var(--color-bone); }
   .stat-l { color: var(--color-dust); font-size: 0.975rem; }
   .fuel-teaser { display: grid; }
   @media (min-width: 1024px) { .fuel-teaser { grid-template-columns: 1fr 1fr; } }
@@ -266,8 +266,8 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
   @media (min-width: 640px) { .ft-cards { grid-template-columns: 1fr 1fr; } }
   .ft-card { position: relative; overflow: hidden; display: grid; gap: 10px; align-content: start; justify-items: start; padding: 22px; min-height: 200px; border-radius: var(--radius-md); background: rgb(14 15 12 / 0.55); border: 1px solid rgb(242 238 230 / 0.12); text-decoration: none; transition: transform 260ms var(--ease), background 260ms var(--ease); }
   .ft-card:hover { transform: translateY(-4px); background: rgb(14 15 12 / 0.75); }
-  :global(.ft-icon) { position: absolute; right: 16px; bottom: 16px; color: var(--color-signal); }
-  .ft-salt { position: absolute; right: 16px; bottom: 14px; font-family: var(--font-mono); color: var(--color-signal); font-size: 0.9rem; letter-spacing: 0.1em; }
+  :global(.ft-icon) { position: absolute; right: 16px; bottom: 16px; color: var(--color-sage); }
+  .ft-salt { position: absolute; right: 16px; bottom: 14px; font-family: var(--font-mono); color: var(--color-sage); font-size: 0.9rem; letter-spacing: 0.1em; }
   :global(.ft-fine) { color: #cfd3c4 !important; }
 
   .opt-teaser { overflow: hidden; }

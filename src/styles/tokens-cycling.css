@@ -5,6 +5,9 @@
      Carbon on Summit 5.77:1, Summit Ink on Bone 5.79:1. Dawn stays defined in tokens.css (master). */
   --color-summit: #2D8CFF;
   --color-summit-ink: #1A4FD6;
+  /* Sage: quiet accent for Fuel and highlights (owner 2026-11-16: no neon boxes; replaces Signal on this site).
+     10.6:1 on Carbon, 5.2:1 on Moss, Carbon on Sage 10.6:1. Signal stays defined in tokens.css (master). */
+  --color-sage: #B7C6A0;
   --color-grit: #D9A441;
   --color-grit-ink: #7A5512;
   --color-velo: #A592FF;
