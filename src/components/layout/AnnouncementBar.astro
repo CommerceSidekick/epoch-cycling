@@ -15,11 +15,11 @@ import Icon from "../ui/Icon.astro";
   try { if (localStorage.getItem("epoch-ann-dismissed") !== "1") document.querySelector("[data-announcement]")?.removeAttribute("hidden"); } catch (e) { document.querySelector("[data-announcement]")?.removeAttribute("hidden"); }
 </script>
 <style>
-  .ann { background: var(--color-signal); color: var(--color-carbon); }
+  .ann { background: var(--color-ridge); color: var(--color-bone); border-bottom: 1px solid var(--color-slate); }
   .ann-row { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 40px; position: relative; }
-  .ann-text { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 10px; font-weight: 600; font-size: 0.9375rem; padding: 6px 40px; text-align: center; }
-  .ann-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-carbon); animation: pulse 1.8s infinite; }
+  .ann-text { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 10px; font-weight: 500; font-size: 0.875rem; padding: 6px 40px; text-align: center; }
+  .ann-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-summit); animation: pulse 2.4s infinite; }
   @keyframes pulse { 50% { opacity: 0.25; } }
-  .ann-link { color: var(--color-carbon); text-decoration: underline; text-underline-offset: 3px; }
-  .ann-close { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: grid; place-content: center; width: 44px; height: 40px; background: none; border: 0; color: var(--color-carbon); cursor: pointer; }
+  .ann-link { color: var(--color-bone); text-decoration: underline; text-decoration-color: rgb(242 238 230 / 0.45); text-underline-offset: 3px; }
+  .ann-close { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: grid; place-content: center; width: 44px; height: 40px; background: none; border: 0; color: var(--color-dust); cursor: pointer; }
 </style>

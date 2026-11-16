@@ -8,7 +8,7 @@ const { MARK_PATHS, WORDMARK_STROKES } = { MARK_PATHS: ["M205 300 L440 82 L611 3
 const V = [
   { id: "default", img: "mtb-blur.jpg", kicker: "EPOCH CYCLING · MTB / GRAVEL / ROAD", title: "Now is your time.", sub: "Ride. Fuel. Optimize.", accent: "#2D8CFF", lock: "CYCLING" },
   { id: "ride", img: "crew-singletrack.jpg", kicker: "THE EPOCH RIDERS CLUB", title: "Nobody gets fast alone.", sub: "Group rides. Jerseys. The race deal.", accent: "#2D8CFF", lock: "RIDERS CLUB" },
-  { id: "fuel", img: "fuel-bottle-trail.jpg", kicker: "FUEL", title: "Fuel the ride.", sub: "Epoch Fuel and Epoch Salt.", accent: "#D4FF3A", lock: "CYCLING" },
+  { id: "fuel", img: "fuel-bottle-trail.jpg", kicker: "FUEL", title: "Fuel the ride.", sub: "Epoch Fuel and Epoch Salt.", accent: "#B7C6A0", lock: "CYCLING" },
   { id: "optimize", img: "mtb-ridge-silhouette.jpg", kicker: "OPTIMIZE", title: "Know when to send it.", sub: "The free Epoch app and coaching for riders.", accent: "#8FB8C9", lock: "CYCLING" },
   { id: "mtb", img: "mtb-charge.jpg", kicker: "EPOCH MTB · LIVE", title: "Nobody gets fast alone.", sub: "Built in the dirt.", accent: "#2D8CFF", lock: "MTB" },
   { id: "gravel", img: "gravel-descent.jpg", kicker: "EPOCH GRAVEL · COMING SOON", title: "Long roads. Loose dirt.", sub: "Get on the list.", accent: "#D9A441", lock: "GRAVEL" },
