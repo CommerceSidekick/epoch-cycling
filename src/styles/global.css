@@ -15,6 +15,8 @@
 @font-face { font-family: "Barlow"; font-weight: 500; font-display: swap; src: url("/fonts/barlow-500.woff2") format("woff2"); }
 @font-face { font-family: "Barlow"; font-weight: 600; font-display: swap; src: url("/fonts/barlow-600.woff2") format("woff2"); }
 @font-face { font-family: "JetBrains Mono"; font-weight: 500; font-display: swap; src: url("/fonts/jetbrains-mono-500.woff2") format("woff2"); }
+/* Schwa for the "epoch /ˈepək/" definition; only downloaded on pages that use it */
+@font-face { font-family: "JetBrains Mono"; font-weight: 500; font-display: swap; src: url("/fonts/jetbrains-mono-500-ipa.woff2") format("woff2"); unicode-range: U+0259, U+018F; }
 
 /* ---------- Base ---------- */
 @layer base {
