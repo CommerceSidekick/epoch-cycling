@@ -1,6 +1,6 @@
 # Image credits and licenses
 
-Launch photography is stock, used under the [Unsplash License](https://unsplash.com/license) (free for commercial use, no permission needed). These are placeholders for owned photography (pre-launch item L13). They are not Epoch riders, and alt text never says they are. Several photos show third-party team kits or brand logos; replace them before any paid campaign.
+Launch photography is stock, used under the [Unsplash License](https://unsplash.com/license) or the [Pexels License](https://www.pexels.com/license/) (both free for commercial use, no permission needed). These are placeholders for owned photography (pre-launch item L13). They are not Epoch riders, and alt text never says they are. Several photos show third-party team kits or brand logos; replace them before any paid campaign.
 
 | File (src/assets/img/) | Source photo page | License |
 |---|---|---|
@@ -31,6 +31,8 @@ Launch photography is stock, used under the [Unsplash License](https://unsplash.
 | trailhead-sunset.jpg | https://unsplash.com/photos/1b6dpSwupHE | Unsplash License |
 | mtb-charge-wide.jpg | crop of mtb-charge.jpg | Unsplash License |
 | gravel-descent-wide.jpg | crop of gravel-descent.jpg | Unsplash License |
+| mtb-downhill-toward-camera.jpg | https://www.pexels.com/photo/photograph-of-a-man-wit-a-green-helmet-riding-a-bicycle-11049373/ (Javier Piva Flos) | Pexels License |
+| mtb-berm-roost.jpg | https://www.pexels.com/photo/man-riding-bicycle-on-dirt-road-4138738/ | Pexels License |
 
 Known photographers: mtb-dusty-race.jpg by Sunil Chandra Sharma; road-peloton.jpg by Quino Al. Others are credited on their photo pages.
 

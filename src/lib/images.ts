@@ -1,4 +1,4 @@
-// Launch photography (Unsplash License, see public/images/CREDITS.md). These are stock placeholders,
+// Launch photography (Unsplash or Pexels License, see public/images/CREDITS.md). These are stock placeholders,
 // not Epoch riders: alt text describes the scene only. Replace with owned photography (L13).
 import mtbBlur from "../assets/img/mtb-blur.jpg";
 import mtbCharge from "../assets/img/mtb-charge.jpg";
@@ -27,6 +27,9 @@ import fuelCage from "../assets/img/fuel-bottle-cage.jpg";
 import trailheadSunset from "../assets/img/trailhead-sunset.jpg";
 import mtbChargeWide from "../assets/img/mtb-charge-wide.jpg";
 import gravelDescentWide from "../assets/img/gravel-descent-wide.jpg";
+// Saved from Epoch Health System for Epoch MTB ("Find your edge.", see docs/saved/find-your-edge.md).
+import mtbDownhillToward from "../assets/img/mtb-downhill-toward-camera.jpg";
+import mtbBermRoost from "../assets/img/mtb-berm-roost.jpg";
 
 export const IMG = {
   mtbBlur: { src: mtbBlur, alt: "Black-and-white panning shot of a mountain biker at speed, the forest a blur behind" },
@@ -56,5 +59,7 @@ export const IMG = {
   mtbChargeWide: { src: mtbChargeWide, alt: "Two downhill riders in full-face helmets charging down a forest trail toward the camera" },
   gravelDescentWide: { src: gravelDescentWide, alt: "Rider descending a winding dirt road on a mountainside" },
   trailheadSunset: { src: trailheadSunset, alt: "Rider silhouetted with a bike against a sunset sky" },
+  mtbDownhillToward: { src: mtbDownhillToward, alt: "Downhill rider in a full-face helmet charging down a rocky course toward the camera" },
+  mtbBermRoost: { src: mtbBermRoost, alt: "Mountain biker carving a forest berm, throwing up a spray of dirt" },
 } as const;
 export type ImgKey = keyof typeof IMG;
