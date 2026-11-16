@@ -14,7 +14,7 @@ const sub: Record<V, string> = {
   road: "ROAD",
   stacked: "",
 };
-const discColor: Partial<Record<V, string>> = { mtb: "var(--color-dawn)", gravel: "var(--color-grit)", road: "var(--color-velo)" };
+const discColor: Partial<Record<V, string>> = { mtb: "var(--color-summit)", gravel: "var(--color-grit)", road: "var(--color-velo)" };
 const label = variant === "stacked" ? BRAND.wordmark : `${BRAND.wordmark} ${sub[variant]}`;
 const w = { sm: 104, md: 128, lg: 220 }[size];
 ---

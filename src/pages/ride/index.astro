@@ -26,7 +26,7 @@ const ways = [
   },
   {
     n: "02", name: "Club racer", price: "By application", who: "Racers of any level.",
-    items: ["Everything members get", "Race entries covered, up to the club limit", "Club racer kit with the Signal cuff stripe"],
+    items: ["Everything members get", "Help with race entries, up to the club limit", "Club racer kit with the Signal cuff stripe"],
     cta: "Apply to race", href: "/ride/apply?type=racer", variant: "signal" as const, racer: true,
   },
   {
@@ -38,14 +38,14 @@ const ways = [
 ---
 <BaseLayout lcp="crewSilhouette"
   title="The Epoch Riders Club | Group Rides, Kits and Race Entry | Epoch Cycling"
-  description="Join the Epoch Riders Club. Group rides, events, team kits and ambassadors. Club racers fuel with Epoch, race in the kit, and get race entries covered."
+  description="Join the Epoch Riders Club. Group rides, events, team kits and ambassadors. Club racers fuel with Epoch, race in the kit, and get help with race entries."
   overlayHeader
   breadcrumbs={[{ name: "Riders Club", path: "/ride" }]}
 >
   <!-- 5.2.1 Hero -->
   <PageHero img="crewSilhouette" eyebrow="PILLAR 01 · RIDE" size="full" position="center 62%" dust>
     <div class="ride-lockup reveal"><Lockup variant="club" size="md" /></div>
-    <h1 class="t-display-xl ride-h1 reveal">This is the <span class="text-dawn">Riders Club.</span></h1>
+    <h1 class="t-display-xl ride-h1 reveal">This is the <span class="text-summit">Riders Club.</span></h1>
     <p class="body-l ride-sub reveal reveal-d1">Group rides, race weekends and a kit you'll actually want to wear. Free to join. Racers can apply for more.</p>
     <div class="ride-ctas reveal reveal-d2">
       <Button href="/join" size="lg" arrow location="ride-hero">Join free</Button>
@@ -83,7 +83,7 @@ const ways = [
     <div class="wrap deal-grid">
       <div class="deal-left">
         <p class="eyebrow" style="--eyebrow-bar: var(--color-signal)">THE RACE DEAL</p>
-        <h2 id="deal-title" class="deal-title reveal"><span>Fuel with Epoch.</span> <span class="t-outline-bone">Race in the kit.</span> <span class="text-signal">We cover your entry.</span></h2>
+        <h2 id="deal-title" class="deal-title reveal"><span>Fuel with Epoch.</span> <span class="t-outline-bone">Race in the kit.</span> <span class="text-signal">We'll help cover your entry.</span></h2>
       </div>
       <div class="deal-right">
         <Steps
@@ -92,11 +92,11 @@ const ways = [
           steps={[
             { title: "Get in.", body: "Apply and get accepted as a Club racer." },
             { title: "Race in Epoch.", body: "Wear the kit. Fuel with Epoch Fuel or Salt on race day." },
-            { title: "Send proof. Get covered.", body: "Your result, a photo in the kit, and your entry receipt. We reimburse your entry under the club terms." },
+            { title: "Send proof. Get help with the entry.", body: "Your result, a photo in the kit, and your entry receipt. We help cover your entry under the club terms." },
           ]}
         />
         <div class="deal-fine">
-          <p>Coverage is up to <Ph value={rc.entryCap} label="entry cap" /> per race and <Ph value={rc.racesPerSeason} label="races per season" /> races per season, for eligible races (<Ph value={rc.eligibleRaces} label="eligible races" />).</p>
+          <p>Entry support is up to <Ph value={rc.entryCap} label="entry cap" /> per race and <Ph value={rc.racesPerSeason} label="races per season" /> races per season, for eligible races (<Ph value={rc.eligibleRaces} label="eligible races" />).</p>
           <p>Posts about Epoch must say you're sponsored (#EpochAthlete plus #ad, or the platform's paid-partnership label).</p>
           <p><strong>The race deal is about fuel and kit. It has nothing to do with any medical program, ever.</strong></p>
         </div>
@@ -178,14 +178,14 @@ const ways = [
   .way-who { color: var(--color-dust); }
   .way-list { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 10px; }
   .way-list li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; }
-  :global(.way-check) { color: var(--color-dawn); margin-top: 3px; }
+  :global(.way-check) { color: var(--color-summit); margin-top: 3px; }
   .way-racer :global(.way-check) { color: var(--color-signal); }
 
   .deal { overflow: hidden; }
   .deal-grid { display: grid; gap: 48px; padding-block: clamp(56px, 8vw, 110px); }
   @media (min-width: 1024px) { .deal-grid { grid-template-columns: 1fr 1fr; align-items: start; } .deal-left { position: sticky; top: 120px; } }
   .deal-left { display: grid; gap: 20px; }
-  .deal-title { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(2.5rem, 6vw, 5.25rem); line-height: 0.9; letter-spacing: -0.015em; }
+  .deal-title { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(2.25rem, 4.1vw, 4rem); line-height: 0.92; letter-spacing: -0.015em; }
   .deal-title span { display: block; }
   .deal-right { display: grid; gap: 26px; justify-items: start; }
   .deal-fine { display: grid; gap: 8px; font-size: 0.9375rem; color: #d9d4c8; border-left: 3px solid var(--color-signal); padding: 4px 0 4px 18px; }

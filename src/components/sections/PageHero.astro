@@ -40,7 +40,7 @@ const { img, eyebrow, position = "center", size = "tall", duo, speed = false, du
           p.x += p.vx; p.y += p.vy;
           if (p.x > 1.02) { p.x = -0.02; p.y = Math.random(); }
           ctx.beginPath();
-          ctx.fillStyle = `rgba(255, 196, 150, ${p.a})`;
+          ctx.fillStyle = `rgba(190, 220, 255, ${p.a})`;
           ctx.arc(p.x * w, p.y * h, p.r, 0, Math.PI * 2);
           ctx.fill();
         }

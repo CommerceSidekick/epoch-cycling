@@ -6,11 +6,11 @@ const fs = require("fs");
 const root = path.resolve(__dirname, "..");
 const { MARK_PATHS, WORDMARK_STROKES } = { MARK_PATHS: ["M205 300 L440 82 L611 300 L427 143 Z", "M261 286 C 300 248 362 205 426 176 C 384 212 324 258 261 286 Z"], WORDMARK_STROKES: ["M151 344.75 H82 V405.25 H151 M82 375 H146", "M219 412 V344.75 H252 a19 19 0 0 1 0 38 H219", "M443 375 a51 30.25 0 1 0 -102 0 a51 30.25 0 1 0 102 0", "M590 357 A 50 30.25 0 1 0 590 393", "M655.75 338 V412 M729.25 338 V412 M655.75 375 H729.25"] };
 const V = [
-  { id: "default", img: "mtb-blur.jpg", kicker: "EPOCH CYCLING · MTB / GRAVEL / ROAD", title: "Now is your time.", sub: "Ride. Fuel. Optimize.", accent: "#FF5A1F", lock: "CYCLING" },
-  { id: "ride", img: "crew-singletrack.jpg", kicker: "THE EPOCH RIDERS CLUB", title: "Nobody gets fast alone.", sub: "Group rides. Team kits. The race deal.", accent: "#FF5A1F", lock: "RIDERS CLUB" },
+  { id: "default", img: "mtb-blur.jpg", kicker: "EPOCH CYCLING · MTB / GRAVEL / ROAD", title: "Now is your time.", sub: "Ride. Fuel. Optimize.", accent: "#2D8CFF", lock: "CYCLING" },
+  { id: "ride", img: "crew-singletrack.jpg", kicker: "THE EPOCH RIDERS CLUB", title: "Nobody gets fast alone.", sub: "Group rides. Jerseys. The race deal.", accent: "#2D8CFF", lock: "RIDERS CLUB" },
   { id: "fuel", img: "fuel-bottle-trail.jpg", kicker: "FUEL", title: "Fuel the ride.", sub: "Epoch Fuel and Epoch Salt.", accent: "#D4FF3A", lock: "CYCLING" },
   { id: "optimize", img: "mtb-ridge-silhouette.jpg", kicker: "OPTIMIZE", title: "Know when to send it.", sub: "The free Epoch app and coaching for riders.", accent: "#8FB8C9", lock: "CYCLING" },
-  { id: "mtb", img: "mtb-charge.jpg", kicker: "EPOCH MTB · LIVE", title: "Nobody gets fast alone.", sub: "Built in the dirt.", accent: "#FF5A1F", lock: "MTB" },
+  { id: "mtb", img: "mtb-charge.jpg", kicker: "EPOCH MTB · LIVE", title: "Nobody gets fast alone.", sub: "Built in the dirt.", accent: "#2D8CFF", lock: "MTB" },
   { id: "gravel", img: "gravel-descent.jpg", kicker: "EPOCH GRAVEL · COMING SOON", title: "Long roads. Loose dirt.", sub: "Get on the list.", accent: "#D9A441", lock: "GRAVEL" },
   { id: "road", img: "road-peloton.jpg", kicker: "EPOCH ROAD · COMING SOON", title: "Fast mornings.", sub: "Tight pacelines. Soon.", accent: "#A592FF", lock: "ROAD" },
 ];

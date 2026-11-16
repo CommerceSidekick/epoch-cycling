@@ -38,8 +38,8 @@ const uid = art;
   {(art === "trail-jersey" || art === "race-jersey") && (
     <>
       <g transform="translate(138 150) scale(0.19)" fill="none" stroke="#F2EEE6" stroke-width="13.5" set:html={word} />
-      <g transform="translate(176 112) scale(0.115) translate(-205 -82)" fill="#FF5A1F" set:html={mark} />
-      <text x="72" y={art === "race-jersey" ? 168 : 152} transform={`rotate(${art === "race-jersey" ? 84 : 32} 72 ${art === "race-jersey" ? 168 : 152})`} font-family="Archivo Variable, sans-serif" font-weight="900" font-size="18" letter-spacing="2" fill="#FF5A1F" style="font-stretch:125%">{tag}</text>
+      <g transform="translate(176 112) scale(0.115) translate(-205 -82)" fill="#2D8CFF" set:html={mark} />
+      <text x="72" y={art === "race-jersey" ? 168 : 152} transform={`rotate(${art === "race-jersey" ? 84 : 32} 72 ${art === "race-jersey" ? 168 : 152})`} font-family="Archivo Variable, sans-serif" font-weight="900" font-size="18" letter-spacing="2" fill="#2D8CFF" style="font-stretch:125%">{tag}</text>
       <g transform={art === "race-jersey" ? "translate(318 150)" : "translate(312 112) rotate(-32)"}>
         <g transform="scale(0.8)" set:html={icon("ride")} />
         <g transform="translate(0 24) scale(0.8)" set:html={icon("fuel")} />
@@ -51,14 +51,14 @@ const uid = art;
   {art === "baggies" && (
     <>
       <path d="M92 80 H308 L310 104 H90 Z" fill="#2E312B" />
-      <g transform="translate(110 250) scale(0.09) translate(-205 -82)" fill="#FF5A1F" set:html={mark} />
+      <g transform="translate(110 250) scale(0.09) translate(-205 -82)" fill="#2D8CFF" set:html={mark} />
       <g transform="translate(254 290) scale(0.11)" fill="none" stroke="#F2EEE6" stroke-width="13.5" set:html={word} />
     </>
   )}
   {art === "trucker" && (
     <>
       <path d="M60 236 Q200 270 350 236 Q352 258 330 262 Q200 290 70 262 Q56 258 60 236Z" fill="#0E0F0C" />
-      <g transform="translate(150 140) scale(0.24) translate(-205 -82)" fill="#FF5A1F" set:html={mark} />
+      <g transform="translate(150 140) scale(0.24) translate(-205 -82)" fill="#2D8CFF" set:html={mark} />
       <g transform="translate(132 208) scale(0.2)" fill="none" stroke="#F2EEE6" stroke-width="13.5" set:html={word} />
     </>
   )}

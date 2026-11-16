@@ -15,7 +15,7 @@ const visible = SITE.flags.showRiders ? (await getCollection("riders")).filter((
   breadcrumbs={[{ name: "Riders Club", path: "/ride" }, { name: "The team", path: "/ride/team" }]}
 >
   <PageHeader eyebrow="THE TEAM" ghost="CREW">
-    <h1 class="t-display-xl">The <span class="text-dawn">crew.</span></h1>
+    <h1 class="t-display-xl">The <span class="text-summit">crew.</span></h1>
     <p class="body-l muted measure">Club racers, ambassadors and the people who host the rides.</p>
   </PageHeader>
 
@@ -61,6 +61,6 @@ const visible = SITE.flags.showRiders ? (await getCollection("riders")).filter((
   .roster-plates { position: absolute; inset: auto 24px 28px 24px; z-index: 2; display: flex; gap: 12px; }
   .roster-plate { display: grid; gap: 6px; padding: 12px 14px; background: var(--color-bone); color: var(--color-carbon); border-radius: 6px; box-shadow: 0 18px 40px -16px rgb(0 0 0 / 0.8); }
   .roster-plate.p0 { transform: rotate(-5deg); } .roster-plate.p1 { transform: rotate(3deg) translateY(-10px); } .roster-plate.p2 { transform: rotate(-2deg); }
-  .rp-q { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 2.6rem; line-height: 0.9; color: var(--color-ember); }
+  .rp-q { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 2.6rem; line-height: 0.9; color: var(--color-summit-ink); }
   .roster-body { display: grid; gap: 20px; align-content: center; padding: clamp(28px, 5vw, 64px); }
 </style>

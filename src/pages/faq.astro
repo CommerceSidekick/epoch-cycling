@@ -14,7 +14,7 @@ import { faqSchema } from "../lib/schema";
   schema={[faqSchema(FAQ)]}
 >
   <PageHeader eyebrow="FAQ" ghost="FAQ">
-    <h1 class="t-display">Questions. <span class="text-dawn">Answered.</span></h1>
+    <h1 class="t-display">Questions. <span class="text-summit">Answered.</span></h1>
     <p class="body-l muted">Can't find it? <a href="/contact" class="link">Ask us</a>.</p>
   </PageHeader>
   <section class="section">
@@ -28,7 +28,7 @@ import { faqSchema } from "../lib/schema";
       <div class="faq-groups">
         {FAQ_GROUPS.map((g) => (
           <section id={`group-${g.id}`} class="faq-group" aria-labelledby={`h-${g.id}`}>
-            <h2 id={`h-${g.id}`} class="t-h3 faq-gh"><span class="race-number text-dawn">{String(FAQ_GROUPS.indexOf(g) + 1).padStart(2, "0")}</span>{g.label}</h2>
+            <h2 id={`h-${g.id}`} class="t-h3 faq-gh"><span class="race-number text-summit">{String(FAQ_GROUPS.indexOf(g) + 1).padStart(2, "0")}</span>{g.label}</h2>
             <FaqAccordion entries={FAQ.filter((f) => f.group === g.id)} />
           </section>
         ))}

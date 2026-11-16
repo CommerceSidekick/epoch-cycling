@@ -13,3 +13,10 @@ s.subset(f)
 f.flavor = "woff2"
 f.save("public/fonts/archivo-wdth.woff2")
 print("wrote public/fonts/archivo-wdth.woff2")
+
+# Mini font with the schwa used in the home page definition (/ˈepək/), loaded via unicode-range.
+f = TTFont("node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-ext-500-normal.woff2")
+o = subset.Options(); o.flavor = "woff2"
+s2 = subset.Subsetter(o); s2.populate(unicodes=[0x259, 0x18F]); s2.subset(f)
+f.flavor = "woff2"; f.save("public/fonts/jetbrains-mono-500-ipa.woff2")
+print("wrote public/fonts/jetbrains-mono-500-ipa.woff2")

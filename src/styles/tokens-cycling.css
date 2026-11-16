@@ -1,5 +1,10 @@
 /* Epoch Cycling deltas (spec 3.2, 3.3, 6.5). Never edit master values in tokens.css. */
 @theme {
+  /* Summit: Epoch Cycling's primary accent and the MTB discipline color (owner decision 2026-11-16,
+     replacing Dawn orange on this site to stay clear of Strava orange). Summit on Carbon 5.77:1,
+     Carbon on Summit 5.77:1, Summit Ink on Bone 5.79:1. Dawn stays defined in tokens.css (master). */
+  --color-summit: #2D8CFF;
+  --color-summit-ink: #1A4FD6;
   --color-grit: #D9A441;
   --color-grit-ink: #7A5512;
   --color-velo: #A592FF;
@@ -8,15 +13,15 @@
 
 :root {
   /* discipline accents (3.3) */
-  --disc-mtb: var(--color-dawn);
-  --disc-mtb-on-light: var(--color-ember);
+  --disc-mtb: var(--color-summit);
+  --disc-mtb-on-light: var(--color-summit-ink);
   --disc-gravel: var(--color-grit);
   --disc-gravel-on-light: var(--color-grit-ink);
   --disc-road: var(--color-velo);
   --disc-road-on-light: var(--color-velo-ink);
 
   /* pillar mapping on this site */
-  --pillar-ride: var(--color-dawn);
+  --pillar-ride: var(--color-summit);
   --pillar-fuel: var(--color-moss);
   --pillar-optimize: var(--color-sky);
   --handoff-bg: var(--color-bone);
@@ -26,8 +31,8 @@
   --grain-opacity: 0.05; /* master 0.02 to 0.04 */
   --topo-opacity: 0.05;
 
-  --disc: var(--color-dawn);
-  --disc-on-light: var(--color-ember);
+  --disc: var(--color-summit);
+  --disc-on-light: var(--color-summit-ink);
 }
 
 [data-discipline="mtb"] { --disc: var(--disc-mtb); --disc-on-light: var(--disc-mtb-on-light); }

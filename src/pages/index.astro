@@ -2,7 +2,6 @@
 import BaseLayout from "../components/layout/BaseLayout.astro";
 import PageHero from "../components/sections/PageHero.astro";
 import SectionHead from "../components/sections/SectionHead.astro";
-import PillarCards from "../components/sections/PillarCards.astro";
 import DisciplinePanels from "../components/sections/DisciplinePanels.astro";
 import Photo from "../components/sections/Photo.astro";
 import PhoneMock from "../components/sections/PhoneMock.astro";
@@ -23,14 +22,22 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
 ---
 <BaseLayout lcp="mtbBlur"
   title="Epoch Cycling | Ride. Fuel. Optimize."
-  description="The riding tribe from Epoch Health System. Group rides, team kits, race entry coverage, ride fuel and a free app. Mountain bike first. Gravel and road next."
+  description="The riding tribe from Epoch Health System. Group rides, jerseys, help with race entries, ride fuel and a free app. Mountain bike first. Gravel and road next."
   overlayHeader
 >
   <!-- 5.1.1 Hero -->
   <PageHero img="mtbBlur" eyebrow="EPOCH CYCLING · MTB / GRAVEL / ROAD" size="full" position="35% center" dust speed>
-    <h1 class="t-display-xl hero-h1 reveal">Now is<br /> your <span class="text-dawn">time.</span></h1>
-    <p class="body-l hero-sub reveal reveal-d1">Ride with a crew. Fuel for the long day. Train smarter every week.</p>
-    <div class="hero-ctas reveal reveal-d2">
+    <h1 class="t-display hero-h1 reveal">Now is your <span class="text-summit">time.</span></h1>
+    <dl class="def reveal reveal-d1">
+      <dt class="def-head"><dfn class="def-word">epoch</dfn> <span class="def-ipa" aria-hidden="true">/<span class="def-stress">ˈ</span>epək/</span><span class="sr-only">, pronounced EP-uck,</span> <span class="def-pos">noun</span></dt>
+      <dd class="def-text">A fixed point in time so significant that everything is measured from it.</dd>
+    </dl>
+    <ul class="squares reveal reveal-d2" role="list" aria-label="The system">
+      <li><a href="/ride" class="sq" style="--sq: var(--color-summit)" data-cta="Ride" data-cta-location="home-hero-squares"><span class="sq-top"><span class="race-number">01</span><PillarIcon name="ride" size={30} /></span><span class="sq-word">Ride</span><span class="sq-line">Group rides. Jerseys. The race deal.</span></a></li>
+      <li><a href="/fuel" class="sq" style="--sq: var(--color-signal)" data-cta="Fuel" data-cta-location="home-hero-squares"><span class="sq-top"><span class="race-number">02</span><PillarIcon name="fuel" size={30} /></span><span class="sq-word">Fuel</span><span class="sq-line">Epoch Fuel. Epoch Salt. The guide.</span></a></li>
+      <li><a href="/optimize" class="sq" style="--sq: var(--color-sky)" data-cta="Optimize" data-cta-location="home-hero-squares"><span class="sq-top"><span class="race-number">03</span><PillarIcon name="optimize" size={30} /></span><span class="sq-word">Optimize</span><span class="sq-line">The free app. Coaching. Labs.</span></a></li>
+    </ul>
+    <div class="hero-ctas reveal reveal-d3">
       <Button href="/join" size="lg" arrow location="home-hero">Join the Riders Club</Button>
       <Button href="/ride/apply" variant="outline" size="lg" location="home-hero">Apply to race</Button>
     </div>
@@ -42,14 +49,6 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
     </div>
   </PageHero>
 
-  <!-- 5.1.2 Pillars -->
-  <section class="section" aria-labelledby="pillars-title">
-    <div class="wrap">
-      <SectionHead eyebrow="THE SYSTEM" title="Ride. Fuel. Optimize." id="pillars-title" intro="Three things that make you faster. We put them in one place, and put you in a crew while we're at it." />
-      <PillarCards />
-    </div>
-  </section>
-
   <!-- 5.1.3 Riders Club band -->
   <section class="club-band" aria-labelledby="club-title">
     <div class="club-media photo">
@@ -57,17 +56,17 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
     </div>
     <div class="club-shade" aria-hidden="true"></div>
     <div class="wrap club-inner">
-      <Eyebrow bar="var(--color-carbon)" class="club-eyebrow">THE EPOCH RIDERS CLUB</Eyebrow>
+      <Eyebrow class="club-eyebrow">THE EPOCH RIDERS CLUB</Eyebrow>
       <h2 id="club-title" class="club-title reveal"><span>Nobody</span> <span class="t-outline">gets fast</span> <span>alone.</span></h2>
       <p class="body-l club-body reveal reveal-d1">The club is the point. Show up to the ride. Race in the kit. Share the hard days. We've got your back.</p>
       <ul class="club-items" role="list">
         <li class="reveal"><span class="race-number">01</span><p class="t-h3">Group rides.</p><p>All levels. Nobody gets dropped without a regroup.</p></li>
-        <li class="reveal reveal-d1"><span class="race-number">02</span><p class="t-h3">Team kits.</p><p>Built to race. Made to wear to the taco truck after.</p></li>
-        <li class="reveal reveal-d2"><span class="race-number">03</span><p class="t-h3">The race deal.</p><p>Fuel with Epoch. Race in the kit. We cover your entry.</p></li>
+        <li class="reveal reveal-d1"><span class="race-number">02</span><p class="t-h3">Jerseys.</p><p>Built to race. Made to wear to the taco truck after.</p></li>
+        <li class="reveal reveal-d2"><span class="race-number">03</span><p class="t-h3">The race deal.</p><p>Fuel with Epoch. Race in the kit. We'll help cover your entry.</p></li>
       </ul>
-      <p class="small club-fine">Race entry coverage is for accepted Club racers. Limits apply. See the <a href="/riders-club-terms" class="club-link">Riders Club terms</a>.</p>
+      <p class="small club-fine">Entry support is for accepted Club racers, up to the club limit. See the <a href="/riders-club-terms" class="club-link">Riders Club terms</a>.</p>
       <div class="club-ctas">
-        <Button href="/join" variant="dark" size="lg" arrow location="home-club">Join the club</Button>
+        <Button href="/join" size="lg" arrow location="home-club">Join the club</Button>
         <a href="/ride/sponsorship" class="link-arrow club-arrow"><span>How the race deal works</span><span class="arr" aria-hidden="true">→</span></a>
       </div>
     </div>
@@ -174,9 +173,36 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
 </BaseLayout>
 
 <style>
-  .hero-h1 { max-width: 11ch; }
-  .hero-sub { margin-top: 26px; max-width: 34ch; color: #ece7dc; }
-  .hero-ctas { display: flex; flex-wrap: wrap; gap: 16px 22px; margin-top: 34px; }
+  .hero-h1 { max-width: 14ch; }
+  /* Dictionary definition under the slogan */
+  .def { margin: 26px 0 0; padding-left: 18px; border-left: 3px solid var(--color-summit); max-width: 40rem; }
+  .def-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+  .def-word { font-family: var(--font-display); font-weight: 800; font-stretch: 112%; font-style: normal; font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1; }
+  .def-ipa { font-family: var(--font-mono); font-size: 1rem; color: var(--color-dust); }
+  /* The stress mark isn't in our fonts: draw it from a proportional system font so mono spacing doesn't leave a gap */
+  .def-stress { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0 0.02em 0 0.04em; }
+  .def-pos { font-family: var(--font-body); font-style: italic; font-size: 1rem; color: var(--color-summit); }
+  .def-text { margin: 8px 0 0; font-size: var(--text-body-l); line-height: 1.45; color: #ece7dc; max-width: 38ch; }
+  /* Three squares: Ride, Fuel, Optimize */
+  /* container-type lets the square labels scale with the squares, so OPTIMIZE always fits */
+  .squares { container-type: inline-size; list-style: none; padding: 0; margin: 30px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 640px; }
+  .sq { position: relative; display: flex; flex-direction: column; aspect-ratio: 1 / 1; padding: clamp(10px, 1.6vw, 18px); border-radius: 10px; text-decoration: none; color: var(--color-bone); background: rgb(14 15 12 / 0.62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgb(242 238 230 / 0.14); border-top: 3px solid var(--sq); transition: transform 240ms var(--ease), background 240ms var(--ease), border-color 240ms var(--ease); overflow: hidden; }
+  .sq::after { content: ""; position: absolute; inset: auto 0 0 0; height: 3px; background: var(--sq); transform: scaleX(0); transform-origin: left; transition: transform 320ms var(--ease); }
+  .sq:hover, .sq:focus-visible { transform: translateY(-4px); background: rgb(14 15 12 / 0.82); border-color: rgb(242 238 230 / 0.28); border-top-color: var(--sq); }
+  .sq:hover::after, .sq:focus-visible::after { transform: scaleX(1); }
+  .sq-top { display: flex; justify-content: space-between; align-items: center; color: var(--sq); }
+  .sq-top .race-number { color: var(--color-dust); }
+  .sq-word { margin-top: auto; font-family: var(--font-display); font-weight: 900; font-stretch: 112%; text-transform: uppercase; font-size: clamp(0.6rem, 4cqi, 1.8rem); line-height: 1; white-space: nowrap; }
+  .sq-line { margin-top: 8px; font-size: 0.875rem; line-height: 1.35; color: #d9d4c8; min-height: 2.7em; }
+  @media (max-width: 639px) {
+    .sq { padding: 10px; }
+    .sq-top :global(svg) { width: 24px; height: 24px; }
+    .sq-line { display: none; }
+  }
+  @media (max-width: 399px) {
+    .sq { padding: 8px; }
+  }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 16px 22px; margin-top: 30px; }
   .hero-micro { margin-top: 18px; color: #cfc9bb; }
   .hero-plate { display: none; }
   @media (min-width: 1200px) {
@@ -184,28 +210,34 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
     .hero-plate::before, .hero-plate::after { content: ""; position: absolute; top: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--color-carbon); opacity: 0.7; }
     .hero-plate::before { left: 10px; } .hero-plate::after { right: 10px; }
     .plate-word { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 2.4rem; line-height: 0.88; }
-    .plate-icons { display: flex; gap: 10px; color: var(--color-ember); }
+    .plate-icons { display: flex; gap: 10px; color: var(--color-summit-ink); }
   }
 
-  .club-band { position: relative; isolation: isolate; overflow: hidden; color: var(--color-carbon); background: var(--color-dawn); }
-  .club-media { position: absolute; inset: 0; z-index: -2; background: transparent; -webkit-mask-image: linear-gradient(100deg, transparent 18%, #000 70%); mask-image: linear-gradient(100deg, transparent 18%, #000 70%); }
-  .club-media :global(img) { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.35) brightness(1.15); mix-blend-mode: multiply; opacity: 0.7; }
-  .club-shade { position: absolute; inset: 0; z-index: -1; background: repeating-linear-gradient(-60deg, transparent 0 22px, rgb(14 15 12 / 0.05) 22px 23px); }
+  /* Riders Club band: solid black behind the text, fading to Summit blue with a blue-toned photo on the right */
+  .club-band { position: relative; isolation: isolate; overflow: hidden; color: var(--color-bone); background: var(--color-carbon); }
+  .club-media { position: absolute; inset: 0; z-index: -2; background: var(--color-summit); isolation: isolate; -webkit-mask-image: linear-gradient(100deg, transparent 30%, rgb(0 0 0 / 0.55) 58%, #000 88%); mask-image: linear-gradient(100deg, transparent 30%, rgb(0 0 0 / 0.55) 58%, #000 88%); }
+  .club-media :global(img) { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.25) brightness(1.05); mix-blend-mode: multiply; opacity: 0.9; }
+  .club-shade { position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse at 100% 50%, rgb(45 140 255 / 0.25), transparent 60%); pointer-events: none; }
   .club-inner { padding-block: clamp(80px, 12vw, 170px); display: grid; gap: 26px; }
-  :global(.club-eyebrow) { color: var(--color-carbon) !important; }
-  .club-title { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(3.25rem, 10vw, 9rem); line-height: 0.86; letter-spacing: -0.02em; max-width: 12ch; }
+  .club-title { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(3rem, 8.5vw, 8rem); line-height: 0.86; letter-spacing: -0.02em; max-width: 12ch; }
   .club-title span { display: block; }
-  .club-title .t-outline { --outline-color: var(--color-carbon); -webkit-text-stroke-width: 2.5px; }
-  .club-body { max-width: 44ch; font-weight: 500; }
+  .club-title .t-outline { --outline-color: var(--color-summit); -webkit-text-stroke-width: 2.5px; }
+  .club-body { max-width: 44ch; color: #e7e2d6; }
   .club-items { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 14px; }
   @media (min-width: 900px) { .club-items { grid-template-columns: repeat(3, 1fr); } }
-  .club-items li { background: rgb(14 15 12 / 0.92); color: var(--color-bone); padding: 24px; border-radius: var(--radius-md); display: grid; gap: 8px; align-content: start; }
-  .club-items .race-number { color: var(--color-dawn); }
-  .club-fine { font-weight: 500; }
-  .club-link { color: var(--color-carbon); text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+  .club-items li { background: rgb(14 15 12 / 0.72); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgb(242 238 230 / 0.12); border-top: 3px solid var(--color-summit); color: var(--color-bone); padding: 24px; border-radius: var(--radius-md); display: grid; gap: 8px; align-content: start; }
+  .club-items .race-number { color: var(--color-summit); }
+  .club-fine { color: var(--color-dust); }
+  .club-link { color: var(--color-bone); text-decoration: underline; text-underline-offset: 3px; }
   .club-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 26px; }
-  .club-arrow { color: var(--color-carbon) !important; }
-  .club-arrow .arr { color: var(--color-carbon); }
+  .club-arrow { color: var(--color-bone) !important; }
+  .club-arrow .arr { color: var(--color-summit); }
+  @media (max-width: 899px) {
+    /* Phones: blue photo at the top, fading down into black before the text starts */
+    .club-media { inset: 0 0 auto 0; height: 340px; -webkit-mask-image: linear-gradient(180deg, #000 35%, transparent 100%); mask-image: linear-gradient(180deg, #000 35%, transparent 100%); }
+    .club-shade { display: none; }
+    .club-inner { padding-top: 220px; }
+  }
 
   .fuel-teaser { display: grid; }
   @media (min-width: 1024px) { .fuel-teaser { grid-template-columns: 1fr 1fr; } }
