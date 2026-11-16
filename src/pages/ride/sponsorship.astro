@@ -29,13 +29,13 @@ const disclosureDont = await snippetBlock("disclosure-dont", "dont");
 ---
 <BaseLayout lcp="mtbDustyRace"
   title="The Race Deal | Fuel With Epoch, Race in the Kit | Epoch Riders Club"
-  description="Club racers fuel with Epoch, race in the kit, and get help with race entries. How it works, what counts, how to claim, and the rules."
+  description="Club racers ride for Epoch, race in the kit, and get help with race entries. How it works, what counts, how to claim, and the rules."
   overlayHeader
   breadcrumbs={[{ name: "Riders Club", path: "/ride" }, { name: "The race deal", path: "/ride/sponsorship" }]}
 >
   <!-- 5.6.1 Hero -->
   <PageHero img="mtbDustyRace" eyebrow="RIDERS CLUB · THE RACE DEAL" size="full" position="62% center" bar="var(--color-sage)" speed>
-    <h1 class="deal-h1 reveal"><span>Fuel with Epoch.</span> <span class="t-outline-bone">Race in the kit.</span> <span class="text-sage">We'll help cover your entry.</span></h1>
+    <h1 class="deal-h1 reveal"><span>Ride for Epoch.</span> <span class="t-outline-bone">Race in the kit.</span> <span class="text-sage">We'll help cover your entry.</span></h1>
     <p class="body-l deal-sub reveal reveal-d1">Simple deal. You race. You rep the crew. We help pay for it.</p>
     <div class="mt-8 reveal reveal-d2"><Button href="/ride/apply?type=racer" variant="signal" size="lg" arrow location="deal-hero">Apply to race</Button></div>
   </PageHero>
@@ -50,7 +50,7 @@ const disclosureDont = await snippetBlock("disclosure-dont", "dont");
         steps={[
           { title: "Apply.", body: "Tell us what you race and where. Every level is welcome." },
           { title: "Get accepted.", body: "Spots are limited each season. We pick riders who show up and bring people with them." },
-          { title: "Race in Epoch.", body: "Wear the Epoch kit. Fuel with Epoch Fuel or Epoch Salt on race day." },
+          { title: "Race in Epoch.", body: "Wear the Epoch kit on race day. Run Epoch supplements once they launch." },
           { title: "Claim it.", body: `Send your proof within ${phHtml(rc.claimWindowDays, "claim window")} days. We help cover your entry, up to the club limit.` },
         ]}
       />
@@ -118,7 +118,7 @@ const disclosureDont = await snippetBlock("disclosure-dont", "dont");
           <ul role="list">
             <li>Hide the tag in a pile of hashtags at the end.</li>
             <li>Rely on "#EpochRidersClub" alone. That's a community tag, not a disclosure.</li>
-            <li>Say anything about Epoch Fuel or Salt that we don't say. No health claims, no "it fixed my cramps".</li>
+            <li>Say anything about Epoch supplements that we don't say. No health claims, no "it fixed my cramps".</li>
             <li>{disclosureDont.body}</li>
           </ul>
         </div>
@@ -130,7 +130,7 @@ const disclosureDont = await snippetBlock("disclosure-dont", "dont");
   <section class="section" aria-label="The rules behind the deal">
     <div class="wrap grid gap-6">
       <Callout variant="bone" title="What the deal is, and isn't.">
-        <p>The race deal is about racing in the kit and fueling with Epoch Fuel and Salt. That's it. It is never tied to the app's paid plans, to coaching, or to any medical program. You never need any of those to join, stay in, or get help with an entry. We'll never ask you to.</p>
+        <p>The race deal is about racing in the kit. That's it. It is never tied to the app's paid plans, to coaching, or to any medical program. You never need any of those to join, stay in, or get help with an entry. We'll never ask you to.</p>
       </Callout>
       <Callout title={clean.title}>
         <p>{clean.body}</p>

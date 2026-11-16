@@ -179,6 +179,9 @@ body::after {
   white-space: nowrap;
   transition: color var(--dur-ui) var(--ease), transform var(--dur-ui) var(--ease);
 }
+/* Small phones: long labels (Explore Personalized Health) wrap instead of pushing the page wide. */
+@media (max-width: 479px) { .btn { white-space: normal; text-align: center; max-width: 100%; } }
+
 .btn::before {
   content: "";
   position: absolute;

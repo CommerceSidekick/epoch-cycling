@@ -4,9 +4,13 @@
 
 export const SITE = {
   url: "https://epochcycling.com",
-  masterUrl: "https://epochhealthsystem.com",
-  // {{HANDOFF_URL}} default per spec token table. Switch to /total-health once the master adds it (A4).
-  handoffUrl: "https://epochhealthsystem.com/system#medical",
+  // Concept phase: the owned domains are parked, so links go to the live Epoch Health System
+  // concept site. Switch to https://epochhealthsystem.com when that domain moves to Vercel.
+  masterUrl: "https://epoch-health-system.vercel.app",
+  // Personalized Health starts riders at the Performance program ("Find your edge.").
+  handoffUrl: "https://epoch-health-system.vercel.app/personalized-health/performance",
+  // Dedicated Epoch MTB site (owner 2026-11-16). Empty until it exists: MTB links stay on /mtb.
+  mtbSiteUrl: "",
   // {{APP_URL}} shared with master.
   appUrl: "https://app.epochhealthsystem.com",
   appStoreUrl: "",
@@ -48,15 +52,16 @@ export const SITE = {
   fuelClaims: { gmpConfirmed: false, testingConfirmed: false },
   flags: {
     appStatus: "waitlist" as "waitlist" | "live",
-    showAnnouncement: true,
+    // Owner removed scrolling banners and the announcement strip on Epoch Health System (2026-11-16). Same here.
+    showAnnouncement: false,
     showRiders: false,
     showJason: false,
     showTempoAI: false,
     certifiedForSport: false,
     legalApproved: false,
     claimsOpen: false,
-    // Epoch Coach is an AI coach? (open decision D7). When true the required line renders.
-    coachIsAI: true,
+    // Coaching is fitness and lifestyle coaching (owner 2026-11-16). No AI line.
+    coachIsAI: false,
   },
   analyticsDomain: (import.meta.env.PUBLIC_ANALYTICS_DOMAIN as string | undefined) ?? "",
   turnstileSiteKey: (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined) ?? "",

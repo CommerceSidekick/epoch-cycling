@@ -14,6 +14,17 @@ import Button from "../components/ui/Button.astro";
 import LinkArrow from "../components/ui/LinkArrow.astro";
 import Eyebrow from "../components/ui/Eyebrow.astro";
 import { SITE } from "../config/site";
+import { getCollection } from "astro:content";
+// Empty sections stay hidden until there is something to show.
+const hasMtbEvents = (await getCollection("events", (e) => e.data.start > new Date() && e.data.status === "scheduled" && e.data.disciplines.includes("mtb"))).length > 0;
+// Why MTB is different (docs/research/mtb-vs-road.md). Trends only: the studies are small.
+const different = [
+  { t: "Surges, not steady.", b: "Cross-country races sit near 90% of max heart rate, with hundreds of short efforts above maximal aerobic power. Road racing is longer and steadier." },
+  { t: "Your upper body works.", b: "Arms, shoulders and trunk hold the bike over terrain the whole ride. Downhill leans hardest on triceps and chest, cross-country on the forearms." },
+  { t: "Grip fades.", b: "Grip strength drops measurably after a single hard descent, and trail vibration raises the cost of every pedal stroke." },
+  { t: "Skill is fitness.", b: "On enduro stages, heart rate under-reads the work of pumping, weighting and unweighting the bike. Time on technical trail counts as training." },
+  { t: "The dirt hits back.", b: "Most mountain bike injuries are to the collarbone, shoulder, hand and wrist. Road riders deal more with the back and hips from long hours in a fixed position." },
+];
 const cards = [
   { n: "01", t: "Group rides.", b: "Trail rides and dawn patrols, all levels. Regroups at every junction.", img: "crewSingletrack" as const, pos: "center 40%" },
   { n: "02", t: "Race weekends.", b: "XC, enduro and downhill. Club racers get help with entries under the club terms.", img: "mtbDustyRace" as const, pos: "65% center" },
@@ -64,6 +75,42 @@ const cards = [
     </div>
   </section>
 
+  <!-- Why MTB is different (research brief: docs/research/mtb-vs-road.md) -->
+  <section class="section diff-sec" aria-labelledby="diff-title">
+    <div class="wrap">
+      <SectionHead eyebrow="THE DIRT IS DIFFERENT" title="Mountain biking isn't road riding on dirt." id="diff-title" intro="Road racing rewards one engine, held steady for hours. Mountain biking asks for that engine and a whole body built to work with it." bar="var(--disc)" />
+      <ol class="diff" role="list">
+        {different.map((d, i) => (
+          <li class={`diff-item reveal reveal-d${i % 4}`}>
+            <span class="race-number diff-n">#{String(i + 1).padStart(2, "0")}</span>
+            <h3 class="t-h3">{d.t}</h3>
+            <p class="muted">{d.b}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="diff-train">
+        <p class="body-l"><strong>How Epoch trains for it.</strong> Fitness and lifestyle coaching adds upper body, grip, trunk and repeated-effort work to your plan, plus recovery for the weeks the trail beats you up. The app reads power, feel and recovery together, because heart rate alone misses the dirt.</p>
+        <Button href="/optimize#coaching" variant="accent" arrow location="mtb-different">See coaching</Button>
+      </div>
+      <p class="fine diff-fine">From published research on mountain bike and road cycling. Many of the studies are small, so these are trends, not promises. General information, not medical advice.</p>
+    </div>
+  </section>
+
+  <!-- Find your edge (saved MTB variant, docs/saved/find-your-edge.md) -->
+  <section class="edge-band" aria-labelledby="edge-title">
+    <div class="edge-media photo"><Photo img="mtbDownhillToward" sizes="100vw" widths={[640, 1024, 1600]} position="50% 35%" decorative /></div>
+    <div class="edge-shade" aria-hidden="true"></div>
+    <div class="wrap edge-inner">
+      <Eyebrow bar="var(--disc)" class="text-bone">OPTIMIZE · PERSONALIZED HEALTH</Eyebrow>
+      <h2 id="edge-title" class="t-display reveal">Find your <span class="text-disc">edge.</span></h2>
+      <p class="body-l edge-sub reveal reveal-d1">An advanced blood panel, your training and your recovery, read together by a coach and a physician-led team at Epoch Health System. Then a plan to fix what's holding you back.</p>
+      <div class="flex flex-wrap items-center gap-5 reveal reveal-d2">
+        <Button href="/optimize/medical" variant="accent" size="lg" arrow location="mtb-edge">Explore Personalized Health</Button>
+        <LinkArrow href="/optimize" accent="var(--disc)">See the whole program</LinkArrow>
+      </div>
+    </div>
+  </section>
+
   <!-- 5.8.3 MTB kit -->
   <section class="section on-ridge topo" aria-labelledby="kit-title">
     <div class="wrap">
@@ -79,10 +126,10 @@ const cards = [
     <div class="split-copy">
       <Eyebrow bar="var(--color-sage)" class="text-bone">FUEL</Eyebrow>
       <h2 id="fuel-title" class="t-h2 reveal">Fuel like the trail is long. <span class="text-sage">It is.</span></h2>
-      <p class="body-l reveal reveal-d1">MTB is hard efforts, short bursts and long days in the saddle. Start fueling early, keep sipping on the climbs, and salt up when it's hot. The guide has the numbers.</p>
+      <p class="body-l reveal reveal-d1">MTB is hard efforts, short bursts and long days in the saddle. Start fueling early and keep drinking on the climbs. The guide has the numbers. Epoch Endurance, Fuel and Edge are coming soon.</p>
       <div class="flex flex-wrap items-center gap-5 reveal reveal-d2">
         <Button href="/fuel/guide" variant="signal" arrow location="mtb-fuel">How to fuel a ride</Button>
-        <LinkArrow href="/fuel" accent="var(--color-sage)">See Epoch Fuel and Salt</LinkArrow>
+        <LinkArrow href="/fuel" accent="var(--color-sage)">See Endurance, Fuel and Edge</LinkArrow>
       </div>
     </div>
   </section>
@@ -101,12 +148,30 @@ const cards = [
     </div>
   </section>
 
-  <!-- 5.8.6 MTB events -->
+  <!-- 5.8.6 MTB events (hidden until MTB rides are on the calendar) -->
+  {hasMtbEvents && (
   <section class="section on-ridge topo" aria-labelledby="events-title">
     <div class="wrap">
       <SectionHead eyebrow="ON THE CALENDAR" title="Next MTB rides." id="events-title" bar="var(--disc)" />
       <EventList limit={3} discipline="mtb" />
       <div class="mt-10"><Button href="/ride/events?discipline=mtb" variant="outline" arrow location="mtb-events">All events</Button></div>
+    </div>
+  </section>
+  )}
+
+  <!-- Dedicated Epoch MTB site (owner 2026-11-16). The button switches to the site once SITE.mtbSiteUrl is set. -->
+  <section class="section mtb-home topo" aria-labelledby="mtbhome-title">
+    <div class="wrap mtb-home-inner">
+      <div class="grid gap-4">
+        <Eyebrow bar="var(--disc)">EPOCH MTB</Eyebrow>
+        <h2 id="mtbhome-title" class="t-h2 reveal">Epoch MTB is getting its own home.</h2>
+        <p class="body-l muted reveal reveal-d1">Riding video, MTB-specific training and the crew, on a site built only for the dirt.</p>
+      </div>
+      {SITE.mtbSiteUrl ? (
+        <a href={SITE.mtbSiteUrl} class="btn btn-accent btn-lg" rel="noopener" data-cta="Enter Epoch MTB" data-cta-location="mtb-home">Enter Epoch MTB</a>
+      ) : (
+        <Button href="/join?interest=mtb" variant="accent" size="lg" arrow location="mtb-home">Get on the list</Button>
+      )}
     </div>
   </section>
 
@@ -129,6 +194,22 @@ const cards = [
 
 <style>
   .mtb-lockup { color: var(--color-bone); margin-bottom: 24px; }
+  .diff { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+  @media (min-width: 768px) { .diff { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1200px) { .diff { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+  .diff-item { display: grid; gap: 10px; align-content: start; padding: 26px; border: 1px solid var(--color-slate); border-top: 3px solid var(--disc); border-radius: var(--radius-md); background: var(--color-ridge); }
+  .diff-n { color: var(--disc); }
+  .diff-train { margin-top: 34px; display: grid; gap: 20px; align-items: center; max-width: 1000px; }
+  @media (min-width: 900px) { .diff-train { grid-template-columns: 1fr auto; gap: 40px; } }
+  .diff-fine { margin-top: 18px; max-width: 72ch; }
+  .edge-band { position: relative; isolation: isolate; overflow: hidden; min-height: min(86vh, 820px); display: grid; align-items: end; }
+  .edge-media { position: absolute; inset: 0; z-index: -2; }
+  .edge-media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .edge-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(14 15 12 / 0.92) 0%, rgb(14 15 12 / 0.6) 40%, rgb(14 15 12 / 0.05) 75%), linear-gradient(0deg, rgb(14 15 12 / 0.8) 0%, transparent 40%); }
+  .edge-inner { display: grid; gap: 22px; padding-block: clamp(80px, 12vw, 160px) clamp(56px, 8vw, 100px); }
+  .edge-sub { max-width: 44ch; color: #ece7dc; }
+  .mtb-home-inner { display: grid; gap: 28px; align-items: center; padding: clamp(28px, 4vw, 48px); border: 1px solid var(--color-slate); border-radius: var(--radius-md); background: var(--color-carbon); }
+  @media (min-width: 900px) { .mtb-home-inner { grid-template-columns: 1fr auto; } }
   .mtb-h1 { max-width: 10ch; }
   .mtb-sub { margin-top: 24px; max-width: 40ch; color: #ece7dc; }
   .mtb-ctas { display: flex; flex-wrap: wrap; gap: 16px 22px; margin-top: 32px; }

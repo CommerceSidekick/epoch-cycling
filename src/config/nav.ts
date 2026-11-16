@@ -18,8 +18,9 @@ export const NAV: NavGroup[] = [
   {
     label: BRAND.PILLAR_2_WORD, href: "/fuel", id: "fuel",
     items: [
-      { label: "Epoch Fuel", href: "/fuel/epoch-fuel", sub: "Carbs and electrolytes for long rides.", icon: "fuel" },
-      { label: "Epoch Salt", href: "/fuel/epoch-salt", sub: "Electrolytes for hot days.", icon: "fuel" },
+      { label: "Epoch Endurance", href: "/fuel/epoch-endurance", sub: "Custom endurance mix. Coming soon.", icon: "fuel" },
+      { label: "Epoch Fuel", href: "/fuel/epoch-fuel", sub: "Performance and recovery support. Coming soon.", icon: "fuel" },
+      { label: "Epoch Edge", href: "/fuel/epoch-edge", sub: "Focus and mental performance. Coming soon.", icon: "fuel" },
       { label: "How to fuel a ride", href: "/fuel/guide", sub: "Before, during and after, by ride length.", icon: "calendar" },
     ],
   },
@@ -27,8 +28,8 @@ export const NAV: NavGroup[] = [
     label: BRAND.PILLAR_3_WORD, href: "/optimize", id: "optimize", dividerBeforeLast: true,
     items: [
       { label: "The app", href: "/optimize#app", sub: `${BRAND.services.app}. Free.`, icon: "optimize" },
-      { label: "Coaching", href: "/optimize#coaching", sub: `${BRAND.services.coaching} for riders.`, icon: "check" },
-      { label: BRAND.program, href: "/optimize/medical", external: true, sub: `Incl. ${BRAND.services.edge}, at Epoch Health System.`, icon: "shield" },
+      { label: "Coaching", href: "/optimize#coaching", sub: `${BRAND.services.coaching}.`, icon: "check" },
+      { label: BRAND.program, href: "/optimize/medical", external: true, sub: "Physician-led programs, at Epoch Health System.", icon: "shield" },
     ],
   },
   {

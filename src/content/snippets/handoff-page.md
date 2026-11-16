@@ -11,6 +11,6 @@ blocks:
   - title: "It's separate from the Riders Club."
     body: "Your club spot, your kit and your race deal never depend on it."
 ---
-Epoch Total Health is the medically guided side of Epoch. It runs on epochhealthsystem.com, with its own evaluation, its own terms and its own rules for health information.
+Personalized Health is the physician-led side of the Epoch program. It runs on Epoch Health System, with its own consult, its own terms and its own rules for health information.
 
-It brings three services together: the AI Health System (the Epoch app), Personal Coaching, and EpochEdge, the clinician-led track for performance optimization.
+The program has three parts: The Health System (the free Epoch app), fitness and lifestyle coaching, and Personalized Health, the physician-led programs. For riders that starts with Performance Health and Optimization.

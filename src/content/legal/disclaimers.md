@@ -10,7 +10,7 @@ Content on this site is general information and training guidance. It isn't medi
 
 ## Supplements and ride fuel.
 
-*These statements have not been evaluated by the Food and Drug Administration. Epoch Fuel and Epoch Salt are not intended to diagnose, treat, cure, or prevent any disease. Talk to a clinician before use if you are pregnant, nursing, taking medication or have a medical condition.
+*These statements have not been evaluated by the Food and Drug Administration. Epoch Endurance, Epoch Fuel and Epoch Edge are not intended to diagnose, treat, cure, or prevent any disease. Talk to a clinician before use if you are pregnant, nursing, taking medication or have a medical condition.
 
 ## Medical services.
 

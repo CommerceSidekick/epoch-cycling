@@ -8,7 +8,6 @@ import PhoneMock from "../components/sections/PhoneMock.astro";
 import EventList from "../components/sections/EventList.astro";
 import StoryGrid from "../components/sections/StoryGrid.astro";
 import RiderGrid from "../components/sections/RiderGrid.astro";
-import Marquee from "../components/sections/Marquee.astro";
 import CtaBand from "../components/sections/CtaBand.astro";
 import ElevationProfile from "../components/sections/ElevationProfile.astro";
 import Button from "../components/ui/Button.astro";
@@ -21,6 +20,10 @@ import Icon from "../components/ui/Icon.astro";
 import { getCollection } from "astro:content";
 import { SITE } from "../config/site";
 const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length > 0;
+// Empty sections stay hidden until there is something to show (same rule as Epoch Health System).
+const hasEvents = (await getCollection("events", (e) => e.data.start > new Date() && e.data.status === "scheduled")).length > 0;
+import { INTEGRATIONS } from "../config/integrations";
+const liveSources = INTEGRATIONS.filter((i) => i.status === "live" && (!i.flag || SITE.flags[i.flag])).length;
 ---
 <BaseLayout lcp="mtbBlur"
   title="Epoch Cycling | Ride. Fuel. Optimize."
@@ -36,8 +39,8 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
     </dl>
     <ul class="squares reveal reveal-d2" role="list" aria-label="The system">
       <li><a href="/ride" class="sq" style="--sq: var(--color-summit)" data-cta="Ride" data-cta-location="home-hero-squares"><span class="sq-top"><span class="race-number">01</span><PillarIcon name="ride" size={30} /></span><span class="sq-word">Ride</span><span class="sq-line">Group rides. Jerseys. The race deal.</span></a></li>
-      <li><a href="/fuel" class="sq" style="--sq: var(--color-sage)" data-cta="Fuel" data-cta-location="home-hero-squares"><span class="sq-top"><span class="race-number">02</span><PillarIcon name="fuel" size={30} /></span><span class="sq-word">Fuel</span><span class="sq-line">Epoch Fuel. Epoch Salt. The guide.</span></a></li>
-      <li><a href="/optimize" class="sq" style="--sq: var(--color-sky)" data-cta="Optimize" data-cta-location="home-hero-squares"><span class="sq-top"><span class="race-number">03</span><PillarIcon name="optimize" size={30} /></span><span class="sq-word">Optimize</span><span class="sq-line">The free app. Coaching. Labs.</span></a></li>
+      <li><a href="/fuel" class="sq" style="--sq: var(--color-sage)" data-cta="Fuel" data-cta-location="home-hero-squares"><span class="sq-top"><span class="race-number">02</span><PillarIcon name="fuel" size={30} /></span><span class="sq-word">Fuel</span><span class="sq-line">Endurance. Fuel. Edge.</span></a></li>
+      <li><a href="/optimize" class="sq" style="--sq: var(--color-sky)" data-cta="Optimize" data-cta-location="home-hero-squares"><span class="sq-top"><span class="race-number">03</span><PillarIcon name="optimize" size={30} /></span><span class="sq-word">Optimize</span><span class="sq-line">The app. Coaching. Personalized Health.</span></a></li>
     </ul>
     <div class="hero-ctas reveal reveal-d3">
       <Button href="/join" size="lg" arrow location="home-hero">Join the Riders Club</Button>
@@ -64,7 +67,7 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
       <ul class="club-items" role="list">
         <li class="reveal"><span class="race-number">01</span><p class="t-h3">Group rides.</p><p>All levels. Nobody gets dropped without a regroup.</p></li>
         <li class="reveal reveal-d1"><span class="race-number">02</span><p class="t-h3">Jerseys.</p><p>Built to race. Made to wear to the taco truck after.</p></li>
-        <li class="reveal reveal-d2"><span class="race-number">03</span><p class="t-h3">The race deal.</p><p>Fuel with Epoch. Race in the kit. We'll help cover your entry.</p></li>
+        <li class="reveal reveal-d2"><span class="race-number">03</span><p class="t-h3">The race deal.</p><p>Ride for Epoch. Race in the kit. We'll help cover your entry.</p></li>
       </ul>
       <p class="small club-fine">Entry support is for accepted Club racers, up to the club limit. See the <a href="/riders-club-terms" class="club-link">Riders Club terms</a>.</p>
       <div class="club-ctas">
@@ -87,8 +90,8 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
   <!-- Stats band (carried over from epochhealthsystem.com; honest counts only) -->
   <section class="stats" aria-label="Epoch Cycling in numbers">
     <ul class="wrap-wide stats-row" role="list">
-      <li><span class="stat-n"><span data-countup="3">3</span></span><span class="stat-l">pillars. One system.</span></li>
-      <li><span class="stat-n"><span data-countup="3">3</span></span><span class="stat-l">disciplines. One club.</span></li>
+      <li><span class="stat-n"><span data-countup={liveSources}>{liveSources}</span></span><span class="stat-l">data sources in one record.</span></li>
+      <li><span class="stat-n"><span data-countup="1">1</span></span><span class="stat-l">record that's yours to keep.</span></li>
       <li><span class="stat-n">$0</span><span class="stat-l">to join the Riders Club.</span></li>
       <li><span class="stat-n">$0</span><span class="stat-l">for the app, with the advanced numbers.</span></li>
     </ul>
@@ -102,19 +105,22 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
     <div class="ft-copy">
       <Eyebrow bar="var(--color-sage)" class="text-bone">FUEL</Eyebrow>
       <h2 id="fuel-title" class="t-h2 reveal">Fuel the ride.</h2>
-      <p class="body-l reveal reveal-d1">Carbs for the long climb. Salt for the hot day. Labels you can actually read.</p>
+      <p class="body-l reveal reveal-d1">Epoch Endurance, Epoch Fuel and Epoch Edge. The same line as Epoch Health System, coming soon. Labels you can actually read.</p>
       <div class="ft-cards">
-        <a href="/fuel/epoch-fuel" class="ft-card reveal">
-          <span class="tag">DROPPING SOON</span>
-          <span class="t-h3">Epoch Fuel</span>
-          <span class="small">Carbs and electrolytes in your bottle for rides over an hour.*</span>
-          <PillarIcon name="fuel" size={40} class="ft-icon" />
+        <a href="/fuel/epoch-endurance" class="ft-card reveal">
+          <span class="tag">COMING SOON</span>
+          <span class="t-h3">Epoch Endurance</span>
+          <span class="small">A custom endurance mix for long rides and hard training days.*</span>
         </a>
-        <a href="/fuel/epoch-salt" class="ft-card reveal reveal-d1">
-          <span class="tag">DROPPING SOON</span>
-          <span class="t-h3">Epoch Salt</span>
-          <span class="small">Electrolytes to replace what you sweat out.*</span>
-          <span class="ft-salt" aria-hidden="true">Na K Mg</span>
+        <a href="/fuel/epoch-fuel" class="ft-card reveal reveal-d1">
+          <span class="tag">COMING SOON</span>
+          <span class="t-h3">Epoch Fuel</span>
+          <span class="small">Performance and recovery support for training days.*</span>
+        </a>
+        <a href="/fuel/epoch-edge" class="ft-card reveal reveal-d2">
+          <span class="tag">COMING SOON</span>
+          <span class="t-h3">Epoch Edge</span>
+          <span class="small">Support for focus and mental performance.*</span>
         </a>
       </div>
       <div class="flex flex-wrap items-center gap-5">
@@ -132,7 +138,7 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
       <div class="opt-copy">
         <Eyebrow bar="var(--color-sky)">OPTIMIZE</Eyebrow>
         <h2 id="opt-title" class="t-h2 reveal">Know when to send it. <span class="text-sky">Know when to rest.</span></h2>
-        <p class="body-l muted reveal reveal-d1">The free Epoch app pulls in your rides, sleep and recovery, and tells you what they mean. Training load, recovery, readiness, all with the numbers behind them. Add a coach when you want one.</p>
+        <p class="body-l muted reveal reveal-d1">Optimize is the Epoch program. The free app pulls in your rides, sleep and recovery and shows the numbers behind every readout. Fitness and lifestyle coaching turns it into a plan. Physician-led Personalized Health goes deeper when you want it.</p>
         <div class="flex flex-wrap items-center gap-5 reveal reveal-d2">
           <Button href="/optimize#app" variant="sky" arrow location="home-optimize">Get the app free</Button>
           <LinkArrow href="/optimize" accent="var(--color-sky)">See what's inside</LinkArrow>
@@ -142,7 +148,8 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
     </div>
   </section>
 
-  <!-- 5.1.7 Events -->
+  <!-- 5.1.7 Events (hidden until rides are on the calendar) -->
+  {hasEvents && (
   <section class="section on-ridge topo" aria-labelledby="events-title">
     <div class="wrap">
       <div class="flex flex-wrap items-end justify-between gap-6">
@@ -152,6 +159,7 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
       <div class="mt-10"><Button href="/ride/events" variant="outline" arrow location="home-events">See all events</Button></div>
     </div>
   </section>
+  )}
 
   <!-- 5.1.8 Stories (hidden if none published) -->
   {hasStories && (
@@ -173,9 +181,6 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
       </div>
     </section>
   )}
-
-  <!-- 5.1.10 Marquee -->
-  <Marquee />
 
   <!-- 5.1.11 Closing CTA -->
   <CtaBand id="get" title="See you at the trailhead." sub="Join free. Get the app. Find a ride near you." img="trailheadSunset" position="center 70%">
@@ -263,11 +268,9 @@ const hasStories = (await getCollection("stories", (s) => !s.data.draft)).length
   .ft-media { min-height: 420px; display: grid; place-items: center; padding-inline: 20px; background: radial-gradient(ellipse at 50% 45%, #4a5a40, #2b3526 70%); }
   .ft-copy { display: grid; gap: 22px; align-content: center; padding: clamp(48px, 7vw, 110px) clamp(20px, 5vw, 80px); position: relative; }
   .ft-cards { display: grid; gap: 14px; }
-  @media (min-width: 640px) { .ft-cards { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 640px) { .ft-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .ft-card { position: relative; overflow: hidden; display: grid; gap: 10px; align-content: start; justify-items: start; padding: 22px; min-height: 200px; border-radius: var(--radius-md); background: rgb(14 15 12 / 0.55); border: 1px solid rgb(242 238 230 / 0.12); text-decoration: none; transition: transform 260ms var(--ease), background 260ms var(--ease); }
   .ft-card:hover { transform: translateY(-4px); background: rgb(14 15 12 / 0.75); }
-  :global(.ft-icon) { position: absolute; right: 16px; bottom: 16px; color: var(--color-sage); }
-  .ft-salt { position: absolute; right: 16px; bottom: 14px; font-family: var(--font-mono); color: var(--color-sage); font-size: 0.9rem; letter-spacing: 0.1em; }
   :global(.ft-fine) { color: #cfd3c4 !important; }
 
   .opt-teaser { overflow: hidden; }

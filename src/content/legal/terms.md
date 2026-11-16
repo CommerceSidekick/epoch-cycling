@@ -1,14 +1,14 @@
 ---
 title: "Terms of Service"
 metaTitle: "Terms of Service | Epoch Cycling"
-description: "The terms for using epochcycling.com, ordering Epoch Fuel, Epoch Salt and kit, and riding with the Epoch Riders Club. Draft for counsel review."
+description: "The terms for using epochcycling.com, ordering Epoch supplements (Epoch Endurance, Epoch Fuel and Epoch Edge) and kit, and riding with the Epoch Riders Club. Draft for counsel review."
 ---
 
 <p class="ph" data-placeholder>DRAFT OUTLINE FOR COUNSEL. Counsel writes the final text and confirms whether one shared Terms of Service covers both domains (open decision D11).</p>
 
 ## 1. Scope
 
-These terms cover epochcycling.com, orders of Epoch Fuel, Epoch Salt and kit, the Epoch Riders Club (by reference to the [Riders Club terms](/riders-club-terms)), and our community rules. The Epoch app is covered by the Epoch Health System terms.
+These terms cover epochcycling.com, orders of Epoch supplements (Epoch Endurance, Epoch Fuel and Epoch Edge) and kit, the Epoch Riders Club (by reference to the [Riders Club terms](/riders-club-terms)), and our community rules. The Epoch app is covered by the Epoch Health System terms.
 
 ## 2. Who we are
 
@@ -20,7 +20,7 @@ These terms cover epochcycling.com, orders of Epoch Fuel, Epoch Salt and kit, th
 
 ## 4. Orders, shipping and returns
 
-<span class="ph" data-placeholder>[set when Fuel, Salt and kit go on sale: pricing, taxes, shipping areas, returns, damaged items]</span>
+<span class="ph" data-placeholder>[set when supplements and kit go on sale: pricing, taxes, shipping areas, returns, damaged items]</span>
 
 ## 5. Subscriptions and auto-renewal
 

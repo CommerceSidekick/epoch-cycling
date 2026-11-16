@@ -16,23 +16,25 @@ export const BRAND = {
   },
   signature: "Now is your time.",
   promise: "Better every season.",
-  products: { fuel: "Epoch Fuel", salt: "Epoch Salt" },
-  // Consumer program on epochhealthsystem.com. Rendered ONLY by the handoff block,
-  // /optimize/medical, FAQ 16, the Optimize nav item and the footer Optimize column.
-  program: "Epoch Total Health",
-  // The three services inside Epoch Total Health (owner brief, 2026-11-16).
+  // Same supplement line as Epoch Health System (owner 2026-11-16). None are on sale yet.
+  products: { endurance: "Epoch Endurance", fuel: "Epoch Fuel", edge: "Epoch Edge" },
+  // Optimize is the Epoch Health System program (owner 2026-11-16). Physician-led care lives on
+  // the Epoch Health System site under Personalized Health. Rendered ONLY by the handoff block,
+  // /optimize/medical, FAQ, the Optimize nav item and the footer Optimize column.
+  program: "Personalized Health",
+  // The three parts of the program, named as on Epoch Health System.
   services: {
-    app: "AI Health System",
-    coaching: "Personal Coaching",
-    edge: "EpochEdge",
+    app: "The Health System",
+    coaching: "Fitness and lifestyle coaching",
+    health: "Personalized Health",
   },
   disciplines: [
     { key: "mtb", name: "Epoch MTB", tag: "MTB", path: "/mtb", live: true, accent: "dawn" },
     { key: "gravel", name: "Epoch Gravel", tag: "GRAVEL", path: "/gravel", live: false, accent: "grit" },
     { key: "road", name: "Epoch Road", tag: "ROAD", path: "/road", live: false, accent: "velo" },
   ],
-  // Jason's name and credential line need his sign-off (L7). Empty = placeholder.
-  cmo: { first: "Jason", surname: "", credentials: "" },
+  // Shown as on Epoch Health System: title and credential line, name hidden until he signs off (L7).
+  cmo: { first: "Jason", surname: "", title: "Chief Medical Officer", credentials: "Former Navy SEAL performance doctor" },
 } as const;
 
 export type DisciplineKey = (typeof BRAND.disciplines)[number]["key"];

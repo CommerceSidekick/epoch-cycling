@@ -39,16 +39,16 @@ const markers = [
   { t: "Heart and lipids.", b: "The long game." },
 ];
 ---
-<BaseLayout lcp="mtbRidge" lcpWidths={[640, 1024, 1600, 2000]}
-  title="Optimize | The Free Epoch App and Coaching for Riders | Epoch Cycling"
-  description="Training load, recovery, readiness and your ride data in one free app. Coaching built around your race calendar. Labs when you want to look under the hood."
+<BaseLayout lcp="mtbBermRoost" lcpWidths={[640, 1024, 1600]}
+  title="Optimize | The Epoch Program for Riders | Epoch Cycling"
+  description="The Epoch program for riders: a free app that reads your training and recovery, fitness and lifestyle coaching, and physician-led Personalized Health on Epoch Health System."
   breadcrumbs={[{ name: "Optimize", path: "/optimize" }]}
   overlayHeader
 >
   <!-- 5.13.1 Hero -->
   <section class="opt-hero" aria-labelledby="opt-h1">
     <div class="oh-media photo">
-      <Photo img="mtbRidge" eager sizes="100vw" widths={[640, 1024, 1600, 2000]} position="70% center" decorative />
+      <Photo img="mtbBermRoost" eager sizes="100vw" widths={[640, 1024, 1600]} position="50% 45%" decorative />
     </div>
     <div class="oh-shade" aria-hidden="true"></div>
     <ElevationProfile class="oh-profile" color="var(--color-sky)" />
@@ -56,7 +56,7 @@ const markers = [
       <div class="oh-copy">
         <Eyebrow bar="var(--color-sky)" class="text-bone">PILLAR 03 · OPTIMIZE</Eyebrow>
         <h1 id="opt-h1" class="t-display reveal oh-h1">Know when to send it. <span class="text-sky">Know when to rest.</span></h1>
-        <p class="body-l reveal reveal-d1 oh-sub">The free Epoch app reads your rides, sleep and recovery, and tells you what to do next. Add a coach when you want one. Look under the hood when you're ready.</p>
+        <p class="body-l reveal reveal-d1 oh-sub">Optimize is the Epoch program. The free app reads your rides, sleep and recovery. Fitness and lifestyle coaching turns it into a plan. Physician-led Personalized Health goes deeper when you're ready.</p>
         <div class="flex flex-wrap gap-4 reveal reveal-d2">
           <Button href="#app" variant="sky" size="lg" arrow location="optimize-hero">Get the app free</Button>
           <Button href="#coaching" variant="outline" size="lg" location="optimize-hero">See coaching</Button>
@@ -64,7 +64,7 @@ const markers = [
         <ul class="oh-services reveal reveal-d3" role="list">
           <li><span class="mono">01</span> {BRAND.services.app}</li>
           <li><span class="mono">02</span> {BRAND.services.coaching}</li>
-          <li><span class="mono">03</span> {BRAND.services.edge}</li>
+          <li><span class="mono">03</span> {BRAND.services.health}</li>
         </ul>
       </div>
       <PhoneMock class="oh-phone" />
@@ -115,7 +115,7 @@ const markers = [
             {SITE.flags.appStatus === "waitlist" && <Button href="/join?interest=app" variant="sky" arrow location="optimize-app">Get early access</Button>}
             <ExternalLink href={SITE.appUrl} campaign="optimize_app_signin" class="link-arrow">Already in? Sign in</ExternalLink>
           </div>
-          <p class="small muted"><ExternalLink href="https://epochhealthsystem.com/system#train" campaign="optimize_app" class="link" arrow={false}>The Epoch app is part of Epoch Health System.</ExternalLink></p>
+          <p class="small muted"><ExternalLink href={`${SITE.masterUrl}/system#train`} campaign="optimize_app" class="link" arrow={false}>The Epoch app is part of Epoch Health System.</ExternalLink></p>
         </div>
       </div>
     </div>
@@ -125,23 +125,18 @@ const markers = [
   <section id="coaching" class="section on-ridge" aria-labelledby="coach-title" data-section="coaching">
     <div class="wrap coach-grid">
       <div class="grid gap-5 content-start">
-        <Eyebrow bar="var(--color-sky)">COACHING · {BRAND.services.coaching.toUpperCase()}</Eyebrow>
-        <h2 id="coach-title" class="t-h2 reveal">Coaching that knows your riding.</h2>
-        <p class="body-l muted reveal reveal-d1">Epoch Coach works from your own rides and recovery, plus published science. You get a plan built around your race calendar, weekly check-ins and straight answers when you ask.</p>
+        <Eyebrow bar="var(--color-sky)">COACHING</Eyebrow>
+        <h2 id="coach-title" class="t-h2 reveal">Fitness and lifestyle coaching.</h2>
+        <p class="body-l muted reveal reveal-d1">Training, strength, nutrition, sleep and recovery, built around your riding and your week. Your plan works from your own data, with weekly check-ins and straight answers when you ask.</p>
         <ul class="coach-list" role="list">
           <li><Icon name="check" size={20} class="text-sky" />A plan that adjusts when your week falls apart</li>
           <li><Icon name="check" size={20} class="text-sky" />Built around the races on your calendar</li>
           <li><Icon name="check" size={20} class="text-sky" />Weekly check-ins and goal tracking</li>
-          <li><Icon name="check" size={20} class="text-sky" />Answers from your own riding history</li>
+          <li><Icon name="check" size={20} class="text-sky" />Strength and mobility for the bike you ride</li>
         </ul>
         <div class="flex flex-wrap items-center gap-4">
-          <ExternalLink href={`${SITE.appUrl}?plan=coach`} campaign="optimize_coach" class="btn btn-sky" arrow={false}>Get Epoch Coach <Icon name="arrow-up-right" size={18} class="arr" /></ExternalLink>
+          <ExternalLink href={`${SITE.appUrl}?plan=coach`} campaign="optimize_coach" class="btn btn-sky" arrow={false}>Get Coach <Icon name="arrow-up-right" size={18} class="arr" /></ExternalLink>
           <span class="mono price">{SITE.prices.coach}{SITE.prices.period}</span>
-        </div>
-        {SITE.flags.coachIsAI && <p class="small muted">Epoch Coach is an AI coach.</p>}
-        <div class="human card">
-          <p class="t-h4">Want a human coach?</p>
-          <p class="muted small">We're lining up coaches who ride. <a href="/join?interest=coaching" class="link">Tell us you're in</a></p>
         </div>
       </div>
       <PhoneMock variant="coach" class="reveal" />
@@ -169,7 +164,7 @@ const markers = [
     </div>
   </section>
 
-  <!-- 5.13.6 Divider + handoff block (three services incl. EpochEdge) -->
+  <!-- 5.13.6 Divider + handoff block (the program, ending in Personalized Health) -->
   <HandoffDivider />
   <HandoffBlock />
 
@@ -195,7 +190,7 @@ const markers = [
   </CtaBand>
   <div class="wrap pb-10 flex gap-6 flex-wrap">
     <LinkArrow href="/ride">Ride: the Riders Club</LinkArrow>
-    <LinkArrow href="/fuel" accent="var(--color-sage)">Fuel: Epoch Fuel and Salt</LinkArrow>
+    <LinkArrow href="/fuel" accent="var(--color-sage)">Fuel: Endurance, Fuel and Edge</LinkArrow>
     <LinkArrow href="/mtb">Epoch MTB</LinkArrow>
   </div>
 </BaseLayout>
@@ -230,7 +225,6 @@ const markers = [
   .coach-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
   .coach-list li { display: flex; gap: 12px; align-items: flex-start; font-weight: 500; }
   .price { color: var(--color-sage); }
-  .human { padding: 20px 22px; display: grid; gap: 6px; background: var(--color-carbon); }
   .marker-grid { list-style: none; padding: 0; margin: 44px 0 0; display: grid; gap: 14px; }
   @media (min-width: 768px) { .marker-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1100px) { .marker-grid { grid-template-columns: repeat(4, 1fr); } }

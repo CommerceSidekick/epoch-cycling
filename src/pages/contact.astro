@@ -17,7 +17,7 @@ const hasMail = !!(SITE.legalEntity && SITE.address);
 ---
 <BaseLayout
   title="Contact | Epoch Cycling"
-  description="Questions about the Riders Club, the race deal, events, Epoch Fuel and Salt, or the app? Talk to us. We read everything."
+  description="Questions about the Riders Club, the race deal, events, Epoch supplements, or the app? Talk to us. We read everything."
   breadcrumbs={[{ name: "Contact", path: "/contact" }]}
 >
   <PageHeader eyebrow="CONTACT" ghost="TALK">
@@ -41,7 +41,7 @@ const hasMail = !!(SITE.legalEntity && SITE.address);
           <li class="way card way-med">
             <p class="t-h4">Medical programs.</p>
             <p class="small muted">Questions about {BRAND.program} go to Epoch Health System.</p>
-            <ExternalLink href="https://epochhealthsystem.com/contact?topic=program" campaign="contact_program" class="link">Contact Epoch Health System</ExternalLink>
+            <ExternalLink href={`${SITE.masterUrl}/contact?topic=program`} campaign="contact_program" class="link">Contact Epoch Health System</ExternalLink>
           </li>
         </ul>
         {hasMail && (
