@@ -20,7 +20,8 @@ export const SITE = {
     support: "support@epochhealthsystem.com",
     privacy: "privacy@epochhealthsystem.com",
   },
-  prices: { coach: "$75/year" }, // {{PRICE_COACH}} carried from master, owner to confirm
+  // App plan prices mirror epochhealthsystem.com/pricing (2026-11-16). Owner confirms. Never list medical prices here.
+  prices: { free: "$0", plus: "$36", coach: "$75", period: "/year" },
   ridersClub: {
     eligibleRaces: "", // {{RC_ELIGIBLE_RACES}}
     entryCap: "", // {{RC_ENTRY_CAP}}

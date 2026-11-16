@@ -3,11 +3,15 @@ import Lockup from "../brand/Lockup.astro";
 import Icon from "../ui/Icon.astro";
 import Button from "../ui/Button.astro";
 import AnnouncementBar from "./AnnouncementBar.astro";
+import PillarIcon from "../brand/PillarIcon.astro";
+import { withUtm } from "../../lib/utm";
 import { NAV } from "../../config/nav";
 import { BRAND } from "../../config/brand";
 import { SITE } from "../../config/site";
 interface Props { overlay?: boolean }
 const { overlay = false } = Astro.props;
+const signIn = withUtm(SITE.appUrl, "header_signin");
+const PILLAR_ICONS = ["ride", "fuel", "optimize"];
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const isCurrent = (href: string) => {
   const h = href.split("#")[0];
@@ -24,7 +28,9 @@ const isCurrent = (href: string) => {
 
       <nav aria-label="Main" class="main-nav">
         <ul class="nav-list">
-          {NAV.map((g) => (
+          {NAV.map((g) => !g.items ? (
+            <li class="nav-item"><a href={g.href} class="nav-link" aria-current={isCurrent(g.href!) ? "page" : undefined}>{g.label}</a></li>
+          ) : (
             <li class="nav-item" data-dropdown>
               {g.href ? (
                 <span class="split">
@@ -44,9 +50,14 @@ const isCurrent = (href: string) => {
                 <ul>
                   {g.items.map((it, i) => (
                     <>
-                      {g.dividerBeforeLast && i === g.items.length - 1 && <li class="dd-divider" aria-hidden="true" />}
+                      {g.dividerBeforeLast && i === g.items!.length - 1 && <li class="dd-divider" aria-hidden="true" />}
                       <li>
-                        <a href={it.href} class={`dd-link ${it.external ? "dd-ext" : ""}`}>
+                        <a href={it.href} class={`dd-link ${it.external ? "dd-ext" : ""} ${it.icon ? "has-icon" : ""}`}>
+                          {it.icon && (
+                            <span class="dd-icon" aria-hidden="true">
+                              {PILLAR_ICONS.includes(it.icon) ? <PillarIcon name={it.icon as "ride" | "fuel" | "optimize"} size={20} /> : <Icon name={it.icon as "calendar" | "check" | "mountain" | "shield"} size={20} />}
+                            </span>
+                          )}
                           <span class="dd-label">
                             {it.label}
                             {it.soon && <span class="tag">SOON</span>}
@@ -61,12 +72,11 @@ const isCurrent = (href: string) => {
               </div>
             </li>
           ))}
-          <li class="nav-item"><a href="/stories" class="nav-link" aria-current={isCurrent("/stories") ? "page" : undefined}>Stories</a></li>
         </ul>
       </nav>
 
       <div class="header-actions">
-        <a href="/optimize#app" class="nav-link get-app" data-cta="Get the app" data-cta-location="header">Get the app</a>
+        <a href={signIn} class="nav-link get-app" rel="noopener" data-outbound>Sign in<span class="sr-only"> (opens Epoch Health System)</span></a>
         <Button href="/join" size="sm" class="join-btn" location="header"><span>Join<span class="hide-xs"> the club</span></span></Button>
         <button type="button" class="menu-btn" aria-expanded="false" aria-controls="mobile-menu" data-menu-open>
           <Icon name="menu" size={22} />
@@ -92,21 +102,25 @@ const isCurrent = (href: string) => {
           <a href="/optimize/medical" class="m-ext">{BRAND.program} <Icon name="arrow-up-right" size={16} /> <span class="m-ext-sub">at Epoch Health System</span></a>
         </li>
       </ul>
+      <p class="m-label mono">Disciplines</p>
       <ul class="m-mid">
         <li><a href="/mtb">MTB</a></li>
         <li><a href="/gravel">Gravel <span class="tag">SOON</span></a></li>
         <li><a href="/road">Road <span class="tag">SOON</span></a></li>
       </ul>
+      <ul class="m-two">
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="/about">About</a></li>
+      </ul>
       <ul class="m-small">
         <li><a href="/ride/events">Events</a></li>
         <li><a href="/stories">Stories</a></li>
-        <li><a href="/about">About</a></li>
         <li><a href="/faq">FAQ</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul>
       <div class="m-actions">
         <Button href="/join" location="mobile-menu">Join the club</Button>
-        <Button href="/optimize#app" variant="outline" location="mobile-menu">Get the app</Button>
+        <a href={signIn} class="btn btn-outline" rel="noopener" data-outbound>Sign in<span class="sr-only"> (opens Epoch Health System)</span></a>
       </div>
       <p class="m-tag mono">{BRAND.tagline}</p>
     </nav>
@@ -132,12 +146,15 @@ const isCurrent = (href: string) => {
   .nav-chev-full { margin-left: 0; display: inline-flex; color: var(--color-bone); }
   .nav-chev :global(svg) { transition: transform var(--dur-ui) var(--ease); }
   .nav-chev[aria-expanded="true"] :global(svg) { transform: rotate(180deg); }
-  .dropdown { position: absolute; top: calc(100% + 4px); left: -8px; min-width: 260px; padding: 10px; background: var(--color-ridge); border: 1px solid var(--color-slate); border-radius: var(--radius-md); box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.8); visibility: hidden; opacity: 0; transform: translateY(6px); transition: opacity var(--dur-ui) var(--ease), transform var(--dur-ui) var(--ease), visibility 0s linear var(--dur-ui); }
+  .dropdown { position: absolute; top: calc(100% + 4px); left: -8px; min-width: 300px; padding: 10px; background: var(--color-ridge); border: 1px solid var(--color-slate); border-radius: var(--radius-md); box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.8); visibility: hidden; opacity: 0; transform: translateY(6px); transition: opacity var(--dur-ui) var(--ease), transform var(--dur-ui) var(--ease), visibility 0s linear var(--dur-ui); }
   .dropdown::before { content: ""; position: absolute; left: 0; right: 0; top: -10px; height: 10px; }
   .nav-item[data-open] .dropdown { visibility: visible; opacity: 1; transform: none; transition-delay: 0s; }
   @media (hover: hover) { .nav-item[data-dropdown]:hover .dropdown { visibility: visible; opacity: 1; transform: none; transition-delay: 0s; } }
   .dropdown ul { list-style: none; margin: 0; padding: 0; }
-  .dd-link { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 8px; text-decoration: none; color: var(--color-bone); min-height: 44px; justify-content: center; }
+  .dd-link { display: grid; grid-template-columns: 1fr; column-gap: 12px; row-gap: 2px; padding: 10px 12px; border-radius: 8px; text-decoration: none; color: var(--color-bone); min-height: 44px; align-content: center; }
+  .dd-link.has-icon { grid-template-columns: 22px 1fr; }
+  .dd-icon { grid-row: span 2; color: var(--color-sky); padding-top: 2px; }
+  .dd-link.has-icon .dd-label, .dd-link.has-icon .dd-sub { grid-column: 2; }
   .dd-link:hover { background: var(--color-slate); }
   .dd-label { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
   .dd-sub { font-size: 0.8125rem; color: var(--color-dust); }
@@ -161,7 +178,10 @@ const isCurrent = (href: string) => {
   .m-num { position: absolute; right: 0; top: 18px; font-family: var(--font-mono); color: var(--color-summit); font-size: 0.8125rem; }
   .m-ext { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; min-height: 44px; color: var(--color-bone); font-weight: 600; text-decoration: none; }
   .m-ext-sub { font-weight: 400; color: var(--color-dust); font-size: 0.875rem; }
-  .m-mid { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 28px; }
+  .m-label { margin-top: 26px; font-size: 0.8125rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-dust); }
+  .m-mid { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 4px; }
+  .m-two { list-style: none; margin: 18px 0 0; padding: 14px 0 0; border-top: 1px solid var(--color-slate); display: flex; gap: 28px; }
+  .m-two a { font-family: var(--font-display); font-weight: 800; font-stretch: 112%; font-size: 1.5rem; text-decoration: none; display: inline-flex; min-height: 44px; align-items: center; }
   .m-mid a { font-family: var(--font-display); font-weight: 800; font-stretch: 112%; font-size: 1.5rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
   .m-small { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; margin-top: 22px; }
   .m-small a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-dust); text-decoration: none; font-size: 1.0625rem; }

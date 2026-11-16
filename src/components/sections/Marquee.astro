@@ -7,7 +7,7 @@ const row = [...items, ...items];
   <div class="marquee-track">
     {[0, 1].map(() => (
       <span class="mq-set">
-        {row.map((t, i) => (<span class={`mq-item ${i % 2 ? "t-outline-bone" : ""}`}>{t}<span class="mq-dot">·</span></span>))}
+        {row.map((t, i) => (<span class={`mq-item ${t === "NOW IS YOUR TIME" ? "mq-hl" : i % 2 ? "t-outline-bone" : ""}`}>{t}<span class="mq-dot">·</span></span>))}
       </span>
     ))}
   </div>
@@ -17,4 +17,5 @@ const row = [...items, ...items];
   .mq-set { display: inline-flex; }
   .mq-item { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: clamp(2rem, 5vw, 4.25rem); line-height: 1; text-transform: uppercase; padding-right: 0.4em; display: inline-flex; align-items: center; gap: 0.4em; }
   .mq-dot { color: var(--color-summit); -webkit-text-stroke: 0; }
+  .mq-hl { color: var(--color-signal); }
 </style>
