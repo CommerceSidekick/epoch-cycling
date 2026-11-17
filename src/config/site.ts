@@ -9,8 +9,9 @@ export const SITE = {
   masterUrl: "https://epoch-health-system.vercel.app",
   // Personalized Health starts riders at the Performance program ("Find your edge.").
   handoffUrl: "https://epoch-health-system.vercel.app/personalized-health/performance",
-  // Dedicated Epoch MTB site (owner 2026-11-16). Empty until it exists: MTB links stay on /mtb.
-  mtbSiteUrl: "",
+  // Dedicated Epoch MTB site (owner 2026-11-16). Concept preview on the Epoch Health System
+  // project (branch epoch-mtb); switch to https://epochmtb.com when it has its own project.
+  mtbSiteUrl: "https://epoch-health-system-git-epoch-mtb-commercesidekicks-projects.vercel.app",
   // {{APP_URL}} shared with master.
   appUrl: "https://app.epochhealthsystem.com",
   appStoreUrl: "",
