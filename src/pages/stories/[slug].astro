@@ -37,7 +37,7 @@ const BAND = {
   optimize: { title: "Better every season.", label: "Get the app free", href: "/optimize#app", img: "mtbMountain" as const },
   club: { title: "This is your season.", label: "Apply to race", href: "/ride/apply", img: "mtbDustyRace" as const },
 }[s.category];
-const accent = { ride: "var(--color-summit)", fuel: "var(--color-signal)", optimize: "var(--color-sky)", club: "var(--color-summit)" }[s.category];
+const accent = { ride: "var(--color-summit)", fuel: "var(--color-sage)", optimize: "var(--color-sky)", club: "var(--color-summit)" }[s.category];
 const related = (await getCollection("stories", (x) => !x.data.draft && x.data.category === s.category && x.id !== story.id)).length;
 ---
 <BaseLayout
@@ -114,6 +114,6 @@ const related = (await getCollection("stories", (x) => !x.data.draft && x.data.c
   .st-prose :global(h2) { margin-top: 1.8em; }
   .st-prose :global(p) { max-width: 68ch; }
   .st-prose :global(a:not(.btn)), .st-body :global(.story-sources a) { text-decoration: underline; text-underline-offset: 3px; }
-  .st-box { margin-bottom: 32px; padding: 16px 20px; border-left: 4px solid var(--color-signal); background: var(--color-slate); border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+  .st-box { margin-bottom: 32px; padding: 16px 20px; border-left: 4px solid var(--color-sage); background: var(--color-slate); border-radius: 0 var(--radius-md) var(--radius-md) 0; }
   .st-cta { margin-top: 40px; }
 </style>

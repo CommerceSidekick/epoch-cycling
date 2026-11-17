@@ -167,6 +167,8 @@ const isCurrent = (href: string) => {
   @media (min-width: 420px) { .hide-xs { display: inline; } }
   .menu-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; background: none; border: 1px solid var(--color-slate); border-radius: 6px; color: var(--color-bone); font-weight: 600; cursor: pointer; font-size: 0.9375rem; }
   @media (min-width: 1024px) { .header-actions .menu-btn { display: none; } }
+  /* 320px phones: the Menu word goes screen-reader-only so the header fits. */
+  @media (max-width: 359px) { .menu-btn { padding: 0 10px; } .menu-btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } .header-actions { gap: 8px; } }
   .mobile-sheet { position: fixed; inset: 0; z-index: 90; background: var(--color-carbon); overflow-y: auto; }
   .mobile-sheet::before { content: ""; position: absolute; inset: 0; background: url("/brand/topo.svg") center / 1200px auto; opacity: 0.08; pointer-events: none; }
   .mobile-inner { position: relative; padding-bottom: 40px; }

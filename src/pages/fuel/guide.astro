@@ -18,14 +18,14 @@ const toc = [
 ];
 const d = SITE.dietitian;
 ---
-<BaseLayout lcp="gravelRoad"
+<BaseLayout lcp="gravelMotion"
   title="How to Fuel a Ride | Before, During and After | Epoch Cycling"
   description="How much to eat and drink before, during and after a ride, by ride length. Carbs per hour, fluids, salt and hot-day tips for mountain bike, gravel and road."
   overlayHeader
   breadcrumbs={[{ name: "Fuel", path: "/fuel" }, { name: "How to fuel a ride", path: "/fuel/guide" }]}
 >
-  <PageHero img="gravelRoad" eyebrow="FUEL · THE GUIDE" bar="var(--color-signal)" size="mid" position="center 55%">
-    <h1 class="t-display guide-h1 reveal">How to fuel <span class="text-signal">a ride.</span></h1>
+  <PageHero img="gravelMotion" eyebrow="FUEL · THE GUIDE" bar="var(--color-sage)" size="mid" position="center 40%">
+    <h1 class="t-display guide-h1 reveal">How to fuel <span class="text-sage">a ride.</span></h1>
     <p class="body-l guide-sub reveal reveal-d1">Before, during and after, by how long you're out. General guidance for healthy adults. Your needs depend on you, the heat and the effort, so test it in training.</p>
   </PageHero>
 
@@ -100,8 +100,9 @@ const d = SITE.dietitian;
       <section id="fits" aria-labelledby="h-fits" class="g-sec">
         <h2 id="h-fits">Where Epoch fits</h2>
         <div class="fits">
-          <div class="fit-card"><PillarIcon name="fuel" size={30} class="text-signal" /><p><strong>Epoch Fuel:</strong> carbs and electrolytes in one bottle. Count its carbs toward your hourly total.*</p></div>
-          <div class="fit-card"><span class="mono text-signal">NA K MG</span><p><strong>Epoch Salt:</strong> electrolytes without the carbs, for hot days or to stack with food.*</p></div>
+          <div class="fit-card"><PillarIcon name="fuel" size={30} class="text-sage" /><p><strong>Epoch Endurance:</strong> a custom endurance mix of potassium, magnesium and OKG for long rides and hard training days.* Not a replacement for the food and fluids above.</p></div>
+          <div class="fit-card"><PillarIcon name="fuel" size={30} class="text-sage" /><p><strong>Epoch Fuel:</strong> performance and recovery support for training days.*</p></div>
+          <div class="fit-card"><PillarIcon name="fuel" size={30} class="text-sage" /><p><strong>Epoch Edge:</strong> support for focus and mental performance.* All three are coming soon.</p></div>
         </div>
         <div class="not-prose mt-6"><Button href="/fuel#lineup" variant="signal" arrow location="guide-fits">See the lineup</Button></div>
       </section>
@@ -149,8 +150,8 @@ const d = SITE.dietitian;
     .toc a { display: flex; gap: 12px; align-items: center; min-height: 40px; padding: 4px 14px; margin-left: -1px; border-left: 2px solid transparent; text-decoration: none; color: var(--color-dust); font-size: 0.9375rem; }
     .toc a .mono { font-size: 0.8125rem; color: var(--color-dust); }
     .toc a:hover { color: var(--color-bone); }
-    .toc a[aria-current="true"] { color: var(--color-bone); border-left-color: var(--color-signal); }
-    .toc a[aria-current="true"] .mono { color: var(--color-signal); }
+    .toc a[aria-current="true"] { color: var(--color-bone); border-left-color: var(--color-sage); }
+    .toc a[aria-current="true"] .mono { color: var(--color-sage); }
   }
   .guide { max-width: 860px; min-width: 0; }
   .guide :global(h2) { margin-top: 0; }
@@ -158,12 +159,12 @@ const d = SITE.dietitian;
   .g-sec:first-child { padding-top: 0; }
   .g-sec p, .g-sec li { max-width: 68ch; }
   .short-list li { font-size: 1.125rem; padding-block: 6px; }
-  .short-list li::before { background: var(--color-signal) !important; width: 10px !important; height: 3px !important; }
-  .prose-epoch :global(li)::before { background: var(--color-signal); }
+  .short-list li::before { background: var(--color-sage) !important; width: 10px !important; height: 3px !important; }
+  .prose-epoch :global(li)::before { background: var(--color-sage); }
   .table-wrap { overflow-x: auto; margin-top: 8px; border: 1px solid var(--color-slate); border-radius: var(--radius-md); background: var(--color-ridge); }
   .guide-table { min-width: 760px; }
   .guide-table tbody tr { scroll-margin-top: 110px; }
-  .guide-table tbody tr:target { background: color-mix(in srgb, var(--color-signal) 10%, transparent); }
+  .guide-table tbody tr:target { background: color-mix(in srgb, var(--color-sage) 10%, transparent); }
   .guide-table caption { padding: 16px 14px 4px; }
   .warn-box { margin-top: 18px; padding: 18px 20px; border-left: 4px solid var(--color-summit); background: var(--color-ridge); border-radius: 0 var(--radius-md) var(--radius-md) 0; display: grid; gap: 6px; }
   .fits { display: grid; gap: 14px; margin-top: 8px; }

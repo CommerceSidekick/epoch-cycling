@@ -2,4 +2,4 @@
 id: jason-about
 counselApproved: false
 ---
-Epoch Health System is led at the top by Jason [surname], [credentials], who leads the medically guided side over at Epoch Health System.
+Epoch's physician-led programs are designed under the direction of our Chief Medical Officer, a former Navy SEAL performance doctor. They run on Epoch Health System.

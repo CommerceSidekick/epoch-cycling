@@ -8,7 +8,7 @@ description: "How Epoch Cycling handles the information you give us through our 
 
 ## 1. Scope
 
-This policy covers epochcycling.com, its forms, and orders of Epoch Fuel, Epoch Salt and kit. The Epoch app is covered by the Epoch Health System privacy policy (linked below). This site never collects clinical information. Any clinical information is handled on the Epoch Health System side under the clinical provider's own notice.
+This policy covers epochcycling.com, its forms, and orders of Epoch supplements (Epoch Endurance, Epoch Fuel and Epoch Edge) and kit. The Epoch app is covered by the Epoch Health System privacy policy (linked below). This site never collects clinical information. Any clinical information is handled on the Epoch Health System side under the clinical provider's own notice.
 
 ## 2. Who we are
 

@@ -1,10 +1,11 @@
 ---
 import LegalPage from "../components/sections/LegalPage.astro";
 import ExternalLink from "../components/ui/ExternalLink.astro";
+import { SITE } from "../config/site";
 ---
 <LegalPage id="privacy" path="/privacy">
   <h2>Related</h2>
-  <p>The Epoch app is covered by the <ExternalLink href="https://epochhealthsystem.com/privacy" campaign="privacy" class="link">Epoch Health System privacy policy</ExternalLink>.</p>
+  <p>The Epoch app is covered by the <ExternalLink href={`${SITE.masterUrl}/privacy`} campaign="privacy" class="link">Epoch Health System privacy policy</ExternalLink>.</p>
 </LegalPage>
 
 <style is:global>

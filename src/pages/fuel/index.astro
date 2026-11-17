@@ -3,7 +3,6 @@ import BaseLayout from "../../components/layout/BaseLayout.astro";
 import PageHero from "../../components/sections/PageHero.astro";
 import SectionHead from "../../components/sections/SectionHead.astro";
 import Photo from "../../components/sections/Photo.astro";
-import Marquee from "../../components/sections/Marquee.astro";
 import Button from "../../components/ui/Button.astro";
 import LinkArrow from "../../components/ui/LinkArrow.astro";
 import Eyebrow from "../../components/ui/Eyebrow.astro";
@@ -14,7 +13,8 @@ import FuelStandard from "../../components/fuel/FuelStandard.astro";
 import RacingCallout from "../../components/fuel/RacingCallout.astro";
 import WaitlistForm from "../../components/forms/WaitlistForm.astro";
 import { getCollection } from "astro:content";
-const products = (await getCollection("products")).sort((a, b) => (a.data.line === "fuel" ? -1 : 1) - (b.data.line === "fuel" ? -1 : 1));
+import { byOrder } from "../../lib/products";
+const products = (await getCollection("products")).sort(byOrder);
 const anyLive = products.some((p) => p.data.status === "live");
 const allLive = products.length > 0 && products.every((p) => p.data.status === "live");
 const strip = [
@@ -24,33 +24,33 @@ const strip = [
 ];
 ---
 <BaseLayout lcp="fuelTrail"
-  title="Fuel | Epoch Fuel and Epoch Salt | Epoch Cycling"
-  description="Ride fuel and electrolytes for long days in the dirt. Every ingredient on the label. Plus a no-nonsense guide to fueling any ride."
+  title="Fuel | Epoch Endurance, Epoch Fuel and Epoch Edge | Epoch Cycling"
+  description="Epoch Endurance, Epoch Fuel and Epoch Edge. Clean, tested and coming soon, with every ingredient on the label. Plus a no-nonsense guide to fueling any ride."
   overlayHeader
   breadcrumbs={[{ name: "Fuel", path: "/fuel" }]}
 >
   <!-- 5.11.1 Hero -->
-  <PageHero img="fuelTrail" eyebrow="PILLAR 02 · FUEL" bar="var(--color-signal)" size="tall" position="center 62%" dust>
-    <h1 class="t-display-xl fuel-h1 reveal">Fuel <span class="t-outline-bone">the</span> <span class="text-signal">ride.</span></h1>
-    <p class="body-l fuel-sub reveal reveal-d1">Epoch Fuel for rides over an hour. Epoch Salt for the hot ones. And a guide that tells you how much, and when.</p>
+  <PageHero img="fuelTrail" eyebrow="PILLAR 02 · FUEL" bar="var(--color-sage)" size="tall" position="center 62%" dust>
+    <h1 class="t-display-xl fuel-h1 reveal">Fuel <span class="t-outline-bone">the</span> <span class="text-sage">ride.</span></h1>
+    <p class="body-l fuel-sub reveal reveal-d1">Epoch Endurance, Epoch Fuel and Epoch Edge. The same line as Epoch Health System, coming soon, with every ingredient and amount on the label.</p>
     <div class="fuel-ctas reveal reveal-d2">
       {anyLive ? (
         <Button href="#lineup" variant="signal" size="lg" arrow location="fuel-hero">Shop the lineup</Button>
       ) : (
         <Button href="/join?interest=fuel" variant="signal" size="lg" arrow location="fuel-hero">Get first access</Button>
       )}
-      <LinkArrow href="/fuel/guide" accent="var(--color-signal)">How to fuel a ride</LinkArrow>
+      <LinkArrow href="/fuel/guide" accent="var(--color-sage)">How to fuel a ride</LinkArrow>
     </div>
     <div class="fuel-badge" aria-hidden="true">
       <PillarIcon name="fuel" size={34} />
-      <span class="mono">NA · K · MG · CHO</span>
+      <span class="mono">ENDURANCE · FUEL · EDGE</span>
     </div>
   </PageHero>
 
   <!-- 5.11.2 The lineup -->
   <section id="lineup" class="section topo" aria-labelledby="lineup-title">
     <div class="wrap">
-      <SectionHead eyebrow="EPOCH FUEL · EPOCH SALT" bar="var(--color-signal)" title="The lineup." id="lineup-title" />
+      <SectionHead eyebrow="ENDURANCE · FUEL · EDGE · COMING SOON" bar="var(--color-sage)" title="The lineup." id="lineup-title" />
       <div class="lineup">
         {products.map((p, i) => <ProductCard product={p} index={i} />)}
       </div>
@@ -60,7 +60,7 @@ const strip = [
   <!-- 5.11.3 Our standard -->
   <section class="section standard-sec" aria-label="Our standard">
     <div class="wrap">
-      <Eyebrow bar="var(--color-signal)" class="mb-5">OUR STANDARD</Eyebrow>
+      <Eyebrow bar="var(--color-sage)" class="mb-5">OUR STANDARD</Eyebrow>
       <FuelStandard />
     </div>
   </section>
@@ -72,7 +72,7 @@ const strip = [
     </div>
     <div class="wrap gs-inner">
       <div class="gs-head">
-        <Eyebrow bar="var(--color-signal)" class="text-bone">HOW TO FUEL A RIDE</Eyebrow>
+        <Eyebrow bar="var(--color-sage)" class="text-bone">HOW TO FUEL A RIDE</Eyebrow>
         <h2 id="strip-title" class="t-display reveal">Simple on purpose.</h2>
       </div>
       <ol class="gs-steps" role="list">
@@ -93,22 +93,20 @@ const strip = [
     <div class="wrap two-up">
       <div class="cant reveal">
         <h2 class="t-h3">What fuel can and can't do.</h2>
-        <p>Fuel gives you energy and replaces what you sweat. It won't replace training, sleep or a bike that fits. Anyone promising more than that is selling something.</p>
+        <p>Supplements support a plan. They won't replace training, sleep or a bike that fits. Anyone promising more than that is selling something.</p>
       </div>
       <RacingCallout />
     </div>
   </section>
-
-  <Marquee items={["CARBS FOR THE LONG CLIMB", "SALT FOR THE HOT DAY", "LABELS YOU CAN ACTUALLY READ", "SIP EARLY. SIP OFTEN."]} />
 
   <!-- 5.11.7 Signup -->
   {!allLive && (
     <section id="signup" class="section topo" aria-labelledby="signup-title">
       <div class="wrap signup-grid">
         <div class="signup-copy">
-          <Eyebrow bar="var(--color-signal)">EARLY ACCESS</Eyebrow>
+          <Eyebrow bar="var(--color-sage)">EARLY ACCESS</Eyebrow>
           <h2 id="signup-title" class="t-h2 reveal">Be first in line.</h2>
-          <p class="body-l muted reveal reveal-d1">Fuel and Salt drop soon. Get early access and launch pricing.</p>
+          <p class="body-l muted reveal reveal-d1">Endurance, Fuel and Edge drop soon. Get early access and launch pricing.</p>
           <div class="signup-photo photo reveal">
             <Photo img="fuelCage" sizes="(min-width: 1024px) 40vw, 100vw" widths={[480, 800, 1200]} position="center 40%" />
           </div>
@@ -132,11 +130,11 @@ const strip = [
   .fuel-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 26px; margin-top: 34px; }
   .fuel-badge { display: none; }
   @media (min-width: 1200px) {
-    .fuel-badge { position: absolute; right: 48px; bottom: 170px; display: grid; justify-items: center; gap: 12px; padding: 22px 20px; border-radius: 50%; width: 170px; height: 170px; align-content: center; border: 2px solid var(--color-signal); color: var(--color-signal); background: rgb(14 15 12 / 0.55); backdrop-filter: blur(6px); transform: rotate(-8deg); }
+    .fuel-badge { position: absolute; right: 48px; bottom: 170px; display: grid; justify-items: center; gap: 12px; padding: 22px 20px; border-radius: 50%; width: 170px; height: 170px; align-content: center; border: 2px solid var(--color-sage); color: var(--color-sage); background: rgb(14 15 12 / 0.55); backdrop-filter: blur(6px); transform: rotate(-8deg); }
     .fuel-badge .mono { font-size: 0.8125rem; letter-spacing: 0.12em; text-align: center; }
   }
   .lineup { display: grid; gap: 18px; }
-  @media (min-width: 900px) { .lineup { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 900px) { .lineup { grid-template-columns: repeat(3, 1fr); } }
   .standard-sec { border-top: 1px solid var(--color-slate); }
 
   .guide-strip { position: relative; isolation: isolate; overflow: hidden; }
@@ -147,7 +145,7 @@ const strip = [
   .gs-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
   @media (min-width: 900px) { .gs-steps { grid-template-columns: repeat(3, 1fr); } }
   .gs-steps li { position: relative; display: grid; gap: 10px; align-content: start; padding: 28px 24px 24px; border-radius: var(--radius-md); background: rgb(14 15 12 / 0.62); border: 1px solid rgb(242 238 230 / 0.12); }
-  .gs-n { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 3.5rem; line-height: 0.85; color: transparent; -webkit-text-stroke: 1.5px var(--color-signal); }
+  .gs-n { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 3.5rem; line-height: 0.85; color: transparent; -webkit-text-stroke: 1.5px var(--color-sage); }
 
   .two-up { display: grid; gap: 18px; align-items: start; }
   @media (min-width: 1024px) { .two-up { grid-template-columns: 1fr 1fr; } }

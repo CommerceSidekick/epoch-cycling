@@ -1,4 +1,4 @@
-const MASTER_HOSTS = ["epochhealthsystem.com", "www.epochhealthsystem.com", "app.epochhealthsystem.com"];
+const MASTER_HOSTS = ["epochhealthsystem.com", "www.epochhealthsystem.com", "app.epochhealthsystem.com", "epoch-health-system.vercel.app"];
 
 export function isMasterDomain(href: string): boolean {
   try {

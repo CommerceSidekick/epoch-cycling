@@ -4,26 +4,23 @@
 import Snippet from "./Snippet.astro";
 import Eyebrow from "../ui/Eyebrow.astro";
 import Icon from "../ui/Icon.astro";
-import Ph from "../ui/Ph.astro";
 import { snippetBlocks } from "../../lib/snippets";
 import { BRAND } from "../../config/brand";
 import { SITE } from "../../config/site";
 const services = await snippetBlocks("total-health-services");
-const steps = await snippetBlocks("epochedge");
+const steps = await snippetBlocks("personalized-health");
 ---
 <section id="medical" class="handoff on-light" aria-labelledby="medical-title" data-section="medical">
   <div class="wrap handoff-inner">
     <div class="ho-head">
-      <Eyebrow bar="var(--color-summit-ink)">MEDICALLY GUIDED · AT EPOCH HEALTH SYSTEM</Eyebrow>
-      <h2 id="medical-title" class="t-h2">Want a medically guided plan?</h2>
+      <Eyebrow bar="var(--color-summit-ink)">PHYSICIAN-LED · AT EPOCH HEALTH SYSTEM</Eyebrow>
+      <h2 id="medical-title" class="t-h2">Want a physician in your corner too?</h2>
       <Snippet id="handoff" class="body-l ho-body" />
-      {SITE.flags.showJason && (
-        <p>The medically guided track is led by Jason <Ph value={BRAND.cmo.surname} label="surname" />, <Ph value={BRAND.cmo.credentials} label="credentials" />.</p>
-      )}
+      <p>{`Programs are designed under the direction of our ${BRAND.cmo.title}, a ${BRAND.cmo.credentials.charAt(0).toLowerCase()}${BRAND.cmo.credentials.slice(1)}.`}</p>
     </div>
 
     <div class="ho-services">
-      <p class="eyebrow no-bar">{BRAND.program}: three ways in</p>
+      <p class="eyebrow no-bar">The Epoch program: three parts</p>
       <ul class="ho-grid" role="list">
         {services.map((s, i) => (
           <li class={`ho-card ${i === 2 ? "ho-edge" : ""}`}>
@@ -35,11 +32,11 @@ const steps = await snippetBlocks("epochedge");
       </ul>
     </div>
 
-    <div class="ho-edgebox" id="epochedge" aria-labelledby="edge-title">
+    <div class="ho-edgebox" id="personalized-health" aria-labelledby="edge-title">
       <div class="ho-edge-copy">
-        <p class="eyebrow">{BRAND.services.edge} · How it works</p>
-        <h3 id="edge-title" class="t-h2 ho-edge-title">{BRAND.services.edge}. Performance medicine, by the book.</h3>
-        <Snippet id="epochedge" />
+        <p class="eyebrow">{BRAND.services.health} · How it works</p>
+        <h3 id="edge-title" class="t-h2 ho-edge-title">Find your edge. Physician-led, by the book.</h3>
+        <Snippet id="personalized-health" />
       </div>
       <ol class="ho-steps" role="list">
         {steps.map((s) => (
@@ -49,15 +46,15 @@ const steps = await snippetBlocks("epochedge");
     </div>
 
     <div class="ho-cta">
-      <a href="/optimize/medical" class="btn btn-dark btn-lg" data-cta="Explore Epoch Total Health" data-cta-location="optimize-handoff">Explore {BRAND.program} <Icon name="arrow-up-right" size={18} class="arr" /></a>
-      <p class="small">You'll leave Epoch Cycling for epochhealthsystem.com.</p>
+      <a href="/optimize/medical" class="btn btn-dark btn-lg" data-cta="Explore Personalized Health" data-cta-location="optimize-handoff">Explore {BRAND.program} <Icon name="arrow-up-right" size={18} class="arr" /></a>
+      <p class="small">You'll leave Epoch Cycling for Epoch Health System.</p>
     </div>
     <Snippet id="separation-line" class="fine ho-sep" />
   </div>
 </section>
 <style>
   .handoff { padding-block: clamp(64px, 9vw, 120px); }
-  .handoff-inner { display: grid; gap: clamp(40px, 6vw, 72px); }
+  .handoff-inner { display: grid; gap: clamp(40px, 6vw, 72px); grid-template-columns: minmax(0, 1fr); }
   .ho-head { display: grid; gap: 20px; max-width: 860px; }
   .ho-body :global(p) { color: #26271f; }
   .ho-grid { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 14px; }
@@ -65,7 +62,7 @@ const steps = await snippetBlocks("epochedge");
   .ho-card { background: #fbf9f4; border: 1px solid #ddd6c8; border-radius: var(--radius-md); padding: 26px; display: grid; gap: 10px; align-content: start; }
   .ho-label { color: var(--color-summit-ink); letter-spacing: 0.1em; }
   .ho-edge { background: var(--color-carbon); color: var(--color-bone); border-color: var(--color-carbon); }
-  .ho-edge .ho-label { color: var(--color-signal); }
+  .ho-edge .ho-label { color: var(--color-sage); }
   .ho-edgebox { display: grid; gap: 36px; padding: clamp(24px, 4vw, 48px); border: 1px solid #ddd6c8; border-radius: var(--radius-md); background: #fbf9f4; }
   @media (min-width: 1024px) { .ho-edgebox { grid-template-columns: 1.05fr 1fr; } }
   .ho-edge-copy { display: grid; gap: 18px; align-content: start; }

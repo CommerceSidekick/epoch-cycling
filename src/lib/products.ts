@@ -4,7 +4,13 @@ import type { CollectionEntry } from "astro:content";
 type P = CollectionEntry<"products">;
 type FactKey = keyof P["data"]["facts"];
 
-export const STATUS_TAG: Record<P["data"]["status"], string> = { waitlist: "DROPPING SOON", live: "IN STOCK", "sold-out": "SOLD OUT" };
+export const STATUS_TAG: Record<P["data"]["status"], string> = { waitlist: "COMING SOON", live: "IN STOCK", "sold-out": "SOLD OUT" };
+
+/** The big word on cards and pages. Same line as Epoch Health System: Endurance, Fuel, Edge. */
+export const LINE_WORD: Record<P["data"]["line"], string> = { endurance: "ENDURANCE", fuel: "FUEL", edge: "EDGE" };
+
+/** Display order across the site. */
+export const byOrder = (a: P, b: P) => a.data.order - b.data.order;
 
 export function bullets(p: P): string[] {
   const f = p.data.facts as Record<string, number | string | undefined>;
@@ -31,18 +37,11 @@ export function keyFacts(p: P): Fact[] {
   const has = (k: FactKey) => f[k] !== undefined && f[k] !== null;
   const out: Fact[] = [];
   const add = (k: FactKey, label: string, fmt: (n: number) => string) => { if (has(k)) out.push({ k: label, v: fmt(f[k] as number) }); };
-  if (p.data.line === "fuel") {
-    add("carbsPerServing", "Carbs", (n) => `${n} g`);
-    add("sodiumPerServing", "Sodium", (n) => `${n} mg`);
-    add("servingsPerPack", "Servings", (n) => `${n}`);
-    if (has("caffeineMg")) out.push({ k: "Caffeine", v: f.caffeineMg === 0 ? "Caffeine-free" : `${f.caffeineMg} mg` });
-  } else {
-    add("sodiumPerServing", "Sodium", (n) => `${n} mg`);
-    add("potassiumPerServing", "Potassium", (n) => `${n} mg`);
-    add("magnesiumPerServing", "Magnesium", (n) => `${n} mg`);
-    add("servingsPerPack", "Servings", (n) => `${n}`);
-    add("sugarPerServing", "Sugar", (n) => (n === 0 ? "Sugar-free" : `${n} g`));
-  }
+  add("potassiumPerServing", "Potassium", (n) => `${n} mg`);
+  add("magnesiumPerServing", "Magnesium", (n) => `${n} mg`);
+  add("carbsPerServing", "Carbs", (n) => `${n} g`);
+  add("servingsPerPack", "Servings", (n) => `${n}`);
+  if (has("caffeineMg")) out.push({ k: "Caffeine", v: f.caffeineMg === 0 ? "Caffeine-free" : `${f.caffeineMg} mg` });
   if (p.data.flavors.length) out.push({ k: p.data.flavors.length > 1 ? "Flavors" : "Flavor", v: p.data.flavors.join(", ") });
   return out;
 }
@@ -50,6 +49,6 @@ export function keyFacts(p: P): Fact[] {
 export function caffeineAnswer(p: P) {
   const c = p.data.facts.caffeineMg;
   if (c === undefined || c === null) return "Caffeine details go up with the full label at launch.";
-  if (c === 0) return "No. Epoch Fuel is caffeine-free.";
+  if (c === 0) return "No. It is caffeine-free.";
   return `Yes, ${c} mg per serving.`;
 }

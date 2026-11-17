@@ -66,7 +66,9 @@ const products = defineCollection({
   schema: ({ image }) =>
     z.object({
       name: z.string(),
-      line: z.enum(["fuel", "salt"]),
+      // The line matches Epoch Health System (owner 2026-11-16): Endurance, Fuel, Edge. There is no Salt.
+      line: z.enum(["endurance", "fuel", "edge"]),
+      order: z.number().default(0),
       status: z.enum(["waitlist", "live", "sold-out"]),
       eyebrow: z.string(),
       oneLiner: z.string(),

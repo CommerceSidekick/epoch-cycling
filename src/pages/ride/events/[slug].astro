@@ -28,7 +28,7 @@ const description = `${dateShort}. ${disc.toUpperCase()} ${typeLabel.toLowerCase
 const pageUrl = `${SITE.url}/ride/events/${event.id}`;
 const img = e.image ? await getImage({ src: e.image, width: 1200, format: "jpg" }) : null;
 const schema = eventSchema(event, pageUrl, img?.src ?? "/og/default.png", (event.body ?? e.title).replace(/[#*_>`\n]+/g, " ").trim());
-const bring = e.whatToBring ?? ["Helmet", "Water", "A snack", "A spare tube", "Epoch Salt if it's hot"];
+const bring = e.whatToBring ?? ["Helmet", "Water", "A snack", "A spare tube", "Extra water if it's hot"];
 const needsWaiver = e.waiverRequired;
 ---
 <BaseLayout

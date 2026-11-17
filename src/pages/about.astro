@@ -10,6 +10,14 @@ import ExternalLink from "../components/ui/ExternalLink.astro";
 import PillarIcon from "../components/brand/PillarIcon.astro";
 import { SITE } from "../config/site";
 import { BRAND } from "../config/brand";
+import Photo from "../components/sections/Photo.astro";
+// Same team as Epoch Health System /about (owner 2026-11-16). CMO name stays hidden until he signs off (L7).
+const team = [
+  { name: `Our ${BRAND.cmo.title}`, role: BRAND.cmo.title, bio: `${BRAND.cmo.credentials}. Epoch's physician-led programs are designed under his direction.`, img: null, initials: "" },
+  { name: "Errol Denger", role: "Founder", bio: "Errol has raced and ridden his whole life while managing Crohn's disease, family life and a heavy career workload. \u201cI wanted real data, real results, and a professional-grade solution grounded in data, not proprietary rings.\u201d Epoch is the system he built to get it.", img: "errolRockGarden" as const, initials: "ED" },
+  // Confirm wording and pronoun with Lisle. "journey" is off-voice on this site, so "path" here.
+  { name: "Lisle Head", role: "Co-founder", bio: "Lisle has always seen mental and physical health as one path, not two. He's spent years learning what actually moves the needle on both.", img: null, initials: "LH" },
+];
 const beliefs = [
   { t: "Show up over show off.", b: "The club backs riders who come to the ride." },
   { t: "Everyone gets a regroup.", b: "Every ride has a sweep. Nobody's left at the junction." },
@@ -17,13 +25,13 @@ const beliefs = [
   { t: "Race clean.", b: "We fuel with food and electrolytes. The club never asks for anything else." },
 ];
 ---
-<BaseLayout lcp="crewRegroup"
+<BaseLayout lcp="crewSilhouette"
   title="About | Started at a Trailhead | Epoch Cycling"
   description="Epoch Cycling started with a few friends at a trailhead. Meet the riding tribe of Epoch Health System, mountain bike first."
   breadcrumbs={[{ name: "About", path: "/about" }]}
   overlayHeader
 >
-  <PageHero img="crewRegroup" eyebrow="ABOUT EPOCH CYCLING" size="tall" position="center 40%">
+  <PageHero img="crewSilhouette" eyebrow="ABOUT EPOCH CYCLING" size="tall" position="center 55%">
     <h1 class="t-display-xl reveal">Started at a <span class="text-summit">trailhead.</span></h1>
     <p class="body-l about-sub reveal reveal-d1">Epoch Cycling started the way most good rides do. A few friends, a trailhead, too early in the morning. We wanted a crew, a kit worth wearing, and fuel that works, without the fluff. So we're building it. Mountain bike first.</p>
     <p class="fine reveal reveal-d2"><span class="ph" data-placeholder>[owner confirms this origin line and supplies the founding crew photo]</span></p>
@@ -53,20 +61,45 @@ const beliefs = [
     </div>
   </section>
 
+  <section class="section" aria-labelledby="team-title">
+    <div class="wrap">
+      <Eyebrow class="mb-5">THE TEAM</Eyebrow>
+      <h2 id="team-title" class="t-h2 mb-10 reveal">Built by riders who needed it.</h2>
+      <ul class="team" role="list">
+        {team.map((m, i) => (
+          <li class={`team-card reveal reveal-d${i}`}>
+            <div class="tm-media">
+              {m.img ? (
+                <Photo img={m.img} sizes="(min-width: 1024px) 33vw, 100vw" widths={[480, 800]} position="center 30%" />
+              ) : m.initials ? (
+                <span class="tm-initials" aria-hidden="true">{m.initials}</span>
+              ) : (
+                <PillarIcon name="optimize" size={72} class="text-summit" />
+              )}
+            </div>
+            <div class="tm-body">
+              <h3 class="t-h3">{m.name}</h3>
+              <p class="eyebrow no-bar tm-role">{m.role}</p>
+              <p class="muted">{m.bio}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <section class="section" aria-labelledby="family-title">
     <div class="wrap family">
       <div class="grid gap-5">
         <Eyebrow>THE FAMILY</Eyebrow>
         <h2 id="family-title" class="t-h2 reveal">Part of Epoch Health System.</h2>
-        <p class="body-l muted measure">Epoch Cycling is the riding side of Epoch Health System, the company behind the Epoch app, Epoch Fuel and Salt, and {BRAND.program}. Running and triathlon get their own sites later. Cycling lives here.</p>
-        {SITE.flags.showJason && (
-          <Snippet id="jason-about" class="measure" />
-        )}
-        <p><ExternalLink href="https://epochhealthsystem.com/about#team" campaign="about_family" class="link-arrow">Meet the Epoch Health System team</ExternalLink></p>
+        <p class="body-l muted measure">Epoch Cycling is the riding side of Epoch Health System, the company behind the Epoch app, the Epoch supplements and {BRAND.program}. Running and triathlon get their own sites later. Cycling lives here.</p>
+        <Snippet id="jason-about" class="measure" />
+        <p><ExternalLink href={`${SITE.masterUrl}/about#team`} campaign="about_family" class="link-arrow">Meet the Epoch Health System team</ExternalLink></p>
       </div>
       <div class="family-art" aria-hidden="true">
         <div class="fa-row"><PillarIcon name="ride" size={64} class="text-summit" /><span>Ride</span></div>
-        <div class="fa-row"><PillarIcon name="fuel" size={64} class="text-signal" /><span>Fuel</span></div>
+        <div class="fa-row"><PillarIcon name="fuel" size={64} class="text-sage" /><span>Fuel</span></div>
         <div class="fa-row"><PillarIcon name="optimize" size={64} class="text-sky" /><span>Optimize</span></div>
       </div>
     </div>
@@ -96,6 +129,14 @@ const beliefs = [
   @media (min-width: 768px) { .believe { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1100px) { .believe { grid-template-columns: repeat(4, 1fr); } }
   .believe li { display: grid; gap: 10px; align-content: start; padding: 28px; border: 1px solid var(--color-slate); border-radius: var(--radius-md); background: var(--color-carbon); }
+  .team { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
+  @media (min-width: 900px) { .team { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .team-card { display: grid; grid-template-rows: auto 1fr; overflow: hidden; border: 1px solid var(--color-slate); border-radius: var(--radius-md); background: var(--color-ridge); }
+  .tm-media { aspect-ratio: 4 / 3; display: grid; place-items: center; background: var(--color-slate); position: relative; overflow: hidden; }
+  .tm-media :global(.photo), .tm-media :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .tm-initials { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: clamp(3rem, 6vw, 4.5rem); color: var(--color-bone); opacity: 0.85; }
+  .tm-body { display: grid; gap: 8px; align-content: start; padding: 26px; }
+  .tm-role { color: var(--color-summit); }
   .family { display: grid; gap: 48px; align-items: center; }
   @media (min-width: 1024px) { .family { grid-template-columns: 1.3fr 0.7fr; } }
   .family-art { display: grid; gap: 18px; }

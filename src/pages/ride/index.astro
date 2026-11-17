@@ -38,7 +38,7 @@ const ways = [
 ---
 <BaseLayout lcp="crewSilhouette"
   title="The Epoch Riders Club | Group Rides, Kits and Race Entry | Epoch Cycling"
-  description="Join the Epoch Riders Club. Group rides, events, team kits and ambassadors. Club racers fuel with Epoch, race in the kit, and get help with race entries."
+  description="Join the Epoch Riders Club. Group rides, events, team kits and ambassadors. Club racers ride for Epoch, race in the kit, and get help with race entries."
   overlayHeader
   breadcrumbs={[{ name: "Riders Club", path: "/ride" }]}
 >
@@ -82,16 +82,16 @@ const ways = [
     <RidgeDivider color="var(--color-carbon)" flip />
     <div class="wrap deal-grid">
       <div class="deal-left">
-        <p class="eyebrow" style="--eyebrow-bar: var(--color-signal)">THE RACE DEAL</p>
-        <h2 id="deal-title" class="deal-title reveal"><span>Fuel with Epoch.</span> <span class="t-outline-bone">Race in the kit.</span> <span class="text-signal">We'll help cover your entry.</span></h2>
+        <p class="eyebrow" style="--eyebrow-bar: var(--color-sage)">THE RACE DEAL</p>
+        <h2 id="deal-title" class="deal-title reveal"><span>Ride for Epoch.</span> <span class="t-outline-bone">Race in the kit.</span> <span class="text-sage">We'll help cover your entry.</span></h2>
       </div>
       <div class="deal-right">
         <Steps
           big
-          accent="var(--color-signal)"
+          accent="var(--color-sage)"
           steps={[
             { title: "Get in.", body: "Apply and get accepted as a Club racer." },
-            { title: "Race in Epoch.", body: "Wear the kit. Fuel with Epoch Fuel or Salt on race day." },
+            { title: "Race in Epoch.", body: "Wear the kit on race day." },
             { title: "Send proof. Get help with the entry.", body: "Your result, a photo in the kit, and your entry receipt. We help cover your entry under the club terms." },
           ]}
         />
@@ -150,13 +150,13 @@ const ways = [
     <div class="wrap">
       <Callout title={clean.title}>
         <p>{clean.body}</p>
-        <p><LinkArrow href="/faq#anti-doping" accent="var(--color-signal)">Read the anti-doping FAQ</LinkArrow></p>
+        <p><LinkArrow href="/faq#anti-doping" accent="var(--color-sage)">Read the anti-doping FAQ</LinkArrow></p>
       </Callout>
     </div>
   </section>
 
   <!-- 5.2.8 CTA band -->
-  <CtaBand title="Get in the crew." img="crewRegroup" position="center 40%">
+  <CtaBand title="Get in the crew." img="mtbBermRoost" position="center 45%">
     <Button href="/join" size="lg" arrow location="ride-closing">Join free</Button>
     <Button href="/ride/apply" variant="outline" size="lg" location="ride-closing">Apply to race</Button>
   </CtaBand>
@@ -171,15 +171,15 @@ const ways = [
   .ways { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
   @media (min-width: 960px) { .ways { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .way { position: relative; display: flex; flex-direction: column; gap: 14px; padding: clamp(24px, 3vw, 34px); border-top: 4px solid var(--color-slate); }
-  .way-racer { border-top-color: var(--color-signal); background: color-mix(in srgb, var(--color-signal) 5%, var(--color-ridge)); }
+  .way-racer { border-top-color: var(--color-sage); background: color-mix(in srgb, var(--color-sage) 5%, var(--color-ridge)); }
   .way-top { display: flex; justify-content: space-between; align-items: center; color: var(--color-dust); }
-  .way-racer .way-top .race-number { color: var(--color-signal); }
+  .way-racer .way-top .race-number { color: var(--color-sage); }
   .way-name { font-family: var(--font-display); font-weight: 900; font-stretch: 112%; text-transform: uppercase; font-size: clamp(1.6rem, 2vw, 2.1rem); line-height: 0.95; margin-top: 18px; overflow-wrap: break-word; hyphens: auto; }
   .way-who { color: var(--color-dust); }
   .way-list { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 10px; }
   .way-list li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; }
   :global(.way-check) { color: var(--color-summit); margin-top: 3px; }
-  .way-racer :global(.way-check) { color: var(--color-signal); }
+  .way-racer :global(.way-check) { color: var(--color-sage); }
 
   .deal { overflow: hidden; }
   .deal-grid { display: grid; gap: 48px; padding-block: clamp(56px, 8vw, 110px); }
@@ -188,6 +188,6 @@ const ways = [
   .deal-title { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(2.25rem, 4.1vw, 4rem); line-height: 0.92; letter-spacing: -0.015em; }
   .deal-title span { display: block; }
   .deal-right { display: grid; gap: 26px; justify-items: start; }
-  .deal-fine { display: grid; gap: 8px; font-size: 0.9375rem; color: #d9d4c8; border-left: 3px solid var(--color-signal); padding: 4px 0 4px 18px; }
+  .deal-fine { display: grid; gap: 8px; font-size: 0.9375rem; color: #d9d4c8; border-left: 3px solid var(--color-sage); padding: 4px 0 4px 18px; }
   .deal-fine strong { color: var(--color-bone); font-weight: 600; }
 </style>

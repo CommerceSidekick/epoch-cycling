@@ -8,7 +8,7 @@ description: "Terms for the Epoch Riders Club: membership, Club racers, ambassad
 
 ## 1. What the Riders Club is
 
-Free membership. Club racer and Ambassador programs by application. Not a contest or sweepstakes. No purchase is required to join or apply. <span class="ph" data-placeholder>[counsel: confirm whether requiring use of Epoch Fuel or Salt on race day, if purchased, creates any issue (D5)]</span>
+Free membership. Club racer and Ambassador programs by application. Not a contest or sweepstakes. No purchase is required to join or apply. <span class="ph" data-placeholder>[counsel: confirm whether requiring use of Epoch supplements on race day, if purchased, creates any issue (D5)]</span>
 
 ## 2. Who can join
 
@@ -20,7 +20,7 @@ At Epoch's sole discretion. <span class="ph" data-placeholder>[number of Club ra
 
 ## 4. What Club racers do
 
-Race in the official Epoch kit. Use Epoch Fuel or Epoch Salt on race day. Post about eligible races with clear disclosure. Follow the conduct rules.
+Race in the official Epoch kit. Use Epoch supplements on race day once they launch. Post about eligible races with clear disclosure. Follow the conduct rules.
 
 ## 5. What Epoch provides
 
@@ -36,7 +36,7 @@ Every post, story, video or review about Epoch must clearly disclose the relatio
 
 ## 8. Ambassadors
 
-Ambassador codes and any commissions apply only to Epoch Fuel, Epoch Salt and kit. Never to the app's paid tiers or coaching, and never to any medical program or medical service, under any circumstances. Ambassadors may not promote, refer people to, or post about any medical program as part of the program.
+Ambassador codes and any commissions apply only to Epoch supplements (Epoch Endurance, Epoch Fuel and Epoch Edge) and kit. Never to the app's paid tiers or coaching, and never to any medical program or medical service, under any circumstances. Ambassadors may not promote, refer people to, or post about any medical program as part of the program.
 
 ## 9. No medical tie
 
